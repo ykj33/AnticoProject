@@ -20,13 +20,8 @@ delivery_place_adres VARCHAR2(300) NOT NULL,
 delivery_place_adres_detail VARCHAR2(150) NOT NULL
 )
 
-alter table tbl_member drop(mname, telepohone)
-alter table tbl_member add(mname varchar2(12), telepohone varchar2(11))
+COMMIT
 
-commit
+SELECT * FROM tbl_member
 
-select * from tbl_member
-
-select * from cols where table_name = 'tbl_member'
-
-insert into tbl_member(mid, email, mpw) values('lee', 'lee@naver.com', '1')
+INSERT INTO tbl_member(mid, email, mpw) VALUES('lee', 'lee@naver.com', '1')
