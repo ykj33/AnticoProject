@@ -4,5 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="m.e.m">
 
+	<insert id="insert">
+		INSERT INTO tbl_member (mid, email, mpw) values (#{mid}, #{email}, #{mpw})
+	</insert>
+
 </mapper>
 
