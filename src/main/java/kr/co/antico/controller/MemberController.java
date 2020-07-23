@@ -19,22 +19,27 @@ public class MemberController {
 	public void login() {
 
 	}
-	
+
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public void insert() {
-		
+
 	}
-	
+
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public String insert(MemberDTO dto) {	
+	public String insert(MemberDTO dto) {
 		System.out.println(dto.toString());
-		mService.insert(dto);		
+		mService.insert(dto);
 		return "redirect:/member/list";
 	}
-	
+
 	@RequestMapping("/list")
 	public void list() {
-		
+
+	}
+
+	@RequestMapping(value = "/payment", method = RequestMethod.GET)
+	public void payment() {
+
 	}
 
 }
