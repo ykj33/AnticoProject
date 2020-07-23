@@ -1,26 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
-
+<%@ include file="../com/header.jsp"%>
+<script defer="defer" src="/resources/js/member.js"></script>
 <style>
 /* Remove the navbar's default margin-bottom and rounded borders */
-
-
-.navbar {
+ .navbar {
 	margin-bottom: 0;
 	border-radius: 0;
 	background-color: #ffffff;
@@ -44,61 +34,62 @@
 	background-color: #f2f2f2;
 	padding: 25px;
 }
+
+
 </style>
 
 
 
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-expand-md">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">동동이</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<!-- <li class="active"><a href="l_select.sdj">메인</a></li> -->
 
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/antico/login"><span
-						class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-
-				<c:if test="${empty login}">
-					<li><a href="/antico/login"> <span
-							class="glyphicon glyphicon-log-in"></span> Login
-					</a></li>
-				</c:if>
-
-				<c:if test="${not empty login}">
-					<li><a href="/antico/login"> <span
-							class="glyphicon glyphicon-log-out"></span> Logout
-					</a></li>
-				</c:if>
-
-			</ul>
-		</div>
-	</nav>
-	<div class="jumbotron text-center">
-		<h1>안티코</h1>
-	</div>
+	<%@ include file="../com/top.jsp"%>
 	<div class="container">
-		<ul class="breadcrumb">
-			<li><a href="#">페이지 1</a></li>
-			<li><a href="#">페이지 2</a></li>
-			<li><a href="#">페이지 3</a></li>
-			<li><a href="#">페이지 4</a></li>
-		</ul>
-
+		<%@ include file="../com/navbar.jsp" %>
 		<div class="row">
-			<div class="col-xs-6">ddd</div>
-			<div class="col-xs-6">ddd</div>
+
+			<div class="col-sm-6 mt-4">
+				<h3>&nbsp;&nbsp;LOGIN</h3><br>
+
+				<form action="/#">
+					<div class="form-group col-sm-10">
+						<input type="text" class="form-control" id="email2" placeholder="Enter email" name="email"><br> <input type="password"
+							class="form-control" id="password" placeholder="Enter password" name="password"><br> <label><input type="checkbox"
+							name="remember">아이디 기억하기</label><br>
+
+						<button type="submit" class="btn btn-default">로그인</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-sm-6 mt-4">
+				<h3>&nbsp;&nbsp;CREATE ACCOUNT</h3><br>
+
+				<form action="/member/insert" method="post">
+					<div class="form-group col-sm-10">
+						<input type="hidden" id="mid" name="mid">
+						<div class="form-group">
+							<input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요" name="email"><br> 
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" id="mpw" placeholder="비밀번호를 입력하세요" name="mpw"><br> 
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" id="mpw_re" placeholder="비밀번호를 한번 더 입력하세요" name="mpw_re"><br> 
+						</div>
+						
+						<label><input type="checkbox" name="remember">회원 가입 및 약관 동의를 읽어봅시다</label><br>
+
+						<button type="submit" class="btn btn-default">가입 완료</button>
+					</div>
+				</form>
+			</div>
+
+
 		</div>
 	</div>
-	<hr>
-	<footer class="container-fluid text-center">
-		<p>Footer Text</p>
-	</footer>
-
-
+	
+	<br><br><br>
+	<%@ include file="../com/footer.jsp"%>
 </body>
 </html>
