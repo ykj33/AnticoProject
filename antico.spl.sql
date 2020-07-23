@@ -25,3 +25,22 @@ COMMIT
 SELECT * FROM tbl_member
 
 INSERT INTO tbl_member(mid, email, mpw) VALUES('lee', 'lee@naver.com', '1')
+
+--상품 테이블
+create table tbl_goods(
+goods_no number primary key,
+goods_nm varchar2(150),
+makr varchar2(60),
+goods_category varchar2(30),
+goods_img varchar2(500),
+goods_info_img varchar2(500),
+goods_info_text varchar2(1000)
+)
+
+create table tbl_gods_option(
+goods_no number references tbl_goods (goods_no),
+goods_amount number,
+goods_untpc number,
+size varchar2(30),
+color varchar2(30)
+)
