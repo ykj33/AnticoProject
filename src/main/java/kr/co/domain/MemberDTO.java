@@ -12,19 +12,19 @@ public class MemberDTO implements Serializable {
 	private String email;
 	private String mpw;
 	private String mname;
-	private String telepohone;
+	private String telephone;
 	private String subscribe_date;
 	
 	public MemberDTO() {
 	}
 
-	public MemberDTO(String mid, String email, String mpw, String mname, String telepohone, String subscribe_date) {
+	public MemberDTO(String mid, String email, String mpw, String mname, String telephone, String subscribe_date) {
 		super();
 		this.mid = mid;
 		this.email = email;
 		this.mpw = mpw;
 		this.mname = mname;
-		this.telepohone = telepohone;
+		this.telephone = telephone;
 		this.subscribe_date = subscribe_date;
 	}
 
@@ -60,12 +60,12 @@ public class MemberDTO implements Serializable {
 		this.mname = mname;
 	}
 
-	public String getTelepohone() {
-		return telepohone;
+	public String getTelephone() {
+		return telephone;
 	}
 
-	public void setTelepohone(String telepohone) {
-		this.telepohone = telepohone;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
 	public String getSubscribe_date() {
@@ -82,7 +82,7 @@ public class MemberDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MemberDTO [mid=" + mid + ", email=" + email + ", mname=" + mname + ", telepohone=" + telepohone
+		return "MemberDTO [mid=" + mid + ", email=" + email + ", mname=" + mname + ", telephone=" + telephone
 				+ ", subscribe_date=" + subscribe_date + "]";
 	}
 

@@ -6,7 +6,7 @@ mid VARCHAR2(30) PRIMARY KEY,
 email VARCHAR2(100) NOT NULL,
 mpw VARCHAR2(50) NOT NULL,
 mname VARCHAR2(12),
-telepohone VARCHAR2(11),
+telephone VARCHAR2(11),
 subscribe_date DATE DEFAULT SYSDATE
 )
 
