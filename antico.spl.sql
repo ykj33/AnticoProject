@@ -1,6 +1,8 @@
 CREATE USER antico IDENTIFIED BY antico;
 GRANT CONNECT, RESOURCE, DBA TO antico;
 
+conn antico/antico
+
 CREATE TABLE tbl_member(
 mid VARCHAR2(30) PRIMARY KEY,
 email VARCHAR2(100) NOT NULL,
