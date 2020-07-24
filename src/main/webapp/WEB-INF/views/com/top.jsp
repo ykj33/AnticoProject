@@ -2,7 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<style>
+.jumbotron {
+	padding: 30px;
+	font-size: 15px;
+	text-align: center;
+	background-color: #ffffff;
+	opacity: 1;
+}
+</style>
 <%-- 
 <div id="tab">
 <nav class="navbar navbar-expand-sm bg-white navbar-light">
