@@ -17,4 +17,9 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.insert(dto);
 	}
 
+	@Override
+	public Integer idCheck(String email) {
+		return memberDao.idCheck(email);
+	}
+
 }

@@ -7,6 +7,10 @@
 	<insert id="insert">
 		INSERT INTO tbl_member (mid, email, mpw) values (#{mid}, #{email}, #{mpw})
 	</insert>
+	
+	<select id="idCheck" resultType="Integer">
+		SELECT * FROM tbl_member WHERE email = #{email}
+	</select>
 
 </mapper>
 

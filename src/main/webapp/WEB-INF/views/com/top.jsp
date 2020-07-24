@@ -8,7 +8,7 @@
 		<a class="btn">장바구니</a>
 	</span>
 	<span class="float-right">
-	<a class="btn">로그인</a><a class="btn">회원가입</a>
+	<a href="/member/login" class="btn">로그인</a><a href="/member/insert" class="btn">회원가입</a>
 	</span>
 </div>
 

@@ -6,4 +6,6 @@ public interface MemberService {
 
 	void insert(MemberDTO dto);
 
+	Integer idCheck(String email);
+
 }

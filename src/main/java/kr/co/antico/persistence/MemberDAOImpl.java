@@ -19,4 +19,9 @@ public class MemberDAOImpl implements MemberDAO {
 		System.out.println(dto.toString() + "+service");
 		mSession.insert(NS + ".insert", dto);
 	}
+
+	@Override
+	public Integer idCheck(String email) {
+		return mSession.selectOne(NS + ".insert", email);
+	}
 }
