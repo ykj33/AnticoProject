@@ -37,9 +37,6 @@ public class MemberController {
 
 	}
 
-	@RequestMapping(value = "/payment", method = RequestMethod.GET)
-	public void payment() {
-
-	}
+	
 
 }

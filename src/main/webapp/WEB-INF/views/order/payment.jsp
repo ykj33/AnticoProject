@@ -30,7 +30,7 @@
 </head>
 <body>
 	<%@ include file="../com/header.jsp"%>
-		<%@ include file="../com/top.jsp"%>
+	<%@ include file="../com/top.jsp"%>
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-7" style="border-right: 1px solid black;">
@@ -109,15 +109,14 @@
 
 				</div>
 				<div>
-					<div style="display: inline">
-						<h4>총액</h4>
+					<div>
+						<h4 style="display: inline">총액</h4>
+						<h4 style="float: right; display: inline">28,800원</h4>
 					</div>
-					<div style="display: inline">
-						<h4>28,800원</h4>
+
+					<div>
+						<button class="btn btn-outline-dark btn-block rounded-0 mt-4">상품 결제</button>
 					</div>
-				</div> 
-				<div style="float: right">
-					<button class="button btn btn-primary">상품 결제</button>
 				</div>
 			</div>
 			</form>
