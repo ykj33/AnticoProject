@@ -11,7 +11,8 @@
 </head>
 <body>
 	<%@ include file="../com/top.jsp" %>
-	회원가입페이지
+	<%@ include file="../com/title.jsp"%>
+	회원가입 페이지
 	<form action="/member/insert" method="post">
 		<input type="text" id="mid" name="mid">
 		<div class="form-group">
