@@ -47,12 +47,7 @@
 		<a class="btn" style="color:#999;">로그인</a><a class="btn" style="color:#999;">회원가입</a>
 	</div>
 </div> -->
-<div class="clearfix">
-	<span class="float-left">
-		<a class="btn" style="color:#999;">장바구니</a>
-	</span>
-	<span class="float-right">
-	<a class="btn" style="color:#999;">로그인</a><a class="btn" style="color:#999;">회원가입</a>
-	</span>
-</div>
 
+<div class="jumbotron text-center">
+	<h1>Antico</h1>
+</div>
