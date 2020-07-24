@@ -3,17 +3,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<title>이쁜이들 마스크</title>
 <%@ include file="../com/header.jsp"%>
 </head>
 <body>
+	<!--유지보수 하기 쉽게 파일 불러서 사용  -->
 	<%@ include file="../com/top.jsp"%>
 	<%@ include file="../com/title.jsp"%>
 
 	<div class="container">
 		<%@ include file="../com/navbar.jsp"%>
-
+		<!--이미지를 주소를 따서 받아온다  -->
 		<img alt="마스크상세정보이미지" src="https://platum.kr/wp-content/uploads/2020/04/eye.jpg" width="100%">
+		<!--클래스 추가 (글자색)  mt(마진)-->
 		<h3 class="text-muted mt-4">이쁜이들은 어떤 마스크를 쓸까?</h3>
 		<p class="text-muted mt-4">베이징에 거주하는 첸자신(27)은 최근 타오바오에서 아이섀도 팔레트만 6개를 구입했다. 코로나19 이후 재택근무와 외출자재 분위기로 행동반경이 제한되었지만, 첸은 인근 슈퍼마켓이나 산책 삼아 근처 공원에 갈 때 화장을 한다.그는 “간간이 집 밖으로 나갈
 			때 기분전환 삼아 아이섀도우의 색깔을 바꾼다. 마스크를 쓰고 다녀야 하기에 눈만 신경쓰면 된다. 구매는 할인폭이 넓은 이커머스를 통해 진행했다”고 말한다.소셜네트워크 영향으로 중국 소비자들의 메이크업 활용은 이전보다 더욱 전문적이고 정교해졌으며 보우 화장품
