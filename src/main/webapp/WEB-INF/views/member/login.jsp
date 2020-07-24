@@ -5,93 +5,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<title>로그인</title>
 <%@ include file="../com/header.jsp"%>
 <script defer="defer" src="/resources/js/member.js"></script>
-<style>
-/* Remove the navbar's default margin-bottom and rounded borders */
- .navbar {
-	margin-bottom: 0;
-	border-radius: 0;
-	background-color: #ffffff;
-}
-
-.jumbotron {
-	padding: 30px;
-	font-size: 15px;
-	text-align: center;
-	background-color: #ffffff;
-	opacity: 1;
-}
-
-.breadcrumb {
-	font-size: 15px;
-	text-align: center;
-	background-color: #ffffff;
-}
-
-.footer {
-	background-color: #f2f2f2;
-	padding: 25px;
-}
-
-
-</style>
-
-
-
-</head>
 <body>
 
-
 	<%@ include file="../com/top.jsp"%>
-	<%@ include file="../com/title.jsp"%>
 	<div class="container">
-		<%@ include file="../com/navbar.jsp" %>
+		<%@ include file="../com/title.jsp" %>
+		<%@ include file="../com/navbar.jsp"%>
 		<div class="row">
-
 			<div class="col-sm-6 mt-4">
-				<h3>&nbsp;&nbsp;LOGIN</h3><br>
-
-				<form action="/#">
-					<div class="form-group col-sm-10">
-						<input type="text" class="form-control" id="email2" placeholder="Enter email" name="email"><br> <input type="password"
-							class="form-control" id="password" placeholder="Enter password" name="password"><br> <label><input type="checkbox"
-							name="remember">아이디 기억하기</label><br>
-
-						<button type="submit" class="btn btn-default">로그인</button>
+				<h3>기존고객</h3>
+				<br>
+				<form>
+					<div class="form-group">
+						<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요."> 
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" id="email" placeholder="패스워드를 입력해주세요.">
+					</div>
+					<div class="form-check text-left">
+						<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+						<label class="form-check-label" for="exampleCheck1">로그인 유지</label>
+					</div>
+					<div class="text-left">
+						<button type="submit" class="btn btn-primary">로그인</button>
 					</div>
 				</form>
 			</div>
 
+
 			<div class="col-sm-6 mt-4">
-				<h3>&nbsp;&nbsp;CREATE ACCOUNT</h3><br>
-
-				<form action="/member/insert" method="post">
+				<h3>신규고객</h3><br>
 					<div class="form-group col-sm-10">
-						<input type="hidden" id="mid" name="mid">
-						<div class="form-group">
-							<input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요" name="email"><br> 
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" id="mpw" placeholder="비밀번호를 입력하세요" name="mpw"><br> 
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" id="mpw_re" placeholder="비밀번호를 한번 더 입력하세요" name="mpw_re"><br> 
-						</div>
-						
-						<label><input type="checkbox" name="remember">회원 가입 및 약관 동의를 읽어봅시다</label><br>
-
-						<button type="submit" class="btn btn-default">가입 완료</button>
+					<p>매장에서 계정을 만들면 결제 과정을 더 빠르게 진행하고 여러 배송 주소를 저장하며 계정에서 주문을보고 추적 할 수 있습니다.</p>
+					<a type="submit" class="btn">회원가입페이지</a>
 					</div>
-				</form>
 			</div>
 
 
 		</div>
 	</div>
-	
-	<br><br><br>
+
+	<br>
+	<br>
+	<br>
 	<%@ include file="../com/footer.jsp"%>
 </body>
 </html>
