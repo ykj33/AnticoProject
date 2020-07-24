@@ -36,12 +36,18 @@ public class MemberController {
 
 	@RequestMapping("/idCheck/{id}")
 	@ResponseBody
-	public void idCheck(@PathVariable("id") String email) {
+	public String idCheck(@PathVariable("id") String email) {
 		System.out.println("id"+email);
 		
-		Integer result = mService.idCheck(email);
+		MemberDTO dto = mService.idCheck(email);
 		
-		System.out.println("result"+result);
+		System.out.println("dto "+dto);
+		
+		if (dto != null) {
+			return "IN_USE";
+		} else {
+			return "NOT_IN_USE";
+		}
 	}
 
 	

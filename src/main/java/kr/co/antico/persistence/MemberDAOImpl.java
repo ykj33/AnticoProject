@@ -21,7 +21,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public Integer idCheck(String email) {
-		return mSession.selectOne(NS + ".insert", email);
+	public MemberDTO idCheck(String email) {
+		return mSession.selectOne(NS + ".idCheck", email);
 	}
 }

@@ -22,6 +22,11 @@
          .then(function (response) {
             // handle success
             console.log(response);
+            if(response.data == "IN_USE"){
+               alert('사용중인 이메일입니다.');
+            } else {
+               alert('사용가능합니다.');
+            }
          })
          .catch(function (error) {
             // handle error
