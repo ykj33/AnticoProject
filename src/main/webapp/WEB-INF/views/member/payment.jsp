@@ -25,6 +25,8 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 <title>Insert title here</title>
+<style type="text/css">
+</style>
 </head>
 <body>
 	<%@ include file="../com/header.jsp"%>
@@ -83,19 +85,37 @@
 			<div class="col-lg-5">
 				<div id="goods_list">
 					<table class="table" style="border-bottom: 1px solid black;">
+						<%-- 추후 DB구축 시 사용할 테이블
+						<c:forEach items="#{}" var="dto">
+							<tr>
+								<td>사진</td>
+								<td>KF-90 마스크</td>
+								<td>15,900원</td>
+							</tr>
+						</c:forEach> --%>
 						<tr>
-							<td>사진</td>
-							<td>상품명</td>
-							<td>가격</td>
+							<td style="border: none"><img
+								src="../resources/image/show.png" height="70px" width="70px"></td>
+							<td style="border: none">KF-90 마스크</td>
+							<td style="border: none">15,900원</td>
 						</tr>
-
+						<tr>
+							<td style="border: none"><img
+								src="../resources/image/show.png" height="70px" width="70px"></td>
+							<td style="border: none">KF-84 마스크</td>
+							<td style="border: none">12,900원</td>
+						</tr>
 					</table>
 
 				</div>
 				<div>
-					<h4>총액 :</h4>
-				</div>
-
+					<div style="display: inline">
+						<h4>총액</h4>
+					</div>
+					<div style="display: inline">
+						<h4>28,800원</h4>
+					</div>
+				</div> 
 				<div style="float: right">
 					<button class="button btn btn-primary">상품 결제</button>
 				</div>
