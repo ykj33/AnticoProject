@@ -11,7 +11,5 @@
 	<a class="btn">로그인</a><a class="btn">회원가입</a>
 	</span>
 </div>
-<div class="jumbotron bg-white text-secondary">
-	<h1>Antico</h1>
-</div>
+
 

@@ -48,6 +48,6 @@
 	</div>
 </div> -->
 
-<div class="jumbotron text-center">
-	<h1>Antico</h1>
+<div class="jumbotron bg-white text-secondary">
+	<h1 style="text-align: center">Antico</h1>
 </div>

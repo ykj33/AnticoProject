@@ -30,8 +30,8 @@
 </head>
 <body>
 	<%@ include file="../com/header.jsp"%>
-	<div class="container">
 		<%@ include file="../com/top.jsp"%>
+	<div class="container">
 		<div class="row">
 			<div class="col-lg-7" style="border-right: 1px solid black;">
 				<%@ include file="../com/title.jsp"%>
