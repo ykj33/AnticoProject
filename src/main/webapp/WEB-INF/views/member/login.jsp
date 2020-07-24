@@ -1,104 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<title>Insert title here</title>
-
-<style>
-/* Remove the navbar's default margin-bottom and rounded borders */
-
-
-.navbar {
-	margin-bottom: 0;
-	border-radius: 0;
-	background-color: #ffffff;
-}
-
-.jumbotron {
-	padding: 30px;
-	font-size: 15px;
-	text-align: center;
-	background-color: #ffffff;
-	opacity: 1;
-}
-
-.breadcrumb {
-	font-size: 15px;
-	text-align: center;
-	background-color: #ffffff;
-}
-
-.footer {
-	background-color: #f2f2f2;
-	padding: 25px;
-}
-</style>
-
-
-
+<title>로그인</title>
+<%@ include file="../com/header.jsp"%>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script defer="defer" src="/resources/js/member.js"></script>
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-expand-md">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">동동이</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<!-- <li class="active"><a href="l_select.sdj">메인</a></li> -->
-
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/antico/login"><span
-						class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-
-				<c:if test="${empty login}">
-					<li><a href="/antico/login"> <span
-							class="glyphicon glyphicon-log-in"></span> Login
-					</a></li>
-				</c:if>
-
-				<c:if test="${not empty login}">
-					<li><a href="/antico/login"> <span
-							class="glyphicon glyphicon-log-out"></span> Logout
-					</a></li>
-				</c:if>
-
-			</ul>
-		</div>
-	</nav>
-	<div class="jumbotron text-center">
-		<h1>안티코</h1>
-	</div>
-	<div class="container">
-		<ul class="breadcrumb">
-			<li><a href="#">페이지 1</a></li>
-			<li><a href="#">페이지 2</a></li>
-			<li><a href="#">페이지 3</a></li>
-			<li><a href="#">페이지 4</a></li>
-		</ul>
-
+	<%@ include file="../com/top.jsp"%>
+	<div class="container mb-5">
+		<%@ include file="../com/title.jsp"%>
+		<%@ include file="../com/navbar.jsp"%>
 		<div class="row">
-			<div class="col-xs-6">ddd</div>
-			<div class="col-xs-6">ddd</div>
+
+			<div class="col-md-5 mt-4 ml-4 mr-4 text-dark">
+				<h3>기존고객</h3>
+				<form class="mt-4 text-muted" action="/member/login" method="post" name="memberLoginForm" onsubmit="return validateMemberLoginForm()">
+						<input type="hidden" class="form-control rounded-0" id="inputMid" name="mid">
+					<div class="form-group">
+						<input type="email" class="form-control rounded-0" id="inputEmail" name="email" placeholder="이메일을 입력해주세요.">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control rounded-0" id="inputPassword" name="mpw" placeholder="패스워드를 입력해주세요.">
+					</div>
+					<div class="form-check text-left">
+						<input type="checkbox" class="form-check-input" id="RemembeMeCheck"> <label class="form-check-label" for="RemembeMeCheck">로그인 유지</label>
+					</div>
+					<div class="text-left mt-2">
+						<button type="submit" value="Submit" class="btn btn-outline-dark rounded-0">로그인</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-md-5 mt-4 ml-4 mr-4 text-dark">
+				<h3>신규고객</h3>
+				<p class="mt-4 text-muted">매장에서 계정을 만들면 결제 과정을 더 빠르게 진행하고 여러 배송 주소를 저장하며 계정에서 주문을보고 추적 할 수 있습니다.</p>
+				<button class="btn btn-outline-dark rounded-0" onclick="location.href='/member/insert'">회원가입페이지</button>
+			</div>
+
 		</div>
 	</div>
-	<hr>
-	<footer class="container-fluid text-center">
-		<p>Footer Text</p>
-	</footer>
-
-
+	<%@ include file="../com/footer.jsp"%>
 </body>
 </html>
