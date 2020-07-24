@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("mypage")
 public class MypageController {
 	
-	
+
 	
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
 	public void mypage() {
