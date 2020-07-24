@@ -44,6 +44,7 @@
 <body>
 
 	<%@ include file="../com/top.jsp"%>
+	<%@ include file="../com/title.jsp"%>
 	<div class="container">
 		<%@ include file="../com/navbar.jsp" %>
 		<div class="row">

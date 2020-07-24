@@ -34,7 +34,7 @@
 <body>
 
 	<%@ include file="../com/top.jsp"%>
-	
+	<%@ include file="../com/title.jsp"%>
 	<div>
 		<%@ include file="../com/navbar.jsp"%>
 	</div>
