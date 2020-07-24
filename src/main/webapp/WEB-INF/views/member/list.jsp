@@ -5,15 +5,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
-<script defer="defer" src="/resources/js/member.js"></script>
+<style>
+/* Remove the navbar's default margin-bottom and rounded borders */
+ .navbar {
+	margin-bottom: 0;
+	border-radius: 0;
+	background-color: #ffffff;
+}
+
+.jumbotron {
+	padding: 30px;
+	font-size: 15px;
+	text-align: center;
+	background-color: #ffffff;
+	opacity: 1;
+}
+
+.footer {
+	background-color: #f2f2f2;
+	padding: 25px;
+}
+
+</style>
+
+<%@ include file="../com/header.jsp"%>
 </head>
 <body>
-리스트 화면
+
+	<%@ include file="../com/top.jsp"%>
+	<%@ include file="../com/title.jsp"%>
+	<div>
+		<%@ include file="../com/navbar.jsp"%>
+	</div>
+	
+	
+	
+	
+	
+
+	<%@ include file="../com/footer.jsp"%>
 </body>
 </html>
