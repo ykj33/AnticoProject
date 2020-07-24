@@ -43,7 +43,6 @@
 	
 	
 	
-	
 
 	<%@ include file="../com/footer.jsp"%>
 </body>
