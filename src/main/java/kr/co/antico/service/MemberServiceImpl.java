@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.antico.persistence.MemberDAO;
+import kr.co.domain.LoginDTO;
 import kr.co.domain.MemberDTO;
 
 @Service
@@ -20,6 +21,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDTO idCheck(String email) {
 		return memberDao.idCheck(email);
+	}
+
+	@Override
+	public MemberDTO login(LoginDTO login) {
+		return memberDao.login(login);
 	}
 
 }

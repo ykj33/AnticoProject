@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import kr.co.domain.LoginDTO;
 import kr.co.domain.MemberDTO;
 
 @Repository
@@ -23,5 +24,10 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public MemberDTO idCheck(String email) {
 		return mSession.selectOne(NS + ".idCheck", email);
+	}
+
+	@Override
+	public MemberDTO login(LoginDTO login) {
+		return mSession.selectOne(NS + ".login", login);
 	}
 }

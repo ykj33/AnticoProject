@@ -8,32 +8,18 @@ public class MemberDTO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String mid;
 	private String email;
 	private String mpw;
-	private String mname;
-	private String telephone;
 	private String subscribe_date;
 	
 	public MemberDTO() {
 	}
 
-	public MemberDTO(String mid, String email, String mpw, String mname, String telephone, String subscribe_date) {
+	public MemberDTO(String email, String mpw, String subscribe_date) {
 		super();
-		this.mid = mid;
 		this.email = email;
 		this.mpw = mpw;
-		this.mname = mname;
-		this.telephone = telephone;
 		this.subscribe_date = subscribe_date;
-	}
-
-	public String getMid() {
-		return mid;
-	}
-
-	public void setMid(String mid) {
-		this.mid = mid;
 	}
 
 	public String getEmail() {
@@ -52,22 +38,6 @@ public class MemberDTO implements Serializable {
 		this.mpw = mpw;
 	}
 
-	public String getMname() {
-		return mname;
-	}
-
-	public void setMname(String mname) {
-		this.mname = mname;
-	}
-
-	public String getTelephone() {
-		return telephone;
-	}
-
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-
 	public String getSubscribe_date() {
 		return subscribe_date;
 	}
@@ -82,9 +52,7 @@ public class MemberDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MemberDTO [mid=" + mid + ", email=" + email + ", mname=" + mname + ", telephone=" + telephone
-				+ ", subscribe_date=" + subscribe_date + "]";
+		return "MemberDTO [email=" + email + ", subscribe_date=" + subscribe_date + "]";
 	}
-
 	
 }

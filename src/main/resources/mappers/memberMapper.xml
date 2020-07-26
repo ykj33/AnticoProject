@@ -5,11 +5,15 @@
 <mapper namespace="m.e.m">
 
 	<insert id="insert">
-		INSERT INTO tbl_member (mid, email, mpw) values (#{mid}, #{email}, #{mpw})
+		INSERT INTO tbl_member (email, mpw) values (#{email}, #{mpw})
 	</insert>
 	
 	<select id="idCheck" resultType="MemberDTO">
 		SELECT * FROM tbl_member WHERE email = #{email}
+	</select>
+	
+	<select id="login" resultType="MemberDTO">
+		SELECT * FROM tbl_member WHERE email = #{email} and mpw = #{mpw}
 	</select>
 
 </mapper>
