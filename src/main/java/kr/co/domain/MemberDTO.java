@@ -10,6 +10,7 @@ public class MemberDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String email;
 	private String mpw;
+	private String key;
 	private String subscribe_date;
 	
 	public MemberDTO() {
@@ -38,6 +39,14 @@ public class MemberDTO implements Serializable {
 		this.mpw = mpw;
 	}
 
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
 	public String getSubscribe_date() {
 		return subscribe_date;
 	}
@@ -52,7 +61,8 @@ public class MemberDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MemberDTO [email=" + email + ", subscribe_date=" + subscribe_date + "]";
+		return "MemberDTO [email=" + email + ", key=" + key + ", subscribe_date=" + subscribe_date + "]";
 	}
-	
+
+
 }

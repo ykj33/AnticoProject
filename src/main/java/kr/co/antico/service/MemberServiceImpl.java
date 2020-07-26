@@ -28,4 +28,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.login(login);
 	}
 
+	@Override
+	public Integer keyAlter(MemberDTO dto) {
+		return memberDao.keyAlter(dto);
+	}
+
 }

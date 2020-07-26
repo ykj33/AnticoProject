@@ -30,4 +30,9 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberDTO login(LoginDTO login) {
 		return mSession.selectOne(NS + ".login", login);
 	}
+
+	@Override
+	public Integer keyAlter(MemberDTO dto) {
+		return mSession.update(NS + ".keyAlter", dto);
+	}
 }

@@ -6,6 +6,7 @@ conn antico/antico
 CREATE TABLE tbl_member(
 email VARCHAR2(100) PRIMARY KEY,
 mpw VARCHAR2(50) NOT NULL,
+key VARCHAR2(20) NOT NULL,
 subscribe_date DATE DEFAULT SYSDATE
 );
 

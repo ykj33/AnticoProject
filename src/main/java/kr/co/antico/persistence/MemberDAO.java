@@ -11,4 +11,6 @@ public interface MemberDAO {
 
 	MemberDTO login(LoginDTO login);
 
+	Integer keyAlter(MemberDTO dto);
+
 }

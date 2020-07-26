@@ -11,4 +11,6 @@ public interface MemberService {
 
 	MemberDTO login(LoginDTO login);
 
+	Integer keyAlter(MemberDTO dto);
+
 }

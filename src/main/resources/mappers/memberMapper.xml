@@ -5,7 +5,7 @@
 <mapper namespace="m.e.m">
 
 	<insert id="insert">
-		INSERT INTO tbl_member (email, mpw) values (#{email}, #{mpw})
+		INSERT INTO tbl_member (email, mpw, key) values (#{email}, #{mpw}, #{key})
 	</insert>
 	
 	<select id="idCheck" resultType="MemberDTO">
@@ -16,5 +16,8 @@
 		SELECT * FROM tbl_member WHERE email = #{email} and mpw = #{mpw}
 	</select>
 
+	<update id="keyAlter">
+		UPDATE tbl_member set key = 'y' WHERE email = #{email} and key = #{key}
+	</update>
 </mapper>
 
