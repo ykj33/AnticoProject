@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,10 +12,9 @@
 document.addEventListener('DOMContentLoaded', function(){
     //const axios = require('axios');
 
-    let email = document.getElementById('inputEmail');
-    let mid = document.getElementById('inputMid');
-
-    console.log(email);
+	<c:if test="${msg eq 'KEY_ALTER_FAIL'}" >
+		alert('이메일 인증이 완료되지 않았습니다.');
+   	</c:if>
  });
  
 function validateMemberLoginForm() {

@@ -79,6 +79,12 @@ public class MemberController {
 		MemberDTO dto = mService.login(login);
 		
 		if (dto != null) {
+			System.out.println("Y ::: "+dto.getKey().equals('Y'));
+			if (!dto.getKey().equals("Y")) {
+				model.addAttribute("msg", "KEY_ALTER_FAIL");
+				return "/member/login";
+			}
+			
 			model.addAttribute("login", dto);
 			
 			String path = (String) session.getAttribute("path");
@@ -88,7 +94,7 @@ public class MemberController {
 			
 			return "redirect:/board/list";
 		} else {
-			return "redirect:/member/login";
+			return "/member/login";
 		}
 	}
 	

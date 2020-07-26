@@ -17,7 +17,7 @@
 	</select>
 
 	<update id="keyAlter">
-		UPDATE tbl_member set key = 'y' WHERE email = #{email} and key = #{key}
+		UPDATE tbl_member set key = 'Y' WHERE email = #{email} and key = #{key}
 	</update>
 </mapper>
 
