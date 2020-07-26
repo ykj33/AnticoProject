@@ -34,10 +34,10 @@ public class MemberController {
 		return "redirect:/board/read";
 	}
 
-	@RequestMapping("/idCheck/{id}")
+	@RequestMapping("/idCheck/{id:.+}")
 	@ResponseBody
 	public String idCheck(@PathVariable("id") String email) {
-		System.out.println("id"+email);
+		System.out.println("id "+email);
 		
 		MemberDTO dto = mService.idCheck(email);
 		

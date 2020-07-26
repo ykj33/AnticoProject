@@ -14,8 +14,13 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@RequestMapping("/list")
+	public void list() {
+		
+	}
 
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
+	@RequestMapping(value = "/read{bno}", method = RequestMethod.GET)
 	public void read(@PathVariable("bno") int bno) {
 //		boardService.read(bno);
 	}
