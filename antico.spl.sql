@@ -28,7 +28,7 @@ INSERT INTO tbl_member(mid, email, mpw) VALUES('lee', 'lee@naver.com', '1')
 
 --상품 테이블
 CREATE TABLE tbl_goods(
-goods_no NUMBER PRIMARY KEY,
+goods_no VARCHAR2(4) PRIMARY KEY,
 goods_nm VARCHAR2(150),
 makr VARCHAR2(60),
 goods_category VARCHAR2(30),
