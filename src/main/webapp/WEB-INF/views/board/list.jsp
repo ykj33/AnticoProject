@@ -17,26 +17,43 @@
 		<div class="row">
 			<c:forEach items="${list }" var="dto" begin="0" end="1">
 				<div class="col-md-6">
-					<img
+					<a href="/board/read/${dto.goods_no}"> <img
 						src="http://i.011st.com/ex_t/R/400x400/1/85/0/src/pd/20/5/8/1/6/9/6/YpwuC/2941581696_B.jpg"
-						width="100%" margin="auto">
-					<%-- <img src = "${dto.goods_img }"> --%>
-					${dto.goods_no } ${dto.goods_nm }
+						width="100%" margin="auto"> <%-- <img src="${dto.goods_img }"> --%>
+						<div>
+							<h5>${dto.goods_nm }</h5>
+						</div> <c:forEach items="${optionByNo }" var="option">
+							<c:if test="${dto.goods_no == option.goods_no  }">
+								<%-- <c:forEach items="${goods_option_size }" var="size">
+							${size}</c:forEach> --%>
+								<div style="float: right">${option.goods_untpc}원</div>
+							</c:if>
+
+						</c:forEach>
+					</a>
 				</div>
 			</c:forEach>
 
+
+
 			<c:forEach items="${list }" var="dto" begin="2" end="3">
 				<div class="col-md-6">
-					<img
+					<a href="/board/read/${dto.goods_no}"> <img
 						src="http://i.011st.com/ex_t/R/400x400/1/85/0/src/pd/20/5/8/1/6/9/6/YpwuC/2941581696_B.jpg"
-						width="100%" margin="auto">
-					<%-- <img src = "${dto.goods_img }"> --%>
-					${dto.goods_no } ${dto.goods_nm }
+						width="100%" margin="auto"> <%-- <img src="${dto.goods_img }"> --%>
+						<div>
+							<h5>${dto.goods_nm }</h5>
+						</div> <c:forEach items="${optionByNo }" var="option">
+							<c:if test="${dto.goods_no == option.goods_no  }">
+								<%-- ${goods_option_size} --%>
+								<div style="float: right">${option.goods_untpc}원</div>
+							</c:if>
+						</c:forEach>
+					</a>
 				</div>
 			</c:forEach>
 		</div>
-	</div>
-	<%@ include file="../com/footer.jsp"%>
+		<%@ include file="../com/footer.jsp"%>
 	</div>
 </body>
 </html>
