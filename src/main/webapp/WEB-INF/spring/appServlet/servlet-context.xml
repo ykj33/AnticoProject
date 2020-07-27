@@ -31,7 +31,7 @@
 		<beans:property name="host" value="smtp.gmail.com" />
 		<beans:property name="port" value="587" /><!-- 465 or 25 -->
 		<beans:property name="username" value="antico19test@gmail.com" />
-		<beans:property name="password" value="" />
+		<beans:property name="password" value="@antico19" />
 		<beans:property name="defaultEncoding" value="utf-8" />
 		<beans:property name="javaMailProperties">
 			<beans:props>

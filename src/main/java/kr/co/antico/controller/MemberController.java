@@ -53,10 +53,12 @@ public class MemberController {
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insert(MemberDTO dto, HttpServletRequest request) {
 		
+		// 난수 발생
 		String key = Utils.getKey(false, 20);
 		dto.setKey(key);
-		mService.insert(dto);
 		
+		
+		// 이메일 발송
 		MimeMessage mail = mailsender.createMimeMessage();
 		String htmlStr = "<h2>안녕하세요 Antico 입니다!</h2><br><br>" 
 				+ "<h3>" + dto.getEmail() + "님</h3>" + "<p>인증하기 버튼을 누르시면 로그인을 하실 수 있습니다 : " 
@@ -70,6 +72,9 @@ public class MemberController {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
+		
+		// 모두 성공 시 DB에 저장
+		mService.insert(dto);
 		
 		return "redirect:/member/login";
 	}
@@ -98,6 +103,7 @@ public class MemberController {
 		}
 	}
 	
+	// 난수 확인 후 난수가 맞을 시 Y로  변경
 	@RequestMapping("/keyAlter")
 	public void key_alter(MemberDTO dto, Model model) {
 
