@@ -38,7 +38,7 @@ public class BoardController {
 					optionByNo.add(new GoodsOptionDTO(goods_no, option.get(j).getGoods_amount(),
 							option.get(j).getGoods_untpc(), option.get(j).getGoods_size(),
 							option.get(j).getGoods_color()));
-					
+
 //					goods_option_size = option.get(j).getGoods_size();
 //
 //					int goods_option_price = option.get(j).getGoods_untpc();
@@ -50,7 +50,7 @@ public class BoardController {
 				}
 			}
 		}
-		
+
 //		model.addAttribute("goods_option_size", goods_option_size);
 		model.addAttribute("optionByNo", optionByNo);
 		model.addAttribute("list", list);
@@ -58,8 +58,9 @@ public class BoardController {
 	}
 
 	// �� ������
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public void read() {
-//		boardService.read(bno);
+	@RequestMapping(value = "/read/{goods_no}", method = RequestMethod.GET)
+	public String read(@PathVariable("goods_no") String goods_no) {
+		/* boardService.read(goods_no); */
+		return "/board/read/";
 	}
 }

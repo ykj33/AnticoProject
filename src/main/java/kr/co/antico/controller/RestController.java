@@ -49,7 +49,7 @@ public class RestController {
 		String goods_info_text = request.getParameter("goods_info_text");
 		
 		String realUploadPath = uploadPath+File.separator+"goods_img"+File.separator+goods_no;
-		
+		System.out.println(realUploadPath);
 		File dir = new File(realUploadPath);
 		
 		if(!dir.isDirectory()) {
