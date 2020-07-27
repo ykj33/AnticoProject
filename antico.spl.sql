@@ -38,7 +38,7 @@ goods_info_text VARCHAR2(1000)
 )
 
 CREATE TABLE tbl_goods_option(
-goods_no NUMBER REFERENCES tbl_goods (goods_no),
+goods_no VARCHAR2(4) REFERENCES tbl_goods (goods_no),
 goods_amount NUMBER,
 goods_untpc NUMBER,
 goods_size VARCHAR2(30),
