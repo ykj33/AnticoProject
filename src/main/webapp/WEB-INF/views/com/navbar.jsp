@@ -8,6 +8,7 @@
 	a:visited { color: grey; text-decoration: none;}
 	a:hover { color: grey; text-decoration: underline;}
 	
+	
 </style>
 
 <nav class="navbar navbar-expand-sm bg-white justify-content-center">

@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	<%@ include file="../com/top.jsp"%>
 	<%@ include file="../com/title.jsp"%>
 	<%@ include file="../com/navbar.jsp"%>
+	
 	<br>
 	<div class="container text-center text-dark">
 		<h3>회원가입</h3>
