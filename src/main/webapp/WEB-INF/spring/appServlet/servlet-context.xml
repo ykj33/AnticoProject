@@ -43,6 +43,12 @@
 		</beans:property>
 	</beans:bean>
 
+	<!-- 이미지 업로드 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property value="20971520" name="maxUploadSize"></beans:property>
+	</beans:bean>
+
 	<context:component-scan
 		base-package="kr.co.antico" />
 	<context:component-scan

@@ -17,7 +17,7 @@ public class GoodsDTO implements Serializable {
 	private String goods_info_text;
 
 	public GoodsDTO() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public GoodsDTO(String goods_no, String goods_nm, String makr, String goods_category, String goods_img,
