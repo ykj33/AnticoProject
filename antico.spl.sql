@@ -37,7 +37,7 @@ goods_info_img VARCHAR2(500),
 goods_info_text VARCHAR2(1000)
 )
 
-CREATE TABLE tbl_gods_option(
+CREATE TABLE tbl_goods_option(
 goods_no NUMBER REFERENCES tbl_goods (goods_no),
 goods_amount NUMBER,
 goods_untpc NUMBER,
