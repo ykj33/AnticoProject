@@ -5,7 +5,7 @@
 
 <div class="clearfix text-secondary">
 	<span class="float-left">
-		<a class="btn">장바구니</a>
+		<a href="#" class="btn">장바구니</a>
 	</span>
 	<span class="float-right">
 	<a href="/member/login" class="btn">로그인</a><a href="/member/insert" class="btn">회원가입</a>

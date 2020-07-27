@@ -75,6 +75,8 @@ document.addEventListener('DOMContentLoaded', function(){
 <body>
 	<%@ include file="../com/top.jsp"%>
 	<%@ include file="../com/title.jsp"%>
+	<%@ include file="../com/navbar.jsp"%>
+	<br>
 	<div class="container text-center text-dark">
 		<h3>회원가입</h3>
 		<form class="mt-4 text-muted" action="/member/insert" method="post" name="memberInserForm" onsubmit="return validateMemberInserForm()">

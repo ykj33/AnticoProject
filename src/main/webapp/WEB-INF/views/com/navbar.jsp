@@ -12,9 +12,9 @@
 
 <nav class="navbar navbar-expand-sm bg-white justify-content-center">
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">Link 12</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">Link 2</a></li>
+		<li class="nav-item"><a class="nav-link" href="#">Link 1</a></li>
+		<li class="nav-item"><a class="nav-link" href="/board/list">리스트</a></li>
 		<li class="nav-item"><a class="nav-link" href="#">Link 3</a></li>
-		<li class="nav-item"><a class="nav-link " href="#">Link 4</a></li>
+		<li class="nav-item"><a class="nav-link " href="/mypage/mypage">마이쇼핑</a></li>
 	</ul>
 </nav>
