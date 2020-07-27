@@ -1,12 +1,12 @@
 #프로젝트에서 동기화 예외 처리합니다.
 #git 설정폴더
-*./git/*
+./git/
 
 #프로젝트 내의 target폴더 전체
-*/target/*
+/target/
 
 #
-*/.settings/*
+/.settings/
 
 #초기 설정파일 처음엔 받고 다음엔 예외처리하세요.
 .classpath
