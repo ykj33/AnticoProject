@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="a.d.m">
+
+	<insert id="goodsInsert">
+		insert into tbl_goods (goods_no, goods_nm, makr, goods_category, goods_img, goods_info_img, goods_info_text) values (#{goods_no}, #{goods_nm}, #{makr}, #{goods_category}, #{goods_img}, #{goods_info_img}, #{goods_info_text})
+	</insert>
+
+</mapper>
+
+	
