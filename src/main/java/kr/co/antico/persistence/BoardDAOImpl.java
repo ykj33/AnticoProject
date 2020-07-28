@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.domain.BoardDTO;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
 
@@ -26,5 +27,16 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<GoodsOptionDTO> option() {
 		// TODO Auto-generated method stub
 		return bSession.selectList(NS + ".option");
+	}
+	
+	@Override
+	public GoodsOptionDTO optionSize() {
+		
+		return bSession.selectOne(NS + ".optionsize");
+	}
+	
+	@Override
+	public List<BoardDTO> read(String goods_no) {
+		return bSession.selectList(NS + ".read", goods_no);
 	}
 }

@@ -10,9 +10,38 @@
 	</select>
 
 	<select id="option" resultType="GoodsOptionDTO">
-		SELECT * FROM tbl_goods_option ORDER BY
+		SELECT * FROM tbl_goods_option
+		ORDER BY
 		goods_no DESC
 	</select>
+
+	<select id="optionsize" resultType="GoodsOptionDTO">
+		select * from tbl_goods tg, (
+		select
+		LISTAGG(goods_size, ',') WITHIN group (order by goods_size) as
+		goods_option_size
+		from tbl_goods_option
+		where goods_no = 'g001' and
+		goods_color = 'black'
+		group by goods_color
+		), (
+		select
+		LISTAGG(goods_color, ',') WITHIN group (order by goods_color) as
+		goods_option_color
+		from tbl_goods_option
+		where goods_no = 'g001' and
+		goods_size = 'L'
+		group by goods_size
+		) where tg.goods_no = 'g001'
+	</select>
+
+	<select id="read" resultType="BoardDTO">
+		SELECT * FROM tbl_goods RIGHT JOIN
+		tbl_goods_option
+		ON tbl_goods.goods_no = tbl_goods_option.goods_no
+		WHERE tbl_goods.goods_no = #{goods_no}
+	</select>
 </mapper>
+
 
 	
