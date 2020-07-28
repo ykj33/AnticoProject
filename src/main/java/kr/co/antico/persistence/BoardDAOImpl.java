@@ -39,4 +39,10 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<BoardDTO> read(String goods_no) {
 		return bSession.selectList(NS + ".read", goods_no);
 	}
+	
+	@Override
+	public List<BoardDTO> forImg() {
+		// TODO Auto-generated method stub
+		return bSession.selectList(NS + ".forimg");
+	}
 }

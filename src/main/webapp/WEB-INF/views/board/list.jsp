@@ -17,18 +17,22 @@
 		<div class="row">
 			<c:forEach items="${list }" var="dto" begin="0" end="1">
 				<div class="col-md-6">
-					<a href="/board/read/${dto.goods_no}"> <img
-						src="http://i.011st.com/ex_t/R/400x400/1/85/0/src/pd/20/5/8/1/6/9/6/YpwuC/2941581696_B.jpg"
-						width="100%" margin="auto"> <%-- <img src="${dto.goods_img }"> --%>
+					<a href="/board/read/${dto.goods_no}"> <c:forEach
+							items="${forImg }" var="img">
+							<c:if test="${dto.goods_no == img.goods_no  }">
+								<img id="main"
+									src='/displayfile?goods_no=${img.goods_no}&&img_name=${img.goods_img}'
+									width="100%" height = "500px" margin="auto" />
+							</c:if>
+						</c:forEach>
 						<div>
 							<h5>${dto.goods_no }${dto.goods_nm }</h5>
-						</div> <c:forEach items="${board }" var="option">
+						</div> <%-- <c:forEach items="${board }" var="option">
 							<c:if test="${dto.goods_no == option.goods_no  }">
 								${option.goods_color }
-							</c:if>
-						</c:forEach> 
-						
-						<c:forEach items="${optionByNo }" var="option" begin="0" end="0">
+							</c:if> 
+						</c:forEach>--%> <c:forEach items="${optionByNo }" var="option"
+							begin="0" end="1">
 							<c:if test="${dto.goods_no == option.goods_no  }">
 								<div style="float: right">${option.goods_untpc}원</div>
 							</c:if>
@@ -41,14 +45,23 @@
 
 			<c:forEach items="${list }" var="dto" begin="2" end="3">
 				<div class="col-md-6">
-					<a href="/board/read/${dto.goods_no}"> <img
-						src="http://i.011st.com/ex_t/R/400x400/1/85/0/src/pd/20/5/8/1/6/9/6/YpwuC/2941581696_B.jpg"
-						width="100%" margin="auto"> <%-- <img src="${dto.goods_img }"> --%>
+					<a href="/board/read/${dto.goods_no}"> <c:forEach
+							items="${forImg }" var="img">
+							<c:if test="${dto.goods_no == img.goods_no  }">
+								<img id="main"
+									src='/displayfile?goods_no=${img.goods_no}&&img_name=${img.goods_img}'
+									width="100%" height = "500px" margin="auto" />
+							</c:if>
+						</c:forEach>
 						<div>
 							<h5>${dto.goods_no }${dto.goods_nm }</h5>
-						</div> <c:forEach items="${optionByNo }" var="option">
+						</div> <%-- <c:forEach items="${board }" var="option">
 							<c:if test="${dto.goods_no == option.goods_no  }">
-
+								${option.goods_color }
+							</c:if> 
+						</c:forEach>--%> <c:forEach items="${optionByNo }" var="option"
+							begin="2" end="3">
+							<c:if test="${dto.goods_no == option.goods_no  }">
 								<div style="float: right">${option.goods_untpc}원</div>
 							</c:if>
 						</c:forEach>

@@ -38,4 +38,10 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardDao.read(goods_no);
 	}
+	
+	@Override
+	public List<BoardDTO> forImg() {
+		// TODO Auto-generated method stub
+		return boardDao.forImg();
+	}
 }

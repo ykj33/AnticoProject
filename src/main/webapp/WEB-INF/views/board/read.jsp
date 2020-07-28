@@ -82,8 +82,8 @@ $('.collapse').collapse('hide');
 		<%@ include file="../com/navbar.jsp"%>
 		<!--이미지를 주소를 따서 받아온다  -->
 		<c:forEach items="${read }" var="read" begin = "0" end = "0">
-			<img alt="마스크상세정보이미지" src="${uploadPath} +  ${read.goods_img}"
-				width="100%">
+			<img id="main" src='/displayfile?goods_no=${read.goods_no}&&img_name=${read.goods_info_img}' width = "100%"/>
+		
 		<!--클래스 추가 (글자색)  mt(마진)-->
 		<h3 class="text-muted mt-4">${read.goods_nm}</h3>
 		<p class="text-muted mt-4">

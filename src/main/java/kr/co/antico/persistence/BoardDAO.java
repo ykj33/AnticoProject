@@ -16,4 +16,6 @@ public interface BoardDAO {
 
 	List<BoardDTO> read(String goods_no);
 
+	List<BoardDTO> forImg();
+
 }

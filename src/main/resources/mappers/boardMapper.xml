@@ -41,6 +41,13 @@
 		ON tbl_goods.goods_no = tbl_goods_option.goods_no
 		WHERE tbl_goods.goods_no = #{goods_no}
 	</select>
+
+	<select id="forimg" resultType="BoardDTO">
+		SELECT * FROM tbl_goods RIGHT JOIN
+		tbl_goods_option
+		ON tbl_goods.goods_no =
+		tbl_goods_option.goods_no
+	</select>
 </mapper>
 
 

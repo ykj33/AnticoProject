@@ -16,6 +16,8 @@ public interface BoardService {
 
 	List<BoardDTO> read(String goods_no);
 
+	List<BoardDTO> forImg();
+
 	
 
 

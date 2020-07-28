@@ -30,7 +30,7 @@ public class BoardController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) {
 		List<GoodsDTO> list = boardService.list();
-		List<BoardDTO> board = null;
+		List<BoardDTO> forImg = boardService.forImg();
 		List<GoodsOptionDTO> option = boardService.option();
 		List<GoodsOptionDTO> optionByNo = new ArrayList<GoodsOptionDTO>();
 		for (int i = 0; i < list.size(); i++) {
@@ -58,7 +58,7 @@ public class BoardController {
 		
 //		model.addAttribute("goods_option_size", goods_option_size);
 		model.addAttribute("optionByNo", optionByNo);
-
+		model.addAttribute("forImg", forImg);
 		model.addAttribute("list", list);
 		
 		
@@ -70,7 +70,7 @@ public class BoardController {
 	@RequestMapping(value = "/read/{goods_no}", method = RequestMethod.GET)
 	public String read(@PathVariable("goods_no") String goods_no, Model model, HttpSession session) {
 		List<BoardDTO> read = boardService.read(goods_no);
-		String uploadPath = session.getServletContext().getRealPath(File.separator+"resources") + File.separator + goods_no + File.separator;
+		String uploadPath = session.getServletContext().getRealPath(File.separator+"resources") + File.separator + "goods_img" + File.separator + goods_no + File.separator;
 		model.addAttribute("read", read);
 		model.addAttribute("uploadPath", uploadPath);
 		System.out.println(uploadPath);
