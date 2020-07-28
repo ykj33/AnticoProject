@@ -1,13 +1,55 @@
 package kr.co.antico.utils;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
+
+import org.imgscalr.Scalr;
+import org.springframework.http.MediaType;
+
+
 
 public class Utils {
 	
-	public static String getMediaType(String fileName) {
+
+	public static String makeThumbnail(String uploadPath, String datePath, String newName) throws IOException {
+		File f1 = new File(uploadPath+datePath, newName);
+		
+		BufferedImage sourceImg = ImageIO.read(f1);
+		
+		BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_EXACT, 100);
+		
+		String thumbnailName = uploadPath+datePath+File.separator+"s_"+newName;
+		
+		File newFile = new File(thumbnailName);
+		
+		String format = newName.substring(newName.lastIndexOf(".")+1).toUpperCase();
+		
+		ImageIO.write(destImg, format, newFile);
+		
+		
+		
+		return thumbnailName.substring(uploadPath.length()).replace(File.separatorChar, '/');
+	}
+	
+	public static MediaType getMediaType(String format) {
+		Map<String, MediaType> map = new HashMap<String, MediaType>();
+		map.put("JPG", MediaType.IMAGE_JPEG);
+		map.put("JPEG", MediaType.IMAGE_JPEG);
+		map.put("PNG", MediaType.IMAGE_PNG);
+		map.put("GIF", MediaType.IMAGE_GIF);
+		
+		MediaType mType = map.get(format.toUpperCase());
+		
+		return mType;
+	}
+	
+	public static String getFormat(String fileName) {
 		String format = fileName.substring(fileName.lastIndexOf(".")+1);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("JPG", "JPG");

@@ -1,19 +1,26 @@
 package kr.co.antico.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,14 +45,53 @@ public class RestController {
 	@Autowired
 	private AdminService aService;
 
+	//<img id="main" src='/displayfile?goods_no=    &&img_name=     '/>  사용방법
+	@RequestMapping(value = "/displayfile", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> displayfile(String goods_no, String img_name, HttpSession session) {
+		String uploadPath = session.getServletContext().getRealPath(File.separator + "resources");
+		uploadPath = uploadPath + File.separator+"goods_img"+File.separator+goods_no+File.separator;
+		ResponseEntity<byte[]> entity = null;
+
+		InputStream in = null;
+
+		try {
+			String format = img_name.substring(img_name.lastIndexOf('.') + 1);
+			MediaType mType = Utils.getMediaType(format);
+			HttpHeaders headers = new HttpHeaders();
+
+			in = new FileInputStream(uploadPath + img_name);
+
+			if (mType != null) {
+				headers.setContentType(mType);
+			} else {
+				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+				headers.add("Content-Disposition",
+						"attachment;filename=\"" + new String(img_name.getBytes("UTF-8"), "ISO-8859-1"));
+			}
+
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST); // 통신상태 넘겨주기
+		} finally {
+			try {
+				if (in != null)
+					in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return entity;
+
+	}
+	
+
 	@RequestMapping(value = "/uploadtest", method = RequestMethod.POST)
-	public String uploadtest(@RequestBody Map<String, Object> map) {
+	public String uploadtest(@RequestBody Map<String, Object> map, HttpSession session, HttpServletRequest request) throws IOException {
 		
-		System.out.println(map);
-		GoodsOptionDTO[] dto =(GoodsOptionDTO[]) map.get("test");
-		System.out.println(dto[0].getGoods_amount());
-		return "ok";
-		
+		return "OK";
 	}
 
 	@RequestMapping(value = "/optionupload", method = RequestMethod.POST)
@@ -117,7 +163,6 @@ public class RestController {
 		String goods_info_text = request.getParameter("goods_info_text");
 
 		String realUploadPath = uploadPath + File.separator + "goods_img" + File.separator + goods_no;
-		System.out.println(realUploadPath);
 		File dir = new File(realUploadPath);
 
 		if (!dir.isDirectory()) {
@@ -133,12 +178,14 @@ public class RestController {
 			MultipartFile mFile = request.getFile(uploadFile);
 			String orgFileName = mFile.getOriginalFilename();
 			try {
-				String format = Utils.getMediaType(orgFileName);
+				String format = Utils.getFormat(orgFileName);
 				if (format != null) {
 					imgName[i] += "." + format;
+					String str = realUploadPath + File.separator + imgName[i++];
+					mFile.transferTo(new File(str));
+				} else {
+					imgName[i++] = "";
 				}
-				mFile.transferTo(new File(realUploadPath + File.separator + imgName[i++]));
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
