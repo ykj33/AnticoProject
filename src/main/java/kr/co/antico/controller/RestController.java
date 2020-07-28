@@ -50,7 +50,9 @@ public class RestController {
 
 	@RequestMapping(value = "/optionupload", method = RequestMethod.POST)
 	public String optionupload(HttpServletRequest request) {
-
+		boolean isOk = false;
+		String str = null;
+		
 		String formdata = request.getParameter("jsonData");
 		formdata = formdata.substring(1);
 
@@ -87,16 +89,20 @@ public class RestController {
 				}
 
 			}
-
+			if(var[1]!=null) {
+				isOk = true;
+			}
+			if(isOk) {
 			GoodsOptionDTO dto = new GoodsOptionDTO(var[0], Integer.valueOf(var[1]), Integer.valueOf(var[2]), var[3],
 					var[4]);
 			list.add(dto);
-			
+			}
+			str = var[0];
 		}
-		
+		if(isOk) {
 		aService.goodsoptioninsert(list);
-
-		return list.get(0).getGoods_no();
+		}
+		return str;
 	}
 
 	@RequestMapping(value = "/imgupload")

@@ -93,6 +93,7 @@
 						$("#goods_no").attr("readonly", "readonly");
 						$("#optionupload").removeAttr("hidden");
 						$("#pl_mi_btn").removeAttr("hidden");
+						addoptioninfo();
 						},
 						error:function(request, status, error){
 							console.log(error);
