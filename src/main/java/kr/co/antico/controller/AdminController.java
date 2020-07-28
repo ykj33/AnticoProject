@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("admin")
 public class AdminController {
 
+	@RequestMapping("/ex")
+	public void ex() {
+		
+	}
 	
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public void insert() {

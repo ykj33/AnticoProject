@@ -37,7 +37,7 @@
 			
 		</form>
 <button class="btn btn-primary" id="img_upload_btn">이미지 업로드</button>
-<div  class="text-right"><a id="addoption" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+<div  class="text-right" id="pl_mi_btn" hidden=""><a id="addoption" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
   <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
   <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
@@ -51,7 +51,7 @@
 
 
 </div>
-<button id="optionupload" class="btn btn-primary">옵션 업로드</button>
+<button id="optionupload" class="btn btn-primary" hidden="">옵션 업로드</button>
 	</div>
 
 	<!-- 	<div class="form-group" id="formNum숫자">
@@ -67,8 +67,18 @@
 				placeholder="색상">
 		</div> -->
 	<script type="text/javascript">
+	var formNum = 0;
+
+	function addoptioninfo(){
+		var no = $("#goods_no").val();
+		var str = '<form id="optionform'+formNum+'"><div class="form-group" id="formNum"><input type="text" class="form-control rounded-0" id="goods_no" name="goods_no" hidden="" value="'+no+'"><input type="number" class="form-control rounded-0 goods_amount" name="goods_amount" placeholder="수량"><input type="number" class="form-control rounded-0 goods_untpc" name="goods_untpc" placeholder="가격"><input type="text" class="form-control rounded-0 goods_size" name="goods_size" placeholder="크기"><input type="text" class="form-control rounded-0 goods_color" name="goods_color" placeholder="색상"></div></form>';
+		formNum = formNum+1;
+		$("#optioninfo").append(str);
+	
+		};
 		$(document).ready(function(){
-			var formNum = 0;
+			
+			var formData = [];
 			$(document).on("click", "#img_upload_btn", function(){
 				var formData =  new FormData($("#imgupload")[0]);
 				$.ajax({
@@ -81,6 +91,8 @@
 					success : function(result){
 						console.log("이미지 업로드 성공");
 						$("#goods_no").attr("readonly", "readonly");
+						$("#optionupload").removeAttr("hidden");
+						$("#pl_mi_btn").removeAttr("hidden");
 						},
 						error:function(request, status, error){
 							console.log(error);
@@ -91,9 +103,8 @@
 				});
 
 			$(document).on("click", "#addoption", function(){
-				var str = '<form id="optionform'+formNum+'"><div class="form-group" id="formNum"><input type="text" class="form-control rounded-0" id="goods_no" name="goods_no" hidden="" value="1"><input type="number" class="form-control rounded-0" id="goods_amount" name="goods_amount" placeholder="수량"><input type="number" class="form-control rounded-0" id="goods_untpc" name="goods_untpc" placeholder="가격"><input type="text" class="form-control rounded-0" id="goods_size" name="goods_size" placeholder="크기"><input type="text" class="form-control rounded-0" id="goods_color" name="goods_color" placeholder="색상"></div></form>';
-				formNum = formNum+1;
-				$("#optioninfo").append(str);
+				addoptioninfo();
+				
 				});
 			$(document).on("click", "#minusoption", function(){
 				formNum = formNum-1;
@@ -101,10 +112,35 @@
 				});
 
 			$(document).on("click", "#optionupload", function(){
-				var formData = $('#optionform1,#optionform2,#optionform3').serialize();
-				$.post("/optionupload", formData, function(){
-					console.log("성공");
+				for(var i=0;i<formNum;i++){
+					var form=$("#optionform"+i).serialize();
+					formData.push(form);
+					
+					}
+
+
+				console.log(formData);
+				var jsonData =JSON.stringify(formData) 
+				console.log(jsonData);
+				
+				
+				$.ajax({
+					type:"POST",
+					url:"/optionupload",
+					dataType:'text',
+					data:{
+						jsonData:jsonData
+					},
+					success:function(result){
+						 location.href="/board/read/"+result; 
+						},
+					error:function(request,status,error){
+						console.log(error);
+						}
+					
+					
 					});
+					
 				
 				
 				});

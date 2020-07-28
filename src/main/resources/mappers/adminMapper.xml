@@ -7,6 +7,10 @@
 	<insert id="goodsInsert">
 		insert into tbl_goods (goods_no, goods_nm, makr, goods_category, goods_img, goods_info_img, goods_info_text) values (#{goods_no}, #{goods_nm}, #{makr}, #{goods_category}, #{goods_img}, #{goods_info_img}, #{goods_info_text})
 	</insert>
+	
+	<insert id="goodsoptioninsert">
+		insert into tbl_goods_option (goods_no, goods_amount, goods_untpc, goods_size, goods_color) values (#{goods_no}, #{goods_amount}, #{goods_untpc}, #{goods_size}, #{goods_color})
+	</insert>
 
 </mapper>
 

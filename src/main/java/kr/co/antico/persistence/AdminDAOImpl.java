@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.co.domain.GoodsDTO;
+import kr.co.domain.GoodsOptionDTO;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -20,6 +21,13 @@ public class AdminDAOImpl implements AdminDAO {
 		Session.insert(NS+".goodsInsert", goodsDTO);
 		
 	}
+
+	@Override
+	public void goodsoptioninsert(GoodsOptionDTO goodsOptionDTO) {
+		Session.insert(NS+".goodsoptioninsert", goodsOptionDTO);
+		
+	}
+
 
 
 	
