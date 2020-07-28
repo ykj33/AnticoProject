@@ -47,33 +47,21 @@ public class RestController {
 
 	//<img id="main" src='/displayfile?goods_no=    &&img_name=     '/>  사용방법
 	@RequestMapping(value = "/displayfile", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> displayfile(String goods_no, String img_name, HttpSession session) {
+	public byte[] displayfile(String goods_no, String img_name, HttpSession session) {
 		String uploadPath = session.getServletContext().getRealPath(File.separator + "resources");
 		uploadPath = uploadPath + File.separator+"goods_img"+File.separator+goods_no+File.separator;
 		ResponseEntity<byte[]> entity = null;
 
 		InputStream in = null;
-
+		byte[] result = null;
 		try {
-			String format = img_name.substring(img_name.lastIndexOf('.') + 1);
-			MediaType mType = Utils.getMediaType(format);
-			HttpHeaders headers = new HttpHeaders();
+
 
 			in = new FileInputStream(uploadPath + img_name);
-
-			if (mType != null) {
-				headers.setContentType(mType);
-			} else {
-				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-				headers.add("Content-Disposition",
-						"attachment;filename=\"" + new String(img_name.getBytes("UTF-8"), "ISO-8859-1"));
-			}
-
-			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
+			result = IOUtils.toByteArray(in);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST); // 통신상태 넘겨주기
 		} finally {
 			try {
 				if (in != null)
@@ -83,7 +71,7 @@ public class RestController {
 			}
 		}
 
-		return entity;
+		return result;
 
 	}
 	
