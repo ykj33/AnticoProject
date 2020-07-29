@@ -1,6 +1,8 @@
 package kr.co.domain;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 public class BoardDTO implements Serializable {
 
@@ -18,16 +20,15 @@ public class BoardDTO implements Serializable {
 	private String goods_info_text;
 	private int goods_amount;
 	private int goods_untpc;	
-	private String goods_size;
-	private String goods_color;
+	private List<String> goods_size;
+	private List<String> goods_color;
 	
 	public BoardDTO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public BoardDTO(String goods_no, String goods_nm, String makr, String goods_category, String goods_img,
-			String goods_info_img, String goods_info_text, int goods_amount, int goods_untpc, String goods_size,
-			String goods_color) {
+			String goods_info_img, String goods_info_text, int goods_amount, int goods_untpc, List<String> goods_size,
+			List<String> goods_color) {
 		super();
 		this.goods_no = goods_no;
 		this.goods_nm = goods_nm;
@@ -114,19 +115,19 @@ public class BoardDTO implements Serializable {
 		this.goods_untpc = goods_untpc;
 	}
 
-	public String getGoods_size() {
+	public List<String> getGoods_size() {
 		return goods_size;
 	}
 
-	public void setGoods_size(String goods_size) {
+	public void setGoods_size(List<String> goods_size) {
 		this.goods_size = goods_size;
 	}
 
-	public String getGoods_color() {
+	public List<String> getGoods_color() {
 		return goods_color;
 	}
 
-	public void setGoods_color(String goods_color) {
+	public void setGoods_color(List<String> goods_color) {
 		this.goods_color = goods_color;
 	}
 
@@ -144,23 +145,18 @@ public class BoardDTO implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		BoardDTO other = (BoardDTO) obj;
 		if (goods_no == null) {
-			if (other.goods_no != null) {
+			if (other.goods_no != null)
 				return false;
-			}
-		} else if (!goods_no.equals(other.goods_no)) {
+		} else if (!goods_no.equals(other.goods_no))
 			return false;
-		}
 		return true;
 	}
 
@@ -171,6 +167,6 @@ public class BoardDTO implements Serializable {
 				+ ", goods_info_text=" + goods_info_text + ", goods_amount=" + goods_amount + ", goods_untpc="
 				+ goods_untpc + ", goods_size=" + goods_size + ", goods_color=" + goods_color + "]";
 	}
-	
+
 	
 }

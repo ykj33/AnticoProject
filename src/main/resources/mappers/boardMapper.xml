@@ -45,6 +45,14 @@
 		ON tbl_goods.goods_no =
 		tbl_goods_option.goods_no
 	</select>
+	
+	<select id="goodsColors" resultType="GoodsOptionDTO">
+		SELECT goods_color FROM tbl_goods_option WHERE goods_no = #{goods_no} GROUP BY goods_color
+	</select>
+	
+	<select id="goodsSizes" resultType="GoodsOptionDTO">
+		SELECT goods_size FROM tbl_goods_option WHERE goods_no = #{goods_no} GROUP BY goods_size
+	</select>
 </mapper>
 
 

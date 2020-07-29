@@ -76,22 +76,34 @@ document.addEventListener("DOMContentLoaded", () => {
 			<div class="col-md-8">
 				<pre class="text-muted mt-4">${dto.goods_info_text }</pre>
 			</div>
-			<div class="col-md-4 mt-4 text-dark">
+			<div class="col-md-4 mt-4 text-muted" id="option">
 				<!-- 옵션 color  -->
 				<div class="row">
-					<div class="col-md-2"><p class="btn btn-sm"><strong>White</strong></p></div>
-					<div class="col-md-2"><p class="btn btn-sm">Black</p></div>
+					<c:forEach items="${dto.goods_color }" var="option" varStatus="status">
+					 	<c:if test="${status.index eq 0 }">
+							<div class="col-md"><p class="btn btn-sm font-weight-bold">${option.goods_color }</p></div>
+						</c:if>
+						<c:if test="${status.index ne 0 }">
+							<div class="col-md"><p class="btn btn-sm">${option.goods_color }</p></div>
+						</c:if>
+					</c:forEach>
 				</div>
 		
 				<!-- 옵션 size  -->
 				<div class="row">
-					<div class="col-md-2"><p class="btn btn-sm">L</p></div>
-					<div class="col-md-2"><p class="btn btn-sm"><strong>S</strong></p></div>
+					<c:forEach items="${dto.goods_size }" var="option" varStatus="status">
+					 	<c:if test="${status.index eq 0 }">
+							<div class="col-md"><p class="btn btn-sm font-weight-bold">${option.goods_size }</p></div>
+						</c:if>
+						<c:if test="${status.index ne 0 }">
+							<div class="col-md"><p class="btn btn-sm">${option.goods_size }</p></div>
+						</c:if>
+					</c:forEach>
 				</div>
 			
 				<!-- 옵션 color와 size에 따른 가격  -->
 				<div class="row">
-					<div class="col-md-6 ml-2 mt-5"><h3><strong>5000</strong>원</h3></div>
+					<div class="col-md ml-2 mt-5"><h3><strong>5000</strong>원</h3></div>
 				</div>
 				
 			</div>

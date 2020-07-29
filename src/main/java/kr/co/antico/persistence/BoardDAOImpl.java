@@ -42,7 +42,16 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	@Override
 	public List<BoardDTO> forImg() {
-		// TODO Auto-generated method stub
 		return bSession.selectList(NS + ".forimg");
+	}
+
+	@Override
+	public List<String> goodsColors(String goods_no) {
+		return bSession.selectList(NS + ".goodsColors", goods_no);
+	}
+
+	@Override
+	public List<String> goodsSizes(String goods_no) {
+		return bSession.selectList(NS + ".goodsSizes", goods_no);
 	}
 }

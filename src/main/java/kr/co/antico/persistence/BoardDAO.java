@@ -18,4 +18,8 @@ public interface BoardDAO {
 
 	List<BoardDTO> forImg();
 
+	List<String> goodsColors(String goods_no);
+
+	List<String> goodsSizes(String goods_no);
+
 }
