@@ -2,6 +2,10 @@
 CREATE USER antico IDENTIFIED BY antico;
 GRANT CONNECT, RESOURCE, DBA TO antico;
 
+COMMIT
+
+--DROP USER antico CASCADE;
+
 conn antico/antico
 
 -- 회원
