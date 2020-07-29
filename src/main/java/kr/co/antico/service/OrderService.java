@@ -1,5 +1,9 @@
 package kr.co.antico.service;
 
-public interface OrderService {
+import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequestMapping("order")
+public interface OrderService {
+	
+	
 }
