@@ -45,21 +45,17 @@ public class RestController {
 	@Autowired
 	private AdminService aService;
 
-	//<img id="main" src='/displayfile?goods_no=    &&img_name=     '/>  사용방법
+	//<img id="main" src='/displayfile?img_name=     '/>  사용방법
 	@RequestMapping(value = "/displayfile", method = RequestMethod.GET)
-	public byte[] displayfile(String goods_no, String img_name, HttpSession session) {
+	public byte[] displayfile(String img_name, HttpSession session) {
 		String uploadPath = session.getServletContext().getRealPath(File.separator + "resources");
-		uploadPath = uploadPath + File.separator+"goods_img"+File.separator+goods_no+File.separator;
-		ResponseEntity<byte[]> entity = null;
-
+		img_name = img_name.replace('/', File.separatorChar);
 		InputStream in = null;
 		byte[] result = null;
 		try {
 
-
 			in = new FileInputStream(uploadPath + img_name);
 			result = IOUtils.toByteArray(in);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -152,16 +148,15 @@ public class RestController {
 		String goods_category = request.getParameter("goods_category");
 		String goods_info_text = request.getParameter("goods_info_text");
 		
-		String datePath = File.separator + "goods_img" + File.separator + goods_no;
-		String realUploadPath = uploadPath + datePath;
-		File dir = new File(realUploadPath);
+		String datePath = "goods_img" + File.separator + goods_no;
+		File dir = new File(uploadPath+File.separator + datePath);
 
 		if (!dir.isDirectory()) {
 			dir.mkdirs();
 		}
 		String[] imgName = new String[2];
-		imgName[0] = goods_no + "_main";
-		imgName[1] = goods_no + "_info";
+		imgName[0] = File.separator + datePath +File.separator + goods_no + "_main";
+		imgName[1] = File.separator + datePath +File.separator + goods_no + "_info";
 		int i = 0;
 		Iterator<String> files = request.getFileNames();
 		while (files.hasNext()) {
@@ -172,7 +167,7 @@ public class RestController {
 				String format = Utils.getFormat(orgFileName);
 				if (format != null) {
 					imgName[i] += "." + format;
-					String str = realUploadPath + File.separator + imgName[i++];
+					String str = uploadPath +imgName[i++];
 					mFile.transferTo(new File(str));
 					
 				} else {
@@ -183,10 +178,11 @@ public class RestController {
 			}
 
 		}
-		if(Utils.getFormat(imgName[0])!=null) {
-			Utils.makeThumbnail(uploadPath, datePath, imgName[0]);
+		if(!Utils.getFormat(imgName[0]).equals("")) {
+			Utils.makeThumbnail(uploadPath, datePath, imgName[0].substring(imgName[0].lastIndexOf(File.separatorChar)+1));
 		}
-
+		imgName[0] = imgName[0].replace(File.separatorChar, '/');
+		imgName[1] = imgName[1].replace(File.separatorChar, '/');
 		aService.goodsInsert(
 				new GoodsDTO(goods_no, goods_nm, makr, goods_category, imgName[0], imgName[1], goods_info_text));
 

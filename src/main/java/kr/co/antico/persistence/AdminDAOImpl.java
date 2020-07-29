@@ -15,20 +15,18 @@ public class AdminDAOImpl implements AdminDAO {
 	@Autowired
 	private SqlSession Session;
 	private final String NS = "a.d.m";
-	
+
 	@Override
 	public void goodsInsert(GoodsDTO goodsDTO) {
-		Session.insert(NS+".goodsInsert", goodsDTO);
-		
+		Session.insert(NS + ".goodsInsert", goodsDTO);
+
 	}
 
 	@Override
 	public void goodsoptioninsert(GoodsOptionDTO goodsOptionDTO) {
-		Session.insert(NS+".goodsoptioninsert", goodsOptionDTO);
-		
+		Session.insert(NS + ".goodsoptioninsert", goodsOptionDTO);
+
 	}
 
 
-
-	
 }

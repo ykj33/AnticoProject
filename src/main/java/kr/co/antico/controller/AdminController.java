@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("admin")
 public class AdminController {
-
+	
 	@RequestMapping("/ex")
 	public void ex() {
 		
