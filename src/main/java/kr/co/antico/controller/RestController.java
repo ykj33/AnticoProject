@@ -137,20 +137,23 @@ public class RestController {
 		aService.goodsoptioninsert(list);
 		}
 		return str;
+		
 	}
 
 	@RequestMapping(value = "/imgupload")
 	public void uploadajax(MultipartHttpServletRequest request, HttpSession session) throws IOException {
 
 		String uploadPath = session.getServletContext().getRealPath(File.separator + "resources");
+		
 
 		String goods_no = request.getParameter("goods_no");
 		String goods_nm = request.getParameter("goods_nm");
 		String makr = request.getParameter("makr");
 		String goods_category = request.getParameter("goods_category");
 		String goods_info_text = request.getParameter("goods_info_text");
-
-		String realUploadPath = uploadPath + File.separator + "goods_img" + File.separator + goods_no;
+		
+		String datePath = File.separator + "goods_img" + File.separator + goods_no;
+		String realUploadPath = uploadPath + datePath;
 		File dir = new File(realUploadPath);
 
 		if (!dir.isDirectory()) {
@@ -171,6 +174,7 @@ public class RestController {
 					imgName[i] += "." + format;
 					String str = realUploadPath + File.separator + imgName[i++];
 					mFile.transferTo(new File(str));
+					
 				} else {
 					imgName[i++] = "";
 				}
@@ -178,6 +182,9 @@ public class RestController {
 				e.printStackTrace();
 			}
 
+		}
+		if(Utils.getFormat(imgName[0])!=null) {
+			Utils.makeThumbnail(uploadPath, datePath, imgName[0]);
 		}
 
 		aService.goodsInsert(
