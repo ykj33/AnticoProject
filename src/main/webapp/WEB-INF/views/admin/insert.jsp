@@ -24,7 +24,7 @@
 				<input type="text" class="form-control rounded-0" id="goods_nm" name="goods_nm" placeholder="상품 이름">
 				<input type="text" class="form-control rounded-0" id="makr" name="makr" placeholder="제조사">
 				<input type="text" class="form-control rounded-0" id="goods_category" name="goods_category" placeholder="카테고리">
-				<input type="text" class="form-control rounded-0" id="goods_info_text" name="goods_info_text" placeholder="문자 정보">
+				<textarea rows="5" class="form-control rounded-0" id="goods_info_text" name="goods_info_text" placeholder="상품 설명"></textarea>
 			</div>
 			<div class="form-group">
 				<p>대표 이미지를 선택해주세요.</p>

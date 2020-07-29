@@ -3,7 +3,6 @@ package kr.co.antico.service;
 import java.util.List;
 
 import kr.co.domain.GoodsDTO;
-import kr.co.domain.GoodsDTO2;
 import kr.co.domain.GoodsOptionDTO;
 
 public interface AdminService {
