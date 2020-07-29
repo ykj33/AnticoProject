@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.co.antico.persistence.AdminDAO;
 import kr.co.antico.persistence.BoardDAO;
 import kr.co.domain.GoodsDTO;
+import kr.co.domain.GoodsDTO2;
 import kr.co.domain.GoodsOptionDTO;
 
 @Service
@@ -29,6 +30,9 @@ public class AdminServiceImpl implements AdminService {
 		}
 		
 	}
+
+
+
 
 
 }

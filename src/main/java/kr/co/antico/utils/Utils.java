@@ -17,13 +17,13 @@ import org.springframework.http.MediaType;
 public class Utils {
 	
 
-	public static String makeThumbnail(String uploadPath, String datePath, String newName) throws IOException {
-		File f1 = new File(uploadPath+datePath, newName);
+	public static void makeThumbnail(String uploadPath, String datePath, String newName) throws IOException {
+		File f1 = new File(uploadPath+File.separator+datePath, newName);
 		BufferedImage sourceImg = ImageIO.read(f1);
 		
 		BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_EXACT, 100);
 		
-		String thumbnailName = uploadPath+datePath+File.separator+"s_"+newName;
+		String thumbnailName = uploadPath+File.separator+datePath+File.separator+"s_"+newName;
 		
 		File newFile = new File(thumbnailName);
 		
@@ -33,7 +33,6 @@ public class Utils {
 		
 		
 		
-		return thumbnailName.substring(uploadPath.length()).replace(File.separatorChar, '/');
 	}
 	
 	public static MediaType getMediaType(String format) {
