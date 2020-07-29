@@ -66,15 +66,13 @@ public class BoardController {
 		return "board/list";
 	}
 
-	// �� ������
+
 	@RequestMapping(value = "/read/{goods_no}", method = RequestMethod.GET)
 	public String read(@PathVariable("goods_no") String goods_no, Model model, HttpSession session) {
-		List<BoardDTO> read = boardService.read(goods_no);
-		String uploadPath = session.getServletContext().getRealPath(File.separator+"resources") + File.separator + "goods_img" + File.separator + goods_no + File.separator;
-		model.addAttribute("read", read);
-		model.addAttribute("uploadPath", uploadPath);
-		System.out.println(uploadPath);
-		System.out.println(read);
+		BoardDTO dto = boardService.read(goods_no);
+		model.addAttribute("dto", dto);
+		
+		System.out.println(dto);
 		return "/board/read";
 	}
 }

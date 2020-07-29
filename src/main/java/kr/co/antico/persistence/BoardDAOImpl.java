@@ -36,8 +36,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public List<BoardDTO> read(String goods_no) {
-		return bSession.selectList(NS + ".read", goods_no);
+	public BoardDTO read(String goods_no) {
+		return bSession.selectOne(NS + ".read", goods_no);
 	}
 	
 	@Override

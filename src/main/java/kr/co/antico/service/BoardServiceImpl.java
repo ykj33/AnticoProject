@@ -34,7 +34,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public List<BoardDTO> read(String goods_no) {
+	public BoardDTO read(String goods_no) {
 		// TODO Auto-generated method stub
 		return boardDao.read(goods_no);
 	}

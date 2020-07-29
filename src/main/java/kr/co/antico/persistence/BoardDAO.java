@@ -14,7 +14,7 @@ public interface BoardDAO {
 
 	GoodsOptionDTO optionSize();
 
-	List<BoardDTO> read(String goods_no);
+	BoardDTO read(String goods_no);
 
 	List<BoardDTO> forImg();
 
