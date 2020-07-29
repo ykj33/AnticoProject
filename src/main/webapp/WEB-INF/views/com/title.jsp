@@ -4,5 +4,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <div class="jumbotron bg-white text-secondary">
-	<h1 style="text-align: center">Antico</h1>
+	<h1 style="text-align: center" ><a href="/board/list" style="text-decoration:none">Antico</a></h1>
 </div>

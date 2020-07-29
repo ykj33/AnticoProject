@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import kr.co.antico.service.MemberService;
 import kr.co.antico.utils.Utils;
@@ -102,6 +103,20 @@ public class MemberController {
 			return "/member/login";
 		}
 	}
+	
+	
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logout(SessionStatus status) {
+		
+		status.setComplete();
+		
+		return "redirect:/board/list";
+	}
+	
+	
+	
+	
+	
 	
 	// 난수 확인 후 난수가 맞을 시 Y로  변경
 	@RequestMapping("/keyAlter")

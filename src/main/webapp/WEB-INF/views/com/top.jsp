@@ -9,7 +9,17 @@
 		
 	</span>
 	<span class="float-right">
-	<a href="/member/login" class="btn">로그인</a><a href="/member/insert" class="btn">회원가입</a>
+	
+		<c:if test="${empty login.email}">
+			<span><a href="/member/login" class="btn"> 로그인 </a></span>
+		</c:if>
+	
+		<c:if test="${not empty login.email}">
+			<span><a href="/member/logout" class="btn"> 로그아웃 </a></span>
+		</c:if>
+
+		<a href="/member/insert" class="btn">회원가입</a>
+	
 	</span>
 </div>
 

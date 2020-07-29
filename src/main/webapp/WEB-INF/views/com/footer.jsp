@@ -1,4 +1,40 @@
 	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	
+	<style type="text/css">
+		.back-to-top {
+			cursor: pointer;
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			display: none;
+		}
+	</style>
+	
+	<script>
+		$(window).scroll(function () {
+		    if ($(this).scrollTop() > 50) {
+		        $('#back-to-top').fadeIn();
+		    } else {
+		        $('#back-to-top').fadeOut();
+		    }
+		});
+	
+		// scroll body to 0px on click
+		$('#back-to-top').click(function () {
+		    $('#back-to-top').tooltip('hide');
+		    $('body,html').animate({
+		        scrollTop: 0
+		    }, 800);
+		    return false;
+		});
+	
+		$('#back-to-top').tooltip('show');
+
+	</script>
+	
+	<a id="back-to-top" href="#" class="btn btn-secondary btn-md back-to-top" role="button" title="Click to return on the top page" 
+		data-toggle="tooltip" data-placement="left"><span class="btn btn-secondary">^</span></a>
+		
 	<hr>
 	<footer class="container-fluid text-center">
 		<p>000회사 | 대표이사 000 | 사업자번호 000-0000-000 </p>
