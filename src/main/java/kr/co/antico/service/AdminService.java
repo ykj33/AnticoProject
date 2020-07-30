@@ -11,6 +11,10 @@ public interface AdminService {
 
 	void goodsoptioninsert(List<GoodsOptionDTO> list);
 
+	GoodsDTO getGoods(String no);
+
+	int deleteNo(String no);
+
 
 
 

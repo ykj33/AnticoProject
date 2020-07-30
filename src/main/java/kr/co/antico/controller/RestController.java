@@ -7,35 +7,21 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.antico.service.AdminService;
 import kr.co.antico.utils.Utils;
+import kr.co.domain.Ex;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
 
@@ -44,6 +30,44 @@ public class RestController {
 
 	@Autowired
 	private AdminService aService;
+
+	
+	
+	@RequestMapping(value = "/goodsidentify", method = RequestMethod.POST)
+	public GoodsDTO goodsidentify(String no, HttpServletRequest request) {
+		GoodsDTO dto = aService.getGoods(no);
+		
+		return dto;
+	}
+	
+	
+	//<img id="main" src='/displaythumb?img_name=     '/>  사용방법
+	@RequestMapping(value = "/displaythumb", method = RequestMethod.GET)
+	public byte[] displaythumb(String img_name, HttpSession session) {
+		String uploadPath = session.getServletContext().getRealPath(File.separator + "resources");
+		img_name = img_name.replace('/', File.separatorChar);
+		img_name = img_name.substring(0, img_name.lastIndexOf(File.separatorChar)+1)+"s_"+img_name.substring(img_name.lastIndexOf(File.separatorChar)+1);
+		System.out.println(img_name);
+		InputStream in = null;
+		byte[] result = null;
+		try {
+			
+			in = new FileInputStream(uploadPath + img_name);
+			result = IOUtils.toByteArray(in);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (in != null)
+					in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+		
+	}
 	
 	//<img id="main" src='/displayfile?img_name=     '/>  사용방법
 	@RequestMapping(value = "/displayfile", method = RequestMethod.GET)
@@ -72,10 +96,10 @@ public class RestController {
 	}
 	
 
-	@RequestMapping(value = "/uploadtest", method = RequestMethod.POST)
-	public String uploadtest(@RequestBody Map<String, Object> map, HttpSession session, HttpServletRequest request) throws IOException {
-		
-		return "OK";
+	@RequestMapping(value = "/extest", method = RequestMethod.POST)
+	public void extest(Ex ex) {
+		System.out.println(ex.getIn1());
+		System.out.println(ex.getIn2());
 	}
 
 	@RequestMapping(value = "/optionupload", method = RequestMethod.POST)

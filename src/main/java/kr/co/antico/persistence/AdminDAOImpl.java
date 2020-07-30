@@ -28,5 +28,22 @@ public class AdminDAOImpl implements AdminDAO {
 
 	}
 
+	@Override
+	public GoodsDTO getGoods(String no) {
+		
+		GoodsDTO dto = new GoodsDTO(no, null, null, null, null, null, null);
+		dto = Session.selectOne(NS+".getgoods", no);
+		return dto;
+	}
+
+	@Override
+	public int deleteNo(String no) {
+		return Session.delete(NS+".deletegoods", no);
+	}
+	@Override
+	public int deleteOption(String no) {
+		return Session.delete(NS+".deleteoption", no);
+	}
+
 
 }

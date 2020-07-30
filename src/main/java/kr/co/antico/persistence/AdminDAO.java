@@ -10,6 +10,12 @@ public interface AdminDAO {
 
 	void goodsoptioninsert(GoodsOptionDTO goodsOptionDTO);
 
+	GoodsDTO getGoods(String no);
+
+	int deleteNo(String no);
+
+	int deleteOption(String no);
+
 
 
 
