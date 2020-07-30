@@ -9,6 +9,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 	let btnCollapse= document.getElementById('btnCollapse');
 	let hide=document.getElementById('hide');
+	let list=document.getElementById('list');
 	
 	btnCollapse.addEventListener("click",()=> {
 		window.scrollTo(0,0);
@@ -17,6 +18,29 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 	hide.addEventListener("click",()=> {
 		$('.collapse').collapse('hide');
+	});
+	
+	list.addEventListener('click',(event)=>{
+	console.log('@',event.target);
+	console.log(event.target.getAttribute('class'));
+	let className=event.target.getAttribute('class');
+	if(className=='btn minus'){
+		let row=event.target.parentNode.parentNode;
+		let value=row.getElementsByClassName('value')[0];
+		let num= value.innerHTML;
+		value.innerHTML=Number(num)-1;
+			if(value.innHtml=='0'){
+				list.remove();
+			}
+	};
+	if(className=='btn plus'){
+		let row=event.target.parentNode.parentNode;
+		let value=row.getElementsByClassName('value')[0];
+		let num= value.innerHTML;
+		value.innerHTML=Number(num)+1;
+
+
+	}
 	});
 });
 </script>
@@ -40,22 +64,34 @@ document.addEventListener("DOMContentLoaded", () => {
 				<div class="col-md-2">가격</div>
 			</div>
 
+			<div id="list">
 			<div class="row ml-4">
-				<%-- 			<div class="col-md-1"><img src="${uploadPath + read.goods_img}" width="60px" height="60px"></div> --%>
-
-
-
+				<div class="col-md-1"><img src="${uploadPath + read.goods_img}" width="60px" height="60px"></div> 
 				<div class="col-md-5">이쁜이들은 어떤 마스크를 쓸까?</div>
 				<div class="col-md-1">free</div>
 				<div class="col-md-1">blue</div>
-				<div class="col-md-2">
-					<button type="button" class="btn">-</button>
-					1
-					<button type="button" class="btn">+</button>
-				</div>
-				<div class="col-md-2">15,900</div>
+				<div class="col-md-2 ">
+					<div class="row">
+						<div >
+							<h1 class="btn minus">-</h1>
+						</div>
 
-			</div>
+						<div >
+							<h1 class="value">1</h1>
+						</div>
+
+						<div >
+							<h1 class="btn plus">+</h1>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div >
+						<h5 class="price">15,900</h5>
+					</div>
+				</div>
+			
+		</div>
 
 			<hr>
 		</div>
