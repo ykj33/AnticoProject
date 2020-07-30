@@ -148,12 +148,6 @@ public class RestController {
 	}
 	
 
-	@RequestMapping(value = "/extest", method = RequestMethod.POST)
-	public void extest(Ex ex) {
-		System.out.println(ex.getIn1());
-		System.out.println(ex.getIn2());
-	}
-
 	@RequestMapping(value = "/optionupload", method = RequestMethod.POST)
 	public String optionupload(HttpServletRequest request) {
 		boolean isOk = false;
