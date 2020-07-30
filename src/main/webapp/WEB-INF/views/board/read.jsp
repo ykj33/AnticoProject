@@ -68,12 +68,12 @@
 						console.log('data', data);
 					    if(data) {
 							// 가격확인.
-							console.log('data.goods_untpc',data.goods_untpc);
-							console.log('data.goods_color',data.goods_color);
-							console.log('data.goods_size',data.goods_size);
-							console.log('data.goods_colors',data.goods_colors);
-							console.log('data.goods_sizes',data.goods_sizes);
-							console.log('data.goods_amount',data.goods_amount);
+							// console.log('data.goods_untpc',data.goods_untpc);
+							// console.log('data.goods_color',data.goods_color);
+							// console.log('data.goods_size',data.goods_size);
+							// console.log('data.goods_colors',data.goods_colors);
+							// console.log('data.goods_sizes',data.goods_sizes);
+							// console.log('data.goods_amount',data.goods_amount);
 
 							let colors = data.goods_colors;
 							let sizes = data.goods_sizes;

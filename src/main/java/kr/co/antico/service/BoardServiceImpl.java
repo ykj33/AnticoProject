@@ -52,6 +52,7 @@ public class BoardServiceImpl implements BoardService {
 		dto.setGoods_colors(goodsColors);
 		dto.setGoods_sizes(goodsSizes);
 		dto.setGoods_untpc(optionDto.getGoods_untpc());
+		dto.setGoods_amount(optionDto.getGoods_amount());
 		return dto;
 	}
 	
@@ -72,6 +73,7 @@ public class BoardServiceImpl implements BoardService {
 		dto.setGoods_colors(goodsColors);
 		dto.setGoods_sizes(goodsSizes);
 		dto.setGoods_untpc(optionDto.getGoods_untpc());
+		dto.setGoods_amount(optionDto.getGoods_amount());
 		return dto;
 	}
 	
