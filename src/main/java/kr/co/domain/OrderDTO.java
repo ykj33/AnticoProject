@@ -24,15 +24,15 @@ public class OrderDTO implements Serializable {
 	public OrderDTO(int order_no, String email, String delivery_no, String order_date, int order_totamt,
 			String order_pro_sttus_code, String frwll_reason_code, String setle_mth, int delivery_adbk_no) {
 		super();
-		this.order_no = order_no;
-		this.email = email;
-		this.delivery_no = delivery_no;
-		this.order_date = order_date;
-		this.order_totamt = order_totamt;
-		this.order_pro_sttus_code = order_pro_sttus_code;
-		this.frwll_reason_code = frwll_reason_code;
-		this.setle_mth = setle_mth;
-		this.delivery_adbk_no = delivery_adbk_no;
+		this.order_no = order_no; // 주문번호
+		this.email = email; // 이메일
+		this.delivery_no = delivery_no; // 택배번호
+		this.order_date = order_date; // 주문일
+		this.order_totamt = order_totamt; // 총액
+		this.order_pro_sttus_code = order_pro_sttus_code; // 주문처리상태코드
+		this.frwll_reason_code = frwll_reason_code; // 환송사유구분코드
+		this.setle_mth = setle_mth; // 결제방법
+		this.delivery_adbk_no = delivery_adbk_no; // 배송지코드
 	}
 
 	public int getOrder_no() {

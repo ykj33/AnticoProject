@@ -4,7 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="o.r.d">
 
+	<insert id="adbkInsert">
+		INSERT INTO tbl_delivery_adbk (email,
+		delivery_adbk_no, delivery_adbk_ncm,
+		delivery_place_tlnum,
+		delivery_place_adres,
+		delivery_place_adres_detail) VALUES (#{email},
+		#{delivery_adbk_no},
+		#{delivery_adbk_ncm}, #{delivery_place_tlnum},
+		#{delivery_place_adres},
+		#{delivery_place_adres_detail})
+	</insert>
 	
-
+	<select id="getAdbkNoByEmail" resultType="Integer">
+	SELECT MAX(delivery_adbk_no) FROM tbl_delivery_adbk WHERE email = #{email}
+	</select>
 </mapper>
 

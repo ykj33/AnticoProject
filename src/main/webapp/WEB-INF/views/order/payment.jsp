@@ -19,49 +19,58 @@
 				<%@ include file="../com/title.jsp"%>
 				<%@ include file="../com/navbar.jsp"%>
 				<h3 style="text-align: center">주문 | 결제</h3>
-				<form action="order" method="POST">
+				<h5>주문자 정보</h5>
+				<form action="order" method="POST" id="adbkData"
+					enctype="multipart/form-data">
 					<div>
-						<input class="form-control" name="mname"
-							placeholder="이름을 입력하세요(필수)"><br> <br> <input
-							class="form-control" name="telephone"
-							placeholder="전화번호를 입력하세요(필수)"><br> <br> <input
+						<input class="form-control" name="email" value="${login.email}"
+							readonly><br> <input class="form-control"
+							name="delivery_adbk_ncm" placeholder="새로 저장할 주소록 이름을 입력하세요(필수)"><br>
+						<input class="form-control" name="delivery_place_tlnum"
+							placeholder="전화번호를 입력하세요(필수)"><br> <input
 							class="form-control" name="delivery_place_adres"
-							placeholder="주소를 입력하세요(필수)">
-					</div>
-					<br>
-					<div>
-						<h4>결제수단</h4>
-						<label><input type="radio" name="payment" value="1"
-							onclick="div_OnOff(this.value,'selectCard');">카드</label> <label><input
-							type="radio" name="payment" value="2"
-							onclick="div_OnOff(this.value,'selectDeposit');">무통장입금</label> <label><input
-							type="radio" name="payment" value="3"
-							onclick="div_OnOff(this.value,'selectPay');">간편결제</label>
+							placeholder="주소를 입력하세요(필수)"><br> <input
+							class="form-control" name="delivery_place_adres_detail"
+							placeholder="상세 주소를 입력하세요(필수)">
 					</div>
 
-					<div id="selectCard" style="display: none">
-						카드를 선택하세요 <select class="custom-select" name="selectCard">
-							<option value="samsung">삼성카드</option>
-							<option value="woori">우리카드</option>
-							<option value="shinhan">신한카드</option>
-							<option value="hana">하나카드</option>
-						</select>
-					</div>
-					<div id="selectDeposit" style="display: none">
-						입금할 계좌를 선택하세요 <select class="custom-select" name="selectDeposit">
-							<option value="woori">우리은행</option>
-							<option value="shinhan">신한은행</option>
-							<option value="hana">하나은행</option>
-							<option value="nonghyub">농협은행</option>
-						</select>
-					</div>
-					<div id="selectPay" style="display: none">
-						간편 결제 방법을 선택하세요 <select class="custom-select" name="selectPay">
-							<option value="samsungpay">삼성페이</option>
-							<option value="payco">페이코</option>
-							<option value="kakao">카카오페이</option>
-						</select>
-					</div>
+				</form>
+				<button id="delivery_adbk_info"
+					class="btn btn-outline-dark btn-block rounded-0 mt-4">배송정보저장</button>
+				<br>
+				<div>
+					<h4>결제수단</h4>
+					<label><input type="radio" name="setle_mth" value="카드"
+						onclick="div_OnOff(this.value,'selectCard');">카드</label> <label><input
+						type="radio" name="setle_mth" value="무통장입금"
+						onclick="div_OnOff(this.value,'selectDeposit');">무통장입금</label> <label><input
+						type="radio" name="setle_mth" value="간편결제"
+						onclick="div_OnOff(this.value,'selectPay');">간편결제</label>
+				</div>
+
+				<div id="selectCard" style="display: none">
+					카드를 선택하세요 <select class="custom-select" name="selectCard">
+						<option value="삼성카드">삼성카드</option>
+						<option value="우리카드">우리카드</option>
+						<option value="신한카드">신한카드</option>
+						<option value="하나카드">하나카드</option>
+					</select>
+				</div>
+				<div id="selectDeposit" style="display: none">
+					입금할 계좌를 선택하세요 <select class="custom-select" name="selectDeposit">
+						<option value="우리은행">우리은행</option>
+						<option value="신한은행">신한은행</option>
+						<option value="하나은행">하나은행</option>
+						<option value="농협은행">농협은행</option>
+					</select>
+				</div>
+				<div id="selectPay" style="display: none">
+					간편 결제 방법을 선택하세요 <select class="custom-select" name="selectPay">
+						<option value="삼성페이">삼성페이</option>
+						<option value="페이코">페이코</option>
+						<option value="카카오페이">카카오페이</option>
+					</select>
+				</div>
 			</div>
 
 			<div class="col-lg-5">
@@ -97,7 +106,8 @@
 					</div>
 
 					<div>
-						<button class="btn btn-outline-dark btn-block rounded-0 mt-4">상품 결제</button>
+						<button class="btn btn-outline-dark btn-block rounded-0 mt-4">상품
+							결제</button>
 					</div>
 				</div>
 			</div>
@@ -108,16 +118,34 @@
 	<%@ include file="../com/footer.jsp"%>
 </body>
 <script type="text/javascript">
+	$(document).ready(function() {
+		$("#delivery_adbk_info").click(function() {
+			var formData = $('#adbkData').serialize();
+
+			console.log(formData);
+			$.ajax({
+				type : "POST",
+				url : "order",
+				data : formData,
+				success : function(result) {
+					console.log(result);
+				},
+				error : function(request, status, error) {
+					console.log(error);
+				}
+			});
+		});
+	});
 	function div_OnOff(value, id) {
-		if (value == "1") {
+		if (value == "카드") {
 			document.getElementById("selectCard").style.display = "";
 			document.getElementById("selectDeposit").style.display = "none";
 			document.getElementById("selectPay").style.display = "none";
-		} else if (value == "2") {
+		} else if (value == "무통장입금") {
 			document.getElementById("selectCard").style.display = "none";
 			document.getElementById("selectDeposit").style.display = "";
 			document.getElementById("selectPay").style.display = "none";
-		} else if (value == "3") {
+		} else if (value == "간편결제") {
 			document.getElementById("selectCard").style.display = "none";
 			document.getElementById("selectDeposit").style.display = "none";
 			document.getElementById("selectPay").style.display = "";

@@ -44,7 +44,7 @@ public class RestController {
 
 	@Autowired
 	private AdminService aService;
-
+	
 	//<img id="main" src='/displayfile?img_name=     '/>  사용방법
 	@RequestMapping(value = "/displayfile", method = RequestMethod.GET)
 	public byte[] displayfile(String img_name, HttpSession session) {
