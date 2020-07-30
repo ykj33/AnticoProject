@@ -37,14 +37,23 @@ integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7
 			<button id="option_update"class="btn btn-warning">옵션 수정</button>
 			<button id="goods_delete"class="btn btn-danger">삭제</button>
 		</div>
+		
+		<div id="inputdiv">
+		
+		
+		</div>
+		
+		
 <!-- 	 -->
 
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
+	
 	var goodsno = "";
+	var info;
 	$(document).on("keyup", "#input_no", function(){
-		var info = $("#input_no").val();
+		info = $("#input_no").val();
 		console.log(info);
 		$.ajax({
 			type:'post',
@@ -62,6 +71,7 @@ $(document).ready(function(){
 			error : function(request, status, error){
 				$("#input_no").removeClass("text-primary");
 				$("#goods_info").empty();
+				$("#inputdiv").empty();
 				goodsno = "";
 				console.log(error);
 				}
@@ -78,9 +88,45 @@ $(document).ready(function(){
 
 	$("#goods_update").click(function(){
 		if(goodsno != ""){
-			
+			$.ajax({
+				type:'post',
+				url:'/goodsidentify',
+				dataType:'JSON',
+				data: {
+					no:info
+				},
+				success : function(result){
+					$("#inputdiv").replaceWith('<div id="inputdiv"><form action="#" method="POST" id="goods_img_update" enctype="multipart/form-data"><div class="form-group"><input type="text" class="form-control rounded-0" id="goods_no" name="goods_no" readonly="readonly" value="'+result.goods_no+'"><input type="text" class="form-control rounded-0" id="goods_nm" name="goods_nm" value="'+result.goods_nm+'"><input type="text" class="form-control rounded-0" id="makr" name="makr" placeholder="제조사" value=""><input type="text" class="form-control rounded-0" id="goods_category" name="goods_category" value="'+result.goods_category+'"><textarea rows="5" class="form-control rounded-0" id="goods_info_text" name="goods_info_text" value="'+result.goods_info_text+'"></textarea></div><div class="form-group"><p>대표 이미지를 선택해주세요.</p><input type="file" class="form-control rounded-0" id="goods_img" name="goods_img"> <br><p>설명 이미지를 선택해주세요.</p><input type="file" class="form-control rounded-0" id="goods_info_img" name="goods_info_img"></div></form><button id="goods_update_ajax" class="form-control btn btn-info">수정 확인</button></div>');
+					},
+				error : function(request, status, error){
+					console.log(error);
+					}
+				
+				});
 		}
 		});
+
+	$(document).on("click","#goods_update_ajax", function(){
+		var formData =  new FormData($("#goods_img_update")[0]);
+		$.ajax({
+			type:"POST",
+			url:"/imgupdate",
+			data : 
+				formData,
+			processData : false,
+			contentType : false,
+			success : function(result){
+				location.href="/board/read/"+result;
+				},
+				error:function(request, status, error){
+					console.log(error);
+					}
+			
+			});
+		
+		
+		});
+	
 	$("#option_update").click(function(){
 		if(goodsno != ""){
 			

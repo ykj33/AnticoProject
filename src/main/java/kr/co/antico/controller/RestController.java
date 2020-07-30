@@ -31,7 +31,59 @@ public class RestController {
 	@Autowired
 	private AdminService aService;
 
-	
+	@RequestMapping(value = "/imgupdate", method = RequestMethod.POST)
+	public String imgupdate(MultipartHttpServletRequest request,  HttpSession session) throws IOException {
+
+		String uploadPath = session.getServletContext().getRealPath(File.separator + "resources");
+		
+
+		String goods_no = request.getParameter("goods_no");
+		String goods_nm = request.getParameter("goods_nm");
+		String makr = request.getParameter("makr");
+		String goods_category = request.getParameter("goods_category");
+		String goods_info_text = request.getParameter("goods_info_text");
+		
+		String datePath = "goods_img" + File.separator + goods_no;
+		File dir = new File(uploadPath+File.separator + datePath);
+
+		if (!dir.isDirectory()) {
+			dir.mkdirs();
+		}
+		String[] imgName = new String[2];
+		imgName[0] = File.separator + datePath +File.separator + goods_no + "_main";
+		imgName[1] = File.separator + datePath +File.separator + goods_no + "_info";
+		int i = 0;
+		Iterator<String> files = request.getFileNames();
+		while (files.hasNext()) {
+			String uploadFile = files.next();
+			MultipartFile mFile = request.getFile(uploadFile);
+			String orgFileName = mFile.getOriginalFilename();
+			try {
+				String format = Utils.getFormat(orgFileName);
+				if (format != null) {
+					imgName[i] += "." + format;
+					String str = uploadPath +imgName[i++];
+					mFile.transferTo(new File(str));
+					
+				} else {
+					imgName[i++] = "";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+		if(!Utils.getFormat(imgName[0]).equals("")) {
+			Utils.makeThumbnail(uploadPath, datePath, imgName[0].substring(imgName[0].lastIndexOf(File.separatorChar)+1));
+		}
+		imgName[0] = imgName[0].replace(File.separatorChar, '/');
+		imgName[1] = imgName[1].replace(File.separatorChar, '/');
+		aService.goodsInsert(
+				new GoodsDTO(goods_no, goods_nm, makr, goods_category, imgName[0], imgName[1], goods_info_text));
+		
+		return "";
+		
+	}
 	
 	@RequestMapping(value = "/goodsidentify", method = RequestMethod.POST)
 	public GoodsDTO goodsidentify(String no, HttpServletRequest request) {
