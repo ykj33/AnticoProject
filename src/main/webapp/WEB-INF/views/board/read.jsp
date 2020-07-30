@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			
 				<!-- 옵션 color와 size에 따른 가격  -->
 				<div class="row">
-					<div class="col-md ml-2 mt-5"><h3><strong>5000</strong>원</h3></div>
+					<div class="col-md ml-2 mt-5"><h3><strong>${dto.goods_untpc }</strong>원</h3></div>
 				</div>
 				
 			</div>

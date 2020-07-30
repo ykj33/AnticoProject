@@ -1,6 +1,7 @@
 package kr.co.antico.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.domain.BoardDTO;
 import kr.co.domain.GoodsDTO;
@@ -18,8 +19,10 @@ public interface BoardDAO {
 
 	List<BoardDTO> forImg();
 
-	List<String> goodsColors(String goods_no);
+	List<GoodsOptionDTO> goodsColors(String goods_no);
 
-	List<String> goodsSizes(String goods_no);
+	List<GoodsOptionDTO> goodsSizes(String goods_no);
+
+	GoodsOptionDTO goodsUntpc(Map<String, String> map);
 
 }
