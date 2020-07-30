@@ -1,6 +1,7 @@
 package kr.co.antico.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +47,18 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<String> goodsColors(String goods_no) {
+	public List<GoodsOptionDTO> goodsColors(String goods_no) {
 		return bSession.selectList(NS + ".goodsColors", goods_no);
 	}
 
 	@Override
-	public List<String> goodsSizes(String goods_no) {
+	public List<GoodsOptionDTO> goodsSizes(String goods_no) {
 		return bSession.selectList(NS + ".goodsSizes", goods_no);
 	}
+
+	@Override
+	public GoodsOptionDTO goodsUntpc(Map<String, String> map) {
+		return bSession.selectOne(NS + ".goodUntpc", map);
+	}
+
 }

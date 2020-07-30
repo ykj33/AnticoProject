@@ -20,15 +20,15 @@ public class BoardDTO implements Serializable {
 	private String goods_info_text;
 	private int goods_amount;
 	private int goods_untpc;	
-	private List<String> goods_size;
-	private List<String> goods_color;
+	private List<GoodsOptionDTO> goods_size;
+	private List<GoodsOptionDTO> goods_color;
 	
 	public BoardDTO() {
 	}
 
 	public BoardDTO(String goods_no, String goods_nm, String makr, String goods_category, String goods_img,
-			String goods_info_img, String goods_info_text, int goods_amount, int goods_untpc, List<String> goods_size,
-			List<String> goods_color) {
+			String goods_info_img, String goods_info_text, int goods_amount, int goods_untpc, List<GoodsOptionDTO> goods_size,
+			List<GoodsOptionDTO> goods_color) {
 		super();
 		this.goods_no = goods_no;
 		this.goods_nm = goods_nm;
@@ -115,19 +115,19 @@ public class BoardDTO implements Serializable {
 		this.goods_untpc = goods_untpc;
 	}
 
-	public List<String> getGoods_size() {
+	public List<GoodsOptionDTO> getGoods_size() {
 		return goods_size;
 	}
 
-	public void setGoods_size(List<String> goods_size) {
+	public void setGoods_size(List<GoodsOptionDTO> goods_size) {
 		this.goods_size = goods_size;
 	}
 
-	public List<String> getGoods_color() {
+	public List<GoodsOptionDTO> getGoods_color() {
 		return goods_color;
 	}
 
-	public void setGoods_color(List<String> goods_color) {
+	public void setGoods_color(List<GoodsOptionDTO> goods_color) {
 		this.goods_color = goods_color;
 	}
 
