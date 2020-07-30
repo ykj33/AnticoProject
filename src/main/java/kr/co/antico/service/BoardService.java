@@ -15,8 +15,11 @@ public interface BoardService {
 	GoodsOptionDTO optionSize();
 
 	BoardDTO read(String goods_no);
+	
+	BoardDTO read(GoodsOptionDTO godto);
 
 	List<BoardDTO> forImg();
+
 
 	
 

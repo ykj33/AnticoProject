@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.antico.service.BoardService;
 import kr.co.domain.BoardDTO;
@@ -74,5 +75,21 @@ public class BoardController {
 		
 		System.out.println(dto);
 		return "/board/read";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/option", method = RequestMethod.GET)
+	public BoardDTO read(GoodsOptionDTO godto) {
+		System.out.println(godto);
+		
+		// 상품 color 기준으로 size 종류를 가져온다.
+		// 상품 size 기준으로 color 종류를 가져온다.
+		// 상품의 가격을 가져온다.
+		// 상품의 수량을 가져온다.
+		BoardDTO dto = boardService.read(godto);
+		dto.setGoods_color(godto.getGoods_color());
+		dto.setGoods_size(godto.getGoods_size());
+		System.out.println(dto);
+		return dto;
 	}
 }

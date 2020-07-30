@@ -20,15 +20,17 @@ public class BoardDTO implements Serializable {
 	private String goods_info_text;
 	private int goods_amount;
 	private int goods_untpc;	
-	private List<GoodsOptionDTO> goods_size;
-	private List<GoodsOptionDTO> goods_color;
+	private String goods_size;
+	private String goods_color;
+	private List<GoodsOptionDTO> goods_sizes;
+	private List<GoodsOptionDTO> goods_colors;
 	
 	public BoardDTO() {
 	}
 
 	public BoardDTO(String goods_no, String goods_nm, String makr, String goods_category, String goods_img,
-			String goods_info_img, String goods_info_text, int goods_amount, int goods_untpc, List<GoodsOptionDTO> goods_size,
-			List<GoodsOptionDTO> goods_color) {
+			String goods_info_img, String goods_info_text, int goods_amount, int goods_untpc, String goods_size,
+			String goods_color, List<GoodsOptionDTO> goods_sizes, List<GoodsOptionDTO> goods_colors) {
 		super();
 		this.goods_no = goods_no;
 		this.goods_nm = goods_nm;
@@ -41,6 +43,8 @@ public class BoardDTO implements Serializable {
 		this.goods_untpc = goods_untpc;
 		this.goods_size = goods_size;
 		this.goods_color = goods_color;
+		this.goods_sizes = goods_sizes;
+		this.goods_colors = goods_colors;
 	}
 
 	public String getGoods_no() {
@@ -115,20 +119,36 @@ public class BoardDTO implements Serializable {
 		this.goods_untpc = goods_untpc;
 	}
 
-	public List<GoodsOptionDTO> getGoods_size() {
+	public String getGoods_size() {
 		return goods_size;
 	}
 
-	public void setGoods_size(List<GoodsOptionDTO> goods_size) {
+	public void setGoods_size(String goods_size) {
 		this.goods_size = goods_size;
 	}
 
-	public List<GoodsOptionDTO> getGoods_color() {
+	public String getGoods_color() {
 		return goods_color;
 	}
 
-	public void setGoods_color(List<GoodsOptionDTO> goods_color) {
+	public void setGoods_color(String goods_color) {
 		this.goods_color = goods_color;
+	}
+
+	public List<GoodsOptionDTO> getGoods_sizes() {
+		return goods_sizes;
+	}
+
+	public void setGoods_sizes(List<GoodsOptionDTO> goods_sizes) {
+		this.goods_sizes = goods_sizes;
+	}
+
+	public List<GoodsOptionDTO> getGoods_colors() {
+		return goods_colors;
+	}
+
+	public void setGoods_colors(List<GoodsOptionDTO> goods_colors) {
+		this.goods_colors = goods_colors;
 	}
 
 	public static long getSerialversionuid() {
@@ -165,7 +185,8 @@ public class BoardDTO implements Serializable {
 		return "BoardDTO [goods_no=" + goods_no + ", goods_nm=" + goods_nm + ", makr=" + makr + ", goods_category="
 				+ goods_category + ", goods_img=" + goods_img + ", goods_info_img=" + goods_info_img
 				+ ", goods_info_text=" + goods_info_text + ", goods_amount=" + goods_amount + ", goods_untpc="
-				+ goods_untpc + ", goods_size=" + goods_size + ", goods_color=" + goods_color + "]";
+				+ goods_untpc + ", goods_size=" + goods_size + ", goods_color=" + goods_color + ", goods_sizes="
+				+ goods_sizes + ", goods_colors=" + goods_colors + "]";
 	}
 
 	

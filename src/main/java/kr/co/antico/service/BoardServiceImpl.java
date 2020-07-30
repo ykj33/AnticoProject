@@ -49,8 +49,28 @@ public class BoardServiceImpl implements BoardService {
 		
 		GoodsOptionDTO optionDto = boardDao.goodsUntpc(map);
 
-		dto.setGoods_color(goodsColors);
-		dto.setGoods_size(goodsSizes);
+		dto.setGoods_colors(goodsColors);
+		dto.setGoods_sizes(goodsSizes);
+		dto.setGoods_untpc(optionDto.getGoods_untpc());
+		return dto;
+	}
+	
+	@Override
+	public BoardDTO read(GoodsOptionDTO godto) {
+		BoardDTO dto = boardDao.read(godto.getGoods_no());
+		
+		List<GoodsOptionDTO> goodsColors = boardDao.goodsColors(godto.getGoods_no());
+		List<GoodsOptionDTO> goodsSizes = boardDao.goodsSizes(godto.getGoods_no());
+		
+		Map<String, String> map = new HashedMap<String, String>();
+		map.put("goods_no", godto.getGoods_no());
+		map.put("goods_color", godto.getGoods_color());
+		map.put("goods_size", godto.getGoods_size());
+		
+		GoodsOptionDTO optionDto = boardDao.goodsUntpc(map);
+
+		dto.setGoods_colors(goodsColors);
+		dto.setGoods_sizes(goodsSizes);
 		dto.setGoods_untpc(optionDto.getGoods_untpc());
 		return dto;
 	}
