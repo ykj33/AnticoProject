@@ -95,3 +95,26 @@ COMMIT
 
 SELECT * FROM tbl_order
 SELECT * FROM tbl_order_detail
+
+-- 장바구니
+CREATE TABLE tbl_cart(
+cart_id NUMBER NOT NULL PRIMARY KEY,
+email VARCHAR2(100) REFERENCES tbl_member(email),
+goods_no VARCHAR2(4) REFERENCES tbl_goods(goods_no),
+goods_img VARCHAR2(500),
+goods_nm VARCHAR2(150) NOT NULL,
+goods_color VARCHAR2(30) NOT NULL,
+goods_size VARCHAR2(30) NOT NULL,
+goods_amount NUMBER NOT NULL,
+goods_untpc NUMBER NOT NULL
+);
+
+
+CREATE SEQUENCE seq_tbl_cart START WITH 1 increment BY 1;
+
+COMMIT;
+
+
+--DROP TABLE tbl_goods
+--DROP TABLE tbl_member
+--DROP TABLE tbl_cart
