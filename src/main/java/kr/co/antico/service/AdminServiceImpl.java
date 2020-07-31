@@ -13,6 +13,7 @@ import kr.co.domain.GoodsOptionDTO;
 @Service
 @Transactional
 public class AdminServiceImpl implements AdminService {
+	
 
 	@Autowired
 	private AdminDAO aDAO ;
@@ -49,6 +50,20 @@ public class AdminServiceImpl implements AdminService {
 		
 	}
 
+	@Override
+	public void goodsUpdate(GoodsDTO goodsDTO) {
+		aDAO.goodsupdate(goodsDTO);
+	}
+
+	@Override
+	public List<GoodsOptionDTO> getOption(String info) {
+		return aDAO.getOption(info);
+	}
+
+	@Override
+	public void specific_optiondelete(int rownum) {
+		aDAO.specific_optiondelete(rownum);
+	}
 
 
 

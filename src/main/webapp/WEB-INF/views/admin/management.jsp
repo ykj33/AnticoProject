@@ -37,9 +37,10 @@ integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7
 			<button id="option_update"class="btn btn-warning">옵션 수정</button>
 			<button id="goods_delete"class="btn btn-danger">삭제</button>
 		</div>
-		
+		<br>
 		<div id="inputdiv">
-		
+			
+			
 		
 		</div>
 		
@@ -48,6 +49,10 @@ integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7
 
 </div>
 <script type="text/javascript">
+
+
+
+
 $(document).ready(function(){
 	
 	var goodsno = "";
@@ -57,7 +62,7 @@ $(document).ready(function(){
 		console.log(info);
 		$.ajax({
 			type:'post',
-			url:'/goodsidentify',
+			url:'goodsidentify',
 			dataType:'JSON',
 			data: {
 				no:info
@@ -87,16 +92,17 @@ $(document).ready(function(){
 	});
 
 	$("#goods_update").click(function(){
+		$("#inputdiv").empty();
 		if(goodsno != ""){
 			$.ajax({
 				type:'post',
-				url:'/goodsidentify',
+				url:'goodsidentify',
 				dataType:'JSON',
 				data: {
 					no:info
 				},
 				success : function(result){
-					$("#inputdiv").replaceWith('<div id="inputdiv"><form action="#" method="POST" id="goods_img_update" enctype="multipart/form-data"><div class="form-group"><input type="text" class="form-control rounded-0" id="goods_no" name="goods_no" readonly="readonly" value="'+result.goods_no+'"><input type="text" class="form-control rounded-0" id="goods_nm" name="goods_nm" value="'+result.goods_nm+'"><input type="text" class="form-control rounded-0" id="makr" name="makr" placeholder="제조사" value=""><input type="text" class="form-control rounded-0" id="goods_category" name="goods_category" value="'+result.goods_category+'"><textarea rows="5" class="form-control rounded-0" id="goods_info_text" name="goods_info_text" value="'+result.goods_info_text+'"></textarea></div><div class="form-group"><p>대표 이미지를 선택해주세요.</p><input type="file" class="form-control rounded-0" id="goods_img" name="goods_img"> <br><p>설명 이미지를 선택해주세요.</p><input type="file" class="form-control rounded-0" id="goods_info_img" name="goods_info_img"></div></form><button id="goods_update_ajax" class="form-control btn btn-info">수정 확인</button></div>');
+					$("#inputdiv").replaceWith('<div id="inputdiv"><form action="#" method="POST" id="goods_img_update" enctype="multipart/form-data"><div class="form-group"><input type="text" class="form-control rounded-0" id="goods_no" name="goods_no" readonly="readonly" value="'+result.goods_no+'"><input type="text" class="form-control rounded-0" id="goods_nm" name="goods_nm" value="'+result.goods_nm+'"><input type="text" class="form-control rounded-0" id="makr" name="makr" placeholder="제조사" value=""><input type="text" class="form-control rounded-0" id="goods_category" name="goods_category" value="'+result.goods_category+'"><textarea rows="5" class="form-control rounded-0" id="goods_info_text" name="goods_info_text" >'+result.goods_info_text+'</textarea></div><div class="form-group"><p>대표 이미지를 선택해주세요.</p><input type="file" class="form-control rounded-0" id="goods_img" name="goods_img"> <br><p>설명 이미지를 선택해주세요.</p><input type="file" class="form-control rounded-0" id="goods_info_img" name="goods_info_img"></div></form><button id="goods_update_ajax" class="form-control btn btn-info">수정 확인</button></div>');
 					},
 				error : function(request, status, error){
 					console.log(error);
@@ -110,7 +116,7 @@ $(document).ready(function(){
 		var formData =  new FormData($("#goods_img_update")[0]);
 		$.ajax({
 			type:"POST",
-			url:"/imgupdate",
+			url:"imgupdate",
 			data : 
 				formData,
 			processData : false,
@@ -123,16 +129,71 @@ $(document).ready(function(){
 					}
 			
 			});
-		
-		
 		});
+		
+		
 	
 	$("#option_update").click(function(){
+		$("#inputdiv").empty();
 		if(goodsno != ""){
-			
+		optiondisplay();
 		}
+	});
+
+	$(document).on("click", ".option_delete", function(){
+		$("#inputdiv").empty();
+		var color = $(this).parent().parent().children(".goods_color").text();
+		var size = $(this).parent().parent().children(".goods_size").text();
+		
+		$.ajax({
+			type:'get',
+			url:'optiondelete',
+			data :{
+				color :	color,
+				size : size
+				},
+		success : function(result){
+				optiondisplay();
+			},
+			error : function(request, status, error){
+			}
+			});
+		});
+	
+	
+	$(document).on("click", "#option_update_ajax", function(){
+
+
+		
+		
 		});
 
+
+	function optiondisplay(){
+		$.ajax({
+			type:'GET',
+			url:'getoption/'+info,
+			
+			success : function(result){
+				var str = '<table class="table table-striped"><tbody>';
+				for(var i=0;i<result.length;i++){
+					str+='<tr><td>'+result[i].goods_amount+'</td><td>'+result[i].goods_untpc+'</td><td class="goods_size">'+result[i].goods_size+'</td><td class="goods_color">'+result[i].goods_color+'</td><td><button class="btn btn-danager option_delete">삭제</button></td></tr>';
+					}
+				str += '</tbody></table>';
+				if(result.length!=0){
+					$("#inputdiv").append(str);
+				} else{
+					$("#inputdiv").append("<h3>옵션을 입력해 주세요.<h3>");
+				}
+				
+			},
+			error : function(request, status, error){
+				console.log(error);
+				}
+			
+			});
+}
+	
 	
 });
 </script>

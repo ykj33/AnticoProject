@@ -45,5 +45,30 @@ public class AdminDAOImpl implements AdminDAO {
 		return Session.delete(NS+".deleteoption", no);
 	}
 
+	@Override
+	public void goodsupdate(GoodsDTO goodsDTO) {
+		GoodsDTO oldData = Session.selectOne(NS+".getgoods", goodsDTO.getGoods_no());
+		if(goodsDTO.getGoods_img().equals("")) {
+			goodsDTO.setGoods_img(oldData.getGoods_img());
+		}
+		if(goodsDTO.getGoods_info_img().equals("")) {
+			goodsDTO.setGoods_info_img(oldData.getGoods_info_img());
+		}
+		Session.update(NS+".goodsupdate", goodsDTO);
+	}
 
+	@Override
+	public List<GoodsOptionDTO> getOption(String info) {
+		
+		return Session.selectList(NS+".getoption", info);
+	}
+
+	@Override
+	public void specific_optiondelete(int rownum) {
+		System.out.println(rownum);
+		System.out.println("확인1");
+		Session.delete(NS+".specificoptiondelete", rownum);
+		System.out.println("확인2");
+	}
+	
 }

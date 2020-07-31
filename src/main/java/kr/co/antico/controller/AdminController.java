@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.FaultAction;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,29 @@ public class AdminController {
 	
 //	여기서 부터 ajax
 	
+	
+	@ResponseBody
+	@RequestMapping(value = "/optiondelete", method = RequestMethod.GET)
+	public void optiondelete(HttpServletRequest request) {
+		System.out.println(request.getParameter("color"));
+		System.out.println(request.getParameter("size"));
+//		service.specific_optiondelete(rownum);
+		
+	}
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/getoption/{info}", method = RequestMethod.GET)
+	public List<GoodsOptionDTO> getoption(@PathVariable("info") String info) {
+		
+		List<GoodsOptionDTO> data = service.getOption(info);
+		
+		return data;
+	}
+	
+	
+	
 	@ResponseBody
 	@RequestMapping(value = "/imgupdate", method = RequestMethod.POST)
 	public String imgupdate(MultipartHttpServletRequest request,  HttpSession session) throws IOException {
@@ -113,6 +137,7 @@ public class AdminController {
 			MultipartFile mFile = request.getFile(uploadFile);
 			String orgFileName = mFile.getOriginalFilename();
 			try {
+				//파일이 존재하고 이미지파일이면 저장
 				String format = Utils.getFormat(orgFileName);
 				if (format != null) {
 					imgName[i] += "." + format;
@@ -120,22 +145,24 @@ public class AdminController {
 					mFile.transferTo(new File(str));
 					
 				} else {
-					imgName[i++] = "";
+				//파일이 없거나 이미지 파일이 아님
+				//원래 이름으로 계속 유지되어야 함.
+					imgName[i++]="";
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 		}
-		if(!Utils.getFormat(imgName[0]).equals("")) {
+		if(!(Utils.getFormat(imgName[0])==null)) {
 			Utils.makeThumbnail(uploadPath, datePath, imgName[0].substring(imgName[0].lastIndexOf(File.separatorChar)+1));
 		}
 		imgName[0] = imgName[0].replace(File.separatorChar, '/');
 		imgName[1] = imgName[1].replace(File.separatorChar, '/');
-		service.goodsInsert(
+		service.goodsUpdate(
 				new GoodsDTO(goods_no, goods_nm, makr, goods_category, imgName[0], imgName[1], goods_info_text));
 		
-		return "";
+		return goods_no;
 		
 	}
 	

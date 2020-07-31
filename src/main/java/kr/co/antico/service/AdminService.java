@@ -15,6 +15,14 @@ public interface AdminService {
 
 	int deleteNo(String no);
 
+	void goodsUpdate(GoodsDTO goodsDTO);
+
+	List<GoodsOptionDTO> getOption(String info);
+
+	void specific_optiondelete(int rownum);
+
+
+
 
 
 
