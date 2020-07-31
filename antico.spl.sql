@@ -105,15 +105,17 @@ goods_img VARCHAR2(500),
 goods_nm VARCHAR2(150) NOT NULL,
 goods_color VARCHAR2(30) NOT NULL,
 goods_size VARCHAR2(30) NOT NULL,
-goods_amount NUMBER NOT NULL,
+goods_qtys NUMBER NOT NULL,
 goods_untpc NUMBER NOT NULL
 );
-
 
 CREATE SEQUENCE seq_tbl_cart START WITH 1 increment BY 1;
 
 COMMIT;
 
+--장바구니 수량 컬럼명을 goods_amount로 선언시 참조
+--장바구니 수량 컬럼명 변경 (goods_amount -> goods_qtys)
+ALTER TABLE tbl_cart rename column goods_amount TO goods_qtys;
 
 --DROP TABLE tbl_goods
 --DROP TABLE tbl_member
