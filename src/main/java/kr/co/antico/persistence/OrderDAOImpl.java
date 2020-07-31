@@ -1,5 +1,9 @@
 package kr.co.antico.persistence;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,11 +19,9 @@ public class OrderDAOImpl implements OrderDAO {
 	private SqlSession oSession;
 	private final String NS = "o.r.d";
 
-	
-
 	@Override
 	public void adbkInsert(DeliveryAdbkDTO dDto) {
-		
+
 		Integer delivery_adbk_no = oSession.selectOne(NS + ".getAdbkNoByEmail", dDto);
 		System.out.println(delivery_adbk_no);
 		if (delivery_adbk_no != null) {
@@ -29,6 +31,20 @@ public class OrderDAOImpl implements OrderDAO {
 		}
 		dDto.setDelivery_adbk_no(delivery_adbk_no);
 		oSession.insert(NS + ".adbkInsert", dDto);
-		
+
+	}
+
+	@Override
+	public List<DeliveryAdbkDTO> adbkSelect(String email) {
+		return oSession.selectList(NS + ".adbkselect", email);
+	}
+
+	@Override
+	public DeliveryAdbkDTO adbkConfirm(String email, String name) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("email", email);
+		map.put("delivery_adbk_ncm", name);
+		System.out.println(map);
+		return oSession.selectOne(NS + ".adbkconfirm", map);
 	}
 }

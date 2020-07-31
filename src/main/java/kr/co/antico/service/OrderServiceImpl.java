@@ -1,5 +1,8 @@
 package kr.co.antico.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,18 @@ public class OrderServiceImpl implements OrderService {
 	public void adbkInsert(DeliveryAdbkDTO dDto) {
 		
 		orderDao.adbkInsert(dDto);
-		System.out.println("서비스 후 " + dDto);
+		
+	}
+	
+	@Override
+	public List<DeliveryAdbkDTO> adbkSelect(String email) {
+		
+		return orderDao.adbkSelect(email);
+	}
+	
+	@Override
+	public DeliveryAdbkDTO adbkConfirm(String email, String name) {
+		
+		return orderDao.adbkConfirm(email, name);
 	}
 }

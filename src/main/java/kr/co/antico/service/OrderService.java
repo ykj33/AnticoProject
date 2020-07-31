@@ -1,5 +1,8 @@
 package kr.co.antico.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.domain.DeliveryAdbkDTO;
@@ -12,6 +15,12 @@ public interface OrderService {
 	
 
 	void adbkInsert(DeliveryAdbkDTO dDto);
+
+	List<DeliveryAdbkDTO> adbkSelect(String email);
+
+	DeliveryAdbkDTO adbkConfirm(String email, String name);
+
+	
 	
 	
 }

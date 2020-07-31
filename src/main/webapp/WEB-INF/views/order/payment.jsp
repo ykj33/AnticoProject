@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="kr.co.domain.DeliveryAdbkDTO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -20,18 +23,26 @@
 				<%@ include file="../com/navbar.jsp"%>
 				<h3 style="text-align: center">주문 | 결제</h3>
 				<h5>주문자 정보</h5>
-				<form action="order" method="POST" id="adbkData"
-					enctype="multipart/form-data">
+				<input type="hidden" id="email" class="form-control" name="email"
+					value="${login.email}" readonly><br>
+				<div id="adress_name"></div>
+				<br>
+				<form action="order" method="POST" id="adbkData">
+
 					<div>
 						<input class="form-control" name="email" value="${login.email}"
-							readonly><br> <input class="form-control"
-							name="delivery_adbk_ncm" placeholder="새로 저장할 주소록 이름을 입력하세요(필수)"><br>
-						<input class="form-control" name="delivery_place_tlnum"
-							placeholder="전화번호를 입력하세요(필수)"><br> <input
-							class="form-control" name="delivery_place_adres"
-							placeholder="주소를 입력하세요(필수)"><br> <input
-							class="form-control" name="delivery_place_adres_detail"
-							placeholder="상세 주소를 입력하세요(필수)">
+							readonly><br> <input id="delivery_adbk_ncm"
+							class="form-control" name="delivery_adbk_ncm"
+							placeholder="새로 저장할 주소록 이름을 입력하세요(필수)" required="required"><br>
+						<input id="delivery_place_tlnum" class="form-control"
+							name="delivery_place_tlnum"
+							placeholder="전화번호를 입력하세요(필수, -를 제외한 숫자만 입력)" required="required"><br>
+						<input id="delivery_place_adres" class="form-control"
+							name="delivery_place_adres" placeholder="주소를 입력하세요(필수)"
+							required="required"><br> <input
+							id="delivery_place_adres_detail" class="form-control"
+							name="delivery_place_adres_detail" placeholder="상세 주소를 입력하세요(필수)"
+							required="required">
 					</div>
 
 				</form>
@@ -112,30 +123,96 @@
 				</div>
 			</div>
 			</form>
+
 		</div>
 	</div>
 	</div>
 	<%@ include file="../com/footer.jsp"%>
 </body>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#delivery_adbk_info").click(function() {
-			var formData = $('#adbkData').serialize();
 
-			console.log(formData);
-			$.ajax({
-				type : "POST",
-				url : "order",
-				data : formData,
-				success : function(result) {
-					console.log(result);
-				},
-				error : function(request, status, error) {
-					console.log(error);
-				}
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+
+				var email = $("#email").val();
+
+				console.log(email);
+				$.ajax({
+					type : 'POST',
+					url : 'payment',
+
+					data : {
+						email : email
+					},
+					success : function(result) {
+						
+						
+						for (var i = 0; i < result.length; i++) {
+							var ncm = result[i].delivery_adbk_ncm;
+							$("#adress_name").append(
+									"<div class='namelist' style = 'display : inline' data-idx='"+i+"'>"
+											+ ncm + "</div>");
+							$("#adress_name").append("    ");
+						}
+					
+
+					},
+					error : function(request, status, error) {
+
+						console.log(error);
+					}
+
+				});
+
+				$(document).on("click", ".namelist", function() {
+
+					var email = $("#email").val();
+						var idx = $(this).attr('data-idx');
+						
+					$.ajax({
+						type : 'POST',
+						url : 'payment',
+
+						data : {
+							email : email
+						},
+						success : function(result) {
+							var name = result[idx].delivery_adbk_ncm;
+							var telnum = result[idx].delivery_place_tlnum;
+							var address = result[idx].delivery_place_adres;
+							var address_detail = result[idx].delivery_place_adres_detail;
+							$("#delivery_adbk_ncm").val(name);
+							$("#delivery_place_tlnum").val(telnum);
+							$("#delivery_place_adres").val(address);
+							$("#delivery_place_adres_detail").val(address_detail);
+
+
+						},
+						error : function(request, status, error) {
+
+							console.log(error);
+						}
+
+					});
+				});
+
+				$("#delivery_adbk_info").click(function() {
+					var formData = $('#adbkData').serialize();
+
+					console.log(formData);
+					$.ajax({
+						type : "POST",
+						url : "order",
+						data : formData,
+						success : function(result) {
+							console.log(result);
+						},
+						error : function(request, status, error) {
+							console.log(error);
+						}
+					});
+				});
 			});
-		});
-	});
 	function div_OnOff(value, id) {
 		if (value == "카드") {
 			document.getElementById("selectCard").style.display = "";
