@@ -42,10 +42,17 @@ public class BoardServiceImpl implements BoardService {
 		List<GoodsOptionDTO> goodsColors = boardDao.goodsColors(goods_no);
 		List<GoodsOptionDTO> goodsSizes = boardDao.goodsSizes(goods_no);
 		
+		System.out.println("goodsColors" + goodsColors.size());
+		System.out.println("goodsSizes" + goodsSizes.size());
+		
 		Map<String, String> map = new HashedMap<String, String>();
 		map.put("goods_no", goods_no);
-		map.put("goods_color", goodsColors.get(0).getGoods_color());
-		map.put("goods_size", goodsSizes.get(0).getGoods_size());
+		if (goodsColors.size() != 0) {
+			map.put("goods_color", goodsColors.get(0).getGoods_color());
+		}
+		if (goodsSizes.size() != 0) {
+			map.put("goods_size", goodsSizes.get(0).getGoods_size());
+		}
 		
 		GoodsOptionDTO optionDto = boardDao.goodsUntpc(map);
 

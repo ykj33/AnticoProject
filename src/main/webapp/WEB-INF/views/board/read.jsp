@@ -10,28 +10,141 @@
 	<script>
 		document.addEventListener("DOMContentLoaded", () => {
 
-			let data = { option: { goods_no:'${dto.goods_no }', goods_color: '${dto.goods_colors[0].goods_color }', goods_size: '${dto.goods_sizes[0].goods_size }' } };
+			let data = { option: { goods_no:'${dto.goods_no }', goods_color: '${dto.goods_colors[0].goods_color }', goods_size: '${dto.goods_sizes[0].goods_size }', goods_untpc: '${dto.goods_sizes[0].goods_untpc }' },
+				cart: []
+			};
+
 			let btnCollapse = document.getElementById('btnCollapse');
 			let hide = document.getElementById('hide');
 			let option = document.getElementById('option');
+			let list = document.getElementById('list');
+			let totalPrice = document.getElementById('totalPrice');
 
 			btnCollapse.addEventListener("click", () => {
+
+				let idx = data.cart.length;
+				// 장바구니에 중복되는 상품이 있는지 확인함.
+				for (let i = 0; i < idx; i++) {
+					const arr = data.cart[i];
+					if(data.option.goods_no == arr.goods_no
+					&& data.option.goods_color == arr.goods_color
+					&& data.option.goods_size == arr.goods_size) {
+						alert('같은 상품이 존재 합니다.');
+						window.scrollTo(0, 0);
+						$('.collapse').collapse('show');
+						return;
+					};
+				}
+
+				// 새로운 상품 data
+				let newCart = {
+					cart_id : 0,
+					email : '${login.email }',
+					goods_no : data.option.goods_no,
+					goods_img : '${dto.goods_img }',
+					goods_nm : '${dto.goods_nm }',
+					goods_color : data.option.goods_color,
+					goods_size : data.option.goods_size,
+					goods_qtys : 1,
+					goods_untpc : data.option.goods_untpc
+				};
+
+				// ajax
+				axios({
+					method: 'post',
+					url: '/board/addcart',
+					headers: {
+						"Content-Type": "application/json",
+						"X-HTTP-Method-Override": "POST"
+					},
+					data: JSON.stringify(newCart),
+					responseType: 'text'
+				}).then(function (response) {
+
+					console.log('상품등록 ajax response >>', response);
+
+					//if(response.data) {
+						data.cart = response.data;
+
+						let str = ''
+
+						for (let i = 0; i < data.cart.length; i++) {
+							const cart = data.cart[i];
+
+							// 동적 테이블 생성
+							str += ''
+							+'<div class="row ml-4 mb-2 text-center">'
+							+	'<div class="col-md-1"><img src="/displayfile?img_name='+cart.goods_img+'" width="60px" height="60px"></div>'
+							+	'<div class="col-md-5">'+cart.goods_nm+'</div>'
+							+	'<div class="col-md-1">'+cart.goods_size+'</div>'
+							+	'<div class="col-md-1">'+cart.goods_color+'</div>'
+							+	'<div class="col-md-2 line">'
+							+		'<div class="row">'
+							+			'<div class="col"><p class="btn minus">-</p></div>'
+							+			'<div class="col mt-2"><p class="amount">'+cart.goods_qtys+'</p></div>'
+							+			'<div class="col"><p class="btn plus text-muted">+</p></div>'
+							+		'</div>'
+							+	'</div>'
+							+	'<div class="col-md-2 price" data-u-price="'+cart.goods_untpc+'">'+String(cart.goods_untpc * cart.goods_qtys).replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</div>'
+							+'</div>';
+							
+						}
+
+						list.innerHTML += str;
+						// 장바구 아이템의 총액을 계산후 표시.
+						cartTotalPrice();
+					//}
+					
+				});
+				
+				// 장바구 아이템의 총액을 계산후 표시.
+				cartTotalPrice();
+
+				// 장바구니 열림
 				window.scrollTo(0, 0);
 				$('.collapse').collapse('show');
 			});
 
-			hide.addEventListener("click", () => {
+			hide.addEventListener('click', () => {
 				$('.collapse').collapse('hide');
 			});
 
-			option.addEventListener('click', (event) => {
-				console.log(event.target);
+			list.addEventListener('click', (event) => {
 				let element = event.target;
 				let strClass = element.getAttribute('class');
-				console.log(element.getAttribute('class'));
+				let amountRow = element.parentNode.parentNode;
+				let	amount = amountRow.getElementsByClassName('amount')[0];
+				let price = amountRow.parentNode.parentNode.getElementsByClassName('price')[0];
+				let data_u_price = price.getAttribute('data-u-price');
+				let strNum = amount.innerHTML;
+				strNum = strNum.replace(',', '');
+
+				if(strClass.indexOf('minus') > -1) {
+					amount.innerHTML = Number(strNum) - 1;
+					price.innerHTML = String((Number(strNum) - 1) * Number(data_u_price)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					if(amount.innerHTML == '0') {
+						let row = amountRow.parentNode.parentNode;
+						row.remove();
+					}
+				}
+
+				if(strClass.indexOf('plus') > -1) {
+					amount.innerHTML = Number(strNum) + 1;
+					price.innerHTML = String((Number(strNum) + 1) * Number(data_u_price)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				}
+
+				// 장바구 아이템의 총액을 계산후 표시.
+				cartTotalPrice();
+			});
+
+			option.addEventListener('click', (event) => {
+				// console.log(event.target);
+				let element = event.target;
+				let strClass = element.getAttribute('class');
+				// console.log(element.getAttribute('class'));
 
 				if (strClass.indexOf('goods_color') > -1) {
-					console.log('@ goods_color click !!');
+					// console.log('@ goods_color click !!');
 
 					let gcArr = document.getElementsByClassName('goods_color');
 					for (let i = 0; i < gcArr.length; i++) {
@@ -43,7 +156,7 @@
 				}
 
 				if (strClass.indexOf('goods_size') > -1) {
-					console.log('@ goods_size click !!');
+					// console.log('@ goods_size click !!');
 
 					let gsArr = document.getElementsByClassName('goods_size');
 					for (let i = 0; i < gsArr.length; i++) {
@@ -54,7 +167,7 @@
 					data.option.goods_size = element.innerHTML;
 				}
 
-				console.log('>>', data);
+				// console.log('>>', data);
 
 				// ajax
 				axios({
@@ -64,35 +177,28 @@
 					})
 					  .then(function (response) {
 					    console.log('response.data', response.data);
-						let data = response.data;
-						console.log('data', data);
-					    if(data) {
-							// 가격확인.
-							// console.log('data.goods_untpc',data.goods_untpc);
-							// console.log('data.goods_color',data.goods_color);
-							// console.log('data.goods_size',data.goods_size);
-							// console.log('data.goods_colors',data.goods_colors);
-							// console.log('data.goods_sizes',data.goods_sizes);
-							// console.log('data.goods_amount',data.goods_amount);
+						let dto = response.data;
+						console.log('data', dto);
+					    if(dto) {
 
-							let colors = data.goods_colors;
-							let sizes = data.goods_sizes;
-							//console.log(colors.length);
-							//console.log(sizes.length);
+							let colors = dto.goods_colors;
+							let sizes = dto.goods_sizes;
+							let untpc = dto.goods_untpc;
+							data.option.goods_untpc = untpc;
 							
 							let str = '';
 										str +='<!-- 옵션 color  -->'
 										str +='<div class="row">'
 								for (let i = 0; i < colors.length; i++) {
-									const dto = colors[i];
+									const item = colors[i];
 									// console.log(dto.goods_color, data.goods_color);
-									if (dto.goods_color === data.goods_color) {
+									if (item.goods_color === dto.goods_color) {
 										str +=	'<div class="col-md">'
-										str +=		'<p class="btn btn-sm goods_color font-weight-bold">'+dto.goods_color+'</p>'
+										str +=		'<p class="btn btn-sm goods_color font-weight-bold">'+item.goods_color+'</p>'
 										str +=	'</div>'
 									} else {
 										str +=	'<div class="col-md">'
-										str +=		'<p class="btn btn-sm goods_color">'+dto.goods_color+'</p>'
+										str +=		'<p class="btn btn-sm goods_color">'+item.goods_color+'</p>'
 										str +=	'</div>'
 									}
 								}
@@ -101,15 +207,15 @@
 										str +='<div class="row">'
 								// console.log(sizes);
 								for (let i = 0; i < sizes.length; i++) {
-									const dto = sizes[i];
+									const item = sizes[i];
 									// console.log(dto.goods_size, data.goods_size);
-									if (dto.goods_size === data.goods_size) {
+									if (item.goods_size === dto.goods_size) {
 										str +=	'<div class="col-md">'
-										str +=		'<p class="btn btn-sm goods_size font-weight-bold">'+dto.goods_size+'</p>'
+										str +=		'<p class="btn btn-sm goods_size font-weight-bold">'+item.goods_size+'</p>'
 										str +=	'</div>'
 									} else {
 										str +=	'<div class="col-md">'
-										str +=		'<p class="btn btn-sm goods_size">'+dto.goods_size+'</p>'
+										str +=		'<p class="btn btn-sm goods_size">'+item.goods_size+'</p>'
 										str +=	'</div>'
 									}
 								}
@@ -117,11 +223,13 @@
 										str +='<!-- 옵션 color와 size에 따른 가격  -->'
 										str +='<div class="row">'
 										str +=	'<div class="col-md ml-2 mt-5">'
-										str +=		'<h3><strong class="goods_untpc">'+data.goods_untpc+'</strong>원</h3>'
+										str +=		'<h3><strong class="goods_untpc" id="untpc">'+dto.goods_untpc+'</strong>원</h3>'
 										str +=	'</div>'
 										str +='</div>';
 							// console.log(str);
 							option.innerHTML = str;
+
+							document.getElementById('untpc').innerHTML = String(untpc).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 							if(data.goods_amount > 0) {
 								btnCollapse.setAttribute('disarbled', 'disarbled');
@@ -131,7 +239,23 @@
 						}
 					  });
 			});
-		});
+		}); // DOMContentLoaded
+
+		// 장바구 아이템의 총액을 계산후 표시.
+		function cartTotalPrice() {
+			let prices = list.getElementsByClassName('price');
+				let sumPrice = 0;
+				for (let i = 0; i < prices.length; i++) {
+					const element = prices[i];
+					let strPrice = element.innerHTML;
+					let numPrice = strPrice.replace(',', '');
+					if(Number(numPrice) !== NaN) {
+						sumPrice += Number(numPrice);
+					}
+				}
+				// let re = new RegExp('/\B(?=(\d{3})+(?!\d))/g');
+				totalPrice.innerHTML = String(sumPrice).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		};
 	</script>
 </head>
 
@@ -147,7 +271,7 @@
 						d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z" />
 				</svg>
 			</div>
-			<div class="row ml-4">
+			<div class="row ml-4 text-center">
 				<div class="col-md-1">이미지</div>
 				<div class="col-md-5">타이틀</div>
 				<div class="col-md-1">사이즈</div>
@@ -156,23 +280,30 @@
 				<div class="col-md-2">가격</div>
 			</div>
 
-			<div class="row ml-4">
-				<%-- 			<div class="col-md-1"><img src="${uploadPath + read.goods_img}" width="60px" height="60px"></div> --%>
+			<div class="" id="list">
 
-
-
-				<div class="col-md-5">이쁜이들은 어떤 마스크를 쓸까?</div>
-				<div class="col-md-1">free</div>
-				<div class="col-md-1">blue</div>
-				<div class="col-md-2">
-					<button type="button" class="btn">-</button>
-					1
-					<button type="button" class="btn">+</button>
-				</div>
-				<div class="col-md-2">15,900</div>
+				<!-- <div class="row ml-4 mb-2 text-center">
+					<div class="col-md-1"><img src="/displayfile?img_name=${dto.goods_img}" width="60px" height="60px"></div>
+					<div class="col-md-5">이쁜이들은 어떤 마스크를 쓸까?</div>
+					<div class="col-md-1">free</div>
+					<div class="col-md-1">blue</div>
+					<div class="col-md-2 line">
+						<div class="row">
+							<div class="col"><p class="btn minus">-</p></div>
+							<div class="col mt-2"><p class="amount">1</p></div>
+							<div class="col"><p class="btn plus text-muted">+</p></div>
+						</div>
+					</div>
+					<div class="col-md-2 price" data-u-price="15900">15,900</div>
+				</div> -->
 
 			</div>
-
+			
+			<div class="row text-right">
+				<div class="col-md mr-5">
+					<h3 id="totalPrice">0</h3>
+				</div>
+			</div>
 			<hr>
 		</div>
 	</div>
@@ -228,7 +359,7 @@
 				<!-- 옵션 color와 size에 따른 가격  -->
 				<div class="row">
 					<div class="col-md ml-2 mt-5">
-						<h3><strong class="goods_untpc">${dto.goods_untpc }</strong>원</h3>
+						<h3><strong class="goods_untpc" id="untpc">${dto.goods_untpc }</strong>원</h3>
 					</div>
 				</div>
 

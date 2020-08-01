@@ -12,12 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jdk.nashorn.internal.parser.JSONParser;
+import jdk.nashorn.internal.runtime.JSONFunctions;
 import kr.co.antico.service.BoardService;
 import kr.co.domain.BoardDTO;
+import kr.co.domain.CartDTO;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
 
@@ -91,5 +96,15 @@ public class BoardController {
 		dto.setGoods_size(godto.getGoods_size());
 		System.out.println(dto);
 		return dto;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/addcart", method = RequestMethod.POST)
+	public List<CartDTO> addcart(@RequestBody CartDTO dto) {
+		System.out.println(dto);
+		
+		List<CartDTO> list = new ArrayList<CartDTO>();
+		list.add(dto);
+		return list;
 	}
 }
