@@ -8,7 +8,6 @@ public class LoginDTO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String mid;
 	private String mpw;
 	private String email;
 	
@@ -16,19 +15,10 @@ public class LoginDTO implements Serializable{
 		super();
 	}
 
-	public LoginDTO(String mid, String mpw, String email) {
+	public LoginDTO(String mpw, String email) {
 		super();
-		this.mid = mid;
 		this.mpw = mpw;
 		this.email = email;
-	}
-
-	public String getMid() {
-		return mid;
-	}
-
-	public void setMid(String mid) {
-		this.mid = mid;
 	}
 
 	public String getMpw() {
@@ -50,8 +40,5 @@ public class LoginDTO implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
-	
 	
 }

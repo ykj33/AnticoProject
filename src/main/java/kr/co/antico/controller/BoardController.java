@@ -25,6 +25,7 @@ import kr.co.domain.BoardDTO;
 import kr.co.domain.CartDTO;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
+import kr.co.domain.LoginDTO;
 
 @Controller
 @RequestMapping("board")
@@ -77,8 +78,7 @@ public class BoardController {
 	public String read(@PathVariable("goods_no") String goods_no, Model model, HttpSession session) {
 		BoardDTO dto = boardService.read(goods_no);
 		model.addAttribute("dto", dto);
-		
-		System.out.println(dto);
+
 		return "/board/read";
 	}
 	

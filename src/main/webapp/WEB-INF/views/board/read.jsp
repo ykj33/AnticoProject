@@ -10,7 +10,15 @@
 	<script>
 		document.addEventListener("DOMContentLoaded", () => {
 
-			let data = { option: { goods_no:'${dto.goods_no }', goods_color: '${dto.goods_colors[0].goods_color }', goods_size: '${dto.goods_sizes[0].goods_size }', goods_untpc: '${dto.goods_sizes[0].goods_untpc }' },
+			// local data
+			let data = { 
+				user: '${login.email }',
+				option: { 
+					goods_no:'${dto.goods_no }'
+					, goods_color: '${dto.goods_colors[0].goods_color }'
+					, goods_size: '${dto.goods_sizes[0].goods_size }'
+					, goods_untpc: '${dto.goods_sizes[0].goods_untpc }' 
+					},
 				cart: []
 			};
 
@@ -20,6 +28,7 @@
 			let list = document.getElementById('list');
 			let totalPrice = document.getElementById('totalPrice');
 
+			// 구매 버튼 / 장바구니 버튼 클릭시.
 			btnCollapse.addEventListener("click", () => {
 
 				let idx = data.cart.length;
@@ -49,7 +58,7 @@
 					goods_untpc : data.option.goods_untpc
 				};
 
-				// ajax
+				// ajax 장바구니 추가.
 				axios({
 					method: 'post',
 					url: '/board/addcart',
@@ -63,7 +72,8 @@
 
 					console.log('상품등록 ajax response >>', response);
 
-					//if(response.data) {
+					if(response.data) {
+						// 업데이트 된 list를 localdata data.cart에 추가한다.
 						data.cart = response.data;
 
 						let str = ''
@@ -80,12 +90,12 @@
 							+	'<div class="col-md-1">'+cart.goods_color+'</div>'
 							+	'<div class="col-md-2 line">'
 							+		'<div class="row">'
-							+			'<div class="col"><p class="btn minus">-</p></div>'
-							+			'<div class="col mt-2"><p class="amount">'+cart.goods_qtys+'</p></div>'
-							+			'<div class="col"><p class="btn plus text-muted">+</p></div>'
+							+			'<div class="col"><p class="btn btn-block minus">-</p></div>'
+							+			'<div class="col mt-2"><p class="qtys">'+cart.goods_qtys+'</p></div>'
+							+			'<div class="col"><p class="btn btn-block plus text-muted">+</p></div>'
 							+		'</div>'
 							+	'</div>'
-							+	'<div class="col-md-2 price" data-u-price="'+cart.goods_untpc+'">'+String(cart.goods_untpc * cart.goods_qtys).replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</div>'
+							+	'<div class="col-md-2 price" data-u-price="'+cart.goods_untpc+'">'+numberWithCommas(cart.goods_untpc * cart.goods_qtys)+'</div>'
 							+'</div>';
 							
 						}
@@ -93,7 +103,7 @@
 						list.innerHTML += str;
 						// 장바구 아이템의 총액을 계산후 표시.
 						cartTotalPrice();
-					//}
+					}
 					
 				});
 				
@@ -105,38 +115,41 @@
 				$('.collapse').collapse('show');
 			});
 
+			// 장바구니 창에 X표시를 클릭시.
 			hide.addEventListener('click', () => {
 				$('.collapse').collapse('hide');
 			});
 
+			// 장바구니 리스트의 버튼들을 클릭시.
 			list.addEventListener('click', (event) => {
 				let element = event.target;
 				let strClass = element.getAttribute('class');
-				let amountRow = element.parentNode.parentNode;
-				let	amount = amountRow.getElementsByClassName('amount')[0];
-				let price = amountRow.parentNode.parentNode.getElementsByClassName('price')[0];
+				let qtysRow = element.parentNode.parentNode;
+				let	qtys = qtysRow.getElementsByClassName('qtys')[0];
+				let price = qtysRow.parentNode.parentNode.getElementsByClassName('price')[0];
 				let data_u_price = price.getAttribute('data-u-price');
-				let strNum = amount.innerHTML;
+				let strNum = qtys.innerHTML;
 				strNum = strNum.replace(',', '');
 
 				if(strClass.indexOf('minus') > -1) {
-					amount.innerHTML = Number(strNum) - 1;
-					price.innerHTML = String((Number(strNum) - 1) * Number(data_u_price)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-					if(amount.innerHTML == '0') {
-						let row = amountRow.parentNode.parentNode;
+					qtys.innerHTML = Number(strNum) - 1;
+					price.innerHTML = numberWithCommas((Number(strNum) - 1) * Number(data_u_price));
+					if(qtys.innerHTML == '0') {
+						let row = qtysRow.parentNode.parentNode;
 						row.remove();
 					}
 				}
 
 				if(strClass.indexOf('plus') > -1) {
-					amount.innerHTML = Number(strNum) + 1;
-					price.innerHTML = String((Number(strNum) + 1) * Number(data_u_price)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					qtys.innerHTML = Number(strNum) + 1;
+					price.innerHTML = numberWithCommas((Number(strNum) + 1) * Number(data_u_price));
 				}
 
 				// 장바구 아이템의 총액을 계산후 표시.
 				cartTotalPrice();
 			});
 
+			// 상품에 option의 버튼들을 클릭시.
 			option.addEventListener('click', (event) => {
 				// console.log(event.target);
 				let element = event.target;
@@ -229,7 +242,7 @@
 							// console.log(str);
 							option.innerHTML = str;
 
-							document.getElementById('untpc').innerHTML = String(untpc).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							document.getElementById('untpc').innerHTML = numberWithCommas(untpc);
 
 							if(data.goods_amount > 0) {
 								btnCollapse.setAttribute('disarbled', 'disarbled');
@@ -254,7 +267,13 @@
 					}
 				}
 				// let re = new RegExp('/\B(?=(\d{3})+(?!\d))/g');
-				totalPrice.innerHTML = String(sumPrice).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				totalPrice.innerHTML = numberWithCommas(sumPrice);
+		};
+
+		// 자리수 표시(3자리 마다, 표시)
+		function numberWithCommas(num) {
+			let strNum = String(num).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			return strNum;
 		};
 	</script>
 </head>
