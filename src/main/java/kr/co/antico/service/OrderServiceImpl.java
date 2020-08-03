@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.antico.persistence.OrderDAO;
+import kr.co.domain.CartDTO;
 import kr.co.domain.DeliveryAdbkDTO;
 import kr.co.domain.OrderDTO;
 import kr.co.domain.OrderDetailDTO;
@@ -36,5 +37,12 @@ public class OrderServiceImpl implements OrderService {
 	public DeliveryAdbkDTO adbkConfirm(String email, String name) {
 		
 		return orderDao.adbkConfirm(email, name);
+	}
+	
+	// 결제할 상품 리스트
+	@Override
+	public List<CartDTO> orderList(String email) {
+		
+		return orderDao.orderList(email);
 	}
 }

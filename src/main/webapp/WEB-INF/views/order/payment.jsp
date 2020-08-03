@@ -25,10 +25,13 @@
 				<h5>주문자 정보</h5>
 				<input type="hidden" id="email" class="form-control" name="email"
 					value="${login.email}" readonly><br>
-				
-					<button id = "new_address" class="btn btn-outline-secondary">새 주소지 추가</button>
-			
-					<div id = "added_address_name"><br></div>
+
+				<button id="new_address" class="btn btn-outline-secondary">새
+					주소지 추가</button>
+
+				<div id="added_address_name">
+					<br>
+				</div>
 				<br>
 				<form action="order" method="POST" id="adbkData">
 
@@ -92,31 +95,7 @@
 			</div>
 
 			<div class="col-lg-5">
-				<div id="goods_list">
-					<table class="table" style="border-bottom: 1px solid black;">
-						<%-- 추후 DB구축 시 사용할 테이블
-						<c:forEach items="#{}" var="dto">
-							<tr>
-								<td>사진</td>
-								<td>KF-90 마스크</td>
-								<td>15,900원</td>
-							</tr>
-						</c:forEach> --%>
-						<tr>
-							<td style="border: none"><img
-								src="../resources/image/show.png" height="70px" width="70px"></td>
-							<td style="border: none">KF-90 마스크</td>
-							<td style="border: none">15,900원</td>
-						</tr>
-						<tr>
-							<td style="border: none"><img
-								src="../resources/image/show.png" height="70px" width="70px"></td>
-							<td style="border: none">KF-84 마스크</td>
-							<td style="border: none">12,900원</td>
-						</tr>
-					</table>
-
-				</div>
+				<div id="goods_list" class = "row"></div>
 				<div>
 					<div>
 						<h4 style="display: inline">총액</h4>
@@ -142,6 +121,7 @@
 			.ready(
 					function() {
 						addressNameDisplay();
+						cartList();
 						$(document)
 								.on(
 										"click",
@@ -161,10 +141,10 @@
 														},
 														success : function(
 																result) {
-															var name = result[idx].delivery_adbk_ncm;
-															var telnum = result[idx].delivery_place_tlnum;
-															var address = result[idx].delivery_place_adres;
-															var address_detail = result[idx].delivery_place_adres_detail;
+															var name = result["adbkList"][idx].delivery_adbk_ncm;
+															var telnum = result["adbkList"][idx].delivery_place_tlnum;
+															var address = result["adbkList"][idx].delivery_place_adres;
+															var address_detail = result["adbkList"][idx].delivery_place_adres_detail;
 															$(
 																	"#delivery_adbk_ncm")
 																	.val(name);
@@ -233,25 +213,34 @@
 
 	}
 
-	function addressNameDisplay() {
+	function cartList() {
 		var email = $("#email").val();
-
-		console.log(email);
 		$.ajax({
 			type : 'POST',
 			url : 'payment',
-
 			data : {
 				email : email
 			},
 			success : function(result) {
+				console.log("map")
 
-				for (var i = 0; i < result.length; i++) {
-					var ncm = result[i].delivery_adbk_ncm;
-					$("#added_address_name").append(
-							"<div class='namelist' style = 'display : inline' data-idx='"+i+"'><button class='btn btn-outline-secondary'>"
-									+ ncm + "</button></div>");
-					$("#added_address_name").append("    ");
+				for (var i = 0; i < result["orderList"].length; i++) {
+
+					/* var img = result["orderList"][i].goods_img; */
+					var name = result["orderList"][i].goods_nm;
+					var quantity = result["orderList"][i].goods_qtys;
+					var price = result["orderList"][i].goods_untpc;
+
+					$("#goods_list").append(
+							"<div class='goodsList col-md-4' style = 'display : inline' data-idx='"+i+"'>"
+									+ name + "</div>");
+					$("#goods_list").append(
+							"<div class='goodsList col-md-4' style = 'display : inline' data-idx='"+i+"'>"
+									+ quantity + "</div>");
+					$("#goods_list").append(
+							"<div class='goodsList col-md-4' style = 'display : inline; float : right' data-idx='"+i+"'>"
+									+ price + "</div>");
+
 				}
 
 			},
@@ -261,6 +250,41 @@
 			}
 
 		});
+	}
+
+	function addressNameDisplay() {
+		var email = $("#email").val();
+
+		console.log(email);
+		$
+				.ajax({
+					type : 'POST',
+					url : 'payment',
+
+					data : {
+						email : email
+					},
+					success : function(result) {
+						console.log("map")
+
+						for (var i = 0; i < result["adbkList"].length; i++) {
+
+							var ncm = result["adbkList"][i].delivery_adbk_ncm;
+							console.log(ncm);
+							$("#added_address_name")
+									.append(
+											"<div class='namelist' style = 'display : inline' data-idx='"+i+"'><button class='btn btn-outline-secondary'>"
+													+ ncm + "</button></div>");
+							$("#added_address_name").append("    ");
+						}
+
+					},
+					error : function(request, status, error) {
+
+						console.log(error);
+					}
+
+				});
 	}
 </script>
 </html>

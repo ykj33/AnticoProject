@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.antico.service.OrderService;
+import kr.co.domain.CartDTO;
 import kr.co.domain.DeliveryAdbkDTO;
 import kr.co.domain.OrderDTO;
 import kr.co.domain.OrderDetailDTO;
@@ -37,11 +38,17 @@ public class OrderController {
 
 	@ResponseBody
 	@RequestMapping(value = "/payment", method = RequestMethod.POST)
-	public List<DeliveryAdbkDTO> paymentSelect(String email) {
+	public Map<String , Object> paymentSelect(String email) {
 
 		List<DeliveryAdbkDTO> adbkList = orderService.adbkSelect(email);
+		// 결제할 상품 리스트
+		List<CartDTO> orderList = orderService.orderList(email);
 
-		return adbkList;
+		Map<String , Object> map = new HashMap<String, Object>();
+		map.put("adbkList", adbkList);
+		map.put("orderList", orderList);
+		return map;
+		
 
 	}
 

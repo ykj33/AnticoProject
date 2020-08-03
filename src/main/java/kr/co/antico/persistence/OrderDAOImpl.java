@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.domain.CartDTO;
 import kr.co.domain.DeliveryAdbkDTO;
 import kr.co.domain.OrderDTO;
 import kr.co.domain.OrderDetailDTO;
@@ -46,5 +47,11 @@ public class OrderDAOImpl implements OrderDAO {
 		map.put("delivery_adbk_ncm", name);
 		System.out.println(map);
 		return oSession.selectOne(NS + ".adbkconfirm", map);
+	}
+	
+	@Override
+	public List<CartDTO> orderList(String email) {
+		
+		return oSession.selectList(NS + ".orderlist", email);
 	}
 }
