@@ -83,7 +83,7 @@
 				var formData =  new FormData($("#imgupload")[0]);
 				$.ajax({
 					type:"POST",
-					url:"/imgupload",
+					url:"imgupload",
 					data : 
 						formData,
 					processData : false,
@@ -127,7 +127,7 @@
 				
 				$.ajax({
 					type:"POST",
-					url:"/optionupload",
+					url:"optionupload",
 					dataType:'text',
 					data:{
 						jsonData:jsonData

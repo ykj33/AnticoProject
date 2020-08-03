@@ -59,7 +59,6 @@ $(document).ready(function(){
 	var info;
 	$(document).on("keyup", "#input_no", function(){
 		info = $("#input_no").val();
-		console.log(info);
 		$.ajax({
 			type:'post',
 			url:'goodsidentify',
@@ -71,7 +70,6 @@ $(document).ready(function(){
 				$("#input_no").addClass("text-primary");
 				$("#goods_info").replaceWith('<div id="goods_info" style="height: 100px;"><img id="main" src="/displaythumb?img_name='+result.goods_img+'"/><h3 class="d-inline m-4">'+result.goods_nm+'</h3></div>');
 				goodsno = result.goods_no;
-				console.log(result);
 				},
 			error : function(request, status, error){
 				$("#input_no").removeClass("text-primary");
@@ -86,7 +84,6 @@ $(document).ready(function(){
 		});
 	$("#goods_delete").click(function(){
 		if(goodsno != ""){
-			console.log(goodsno);
 			location.href="/admin/delete/"+goodsno;
 			}
 	});
@@ -102,7 +99,7 @@ $(document).ready(function(){
 					no:info
 				},
 				success : function(result){
-					$("#inputdiv").replaceWith('<div id="inputdiv"><form action="#" method="POST" id="goods_img_update" enctype="multipart/form-data"><div class="form-group"><input type="text" class="form-control rounded-0" id="goods_no" name="goods_no" readonly="readonly" value="'+result.goods_no+'"><input type="text" class="form-control rounded-0" id="goods_nm" name="goods_nm" value="'+result.goods_nm+'"><input type="text" class="form-control rounded-0" id="makr" name="makr" placeholder="제조사" value=""><input type="text" class="form-control rounded-0" id="goods_category" name="goods_category" value="'+result.goods_category+'"><textarea rows="5" class="form-control rounded-0" id="goods_info_text" name="goods_info_text" >'+result.goods_info_text+'</textarea></div><div class="form-group"><p>대표 이미지를 선택해주세요.</p><input type="file" class="form-control rounded-0" id="goods_img" name="goods_img"> <br><p>설명 이미지를 선택해주세요.</p><input type="file" class="form-control rounded-0" id="goods_info_img" name="goods_info_img"></div></form><button id="goods_update_ajax" class="form-control btn btn-info">수정 확인</button></div>');
+					$("#inputdiv").replaceWith('<div id="inputdiv"><form action="#" method="POST" id="goods_img_update" enctype="multipart/form-data"><div class="form-group"><input type="text" class="form-control rounded-0" id="goods_no" name="goods_no" readonly="readonly" value="'+result.goods_no+'"><input type="text" class="form-control rounded-0" id="goods_nm" name="goods_nm" value="'+result.goods_nm+'"><input type="text" class="form-control rounded-0" id="makr" name="makr" placeholder="제조사" value=""><input type="text" class="form-control rounded-0" id="goods_category" name="goods_category" value="'+result.goods_category+'"><textarea rows="5" class="form-control rounded-0" id="goods_info_text" name="goods_info_text" >'+result.goods_info_text+'</textarea></div><div class="form-group"><p>대표 이미지를 선택해주세요.</p><input type="file" class="form-control rounded-0" id="goods_img" name="goods_img"> <br><p>설명 이미지를 선택해주세요.</p><input type="file" class="form-control rounded-0" id="goods_info_img" name="goods_info_img"></div></form><button id="goods_update_ajax" class="form-control btn btn-info rounded-0">수정 확인</button></div>');
 					},
 				error : function(request, status, error){
 					console.log(error);
@@ -150,7 +147,8 @@ $(document).ready(function(){
 			url:'optiondelete',
 			data :{
 				color :	color,
-				size : size
+				size : size,
+				no : info
 				},
 		success : function(result){
 				optiondisplay();
@@ -159,14 +157,30 @@ $(document).ready(function(){
 			}
 			});
 		});
-	
-	
-	$(document).on("click", "#option_update_ajax", function(){
 
 
+	$(document).on("click", "#option_input_ajax", function(){
+		var data = $("#optionform").serialize();
+		$.ajax({
+			type:'post',
+			url:'optioninput',
+			data : data,
+			success:function(result){
+				console.log("성공");
+				$("#inputdiv").empty();
+				optiondisplay();
+				},
+			error:function(request, status, error){
+				console.log(error);
+				}
+			});
 		
 		
 		});
+	
+	
+	
+	
 
 
 	function optiondisplay(){
@@ -183,9 +197,9 @@ $(document).ready(function(){
 				if(result.length!=0){
 					$("#inputdiv").append(str);
 				} else{
-					$("#inputdiv").append("<h3>옵션을 입력해 주세요.<h3>");
+					$("#inputdiv").append("<h4>옵션은 반드시 1개 이상 존재해야 합니다.<h4><br>");
 				}
-				
+				$("#inputdiv").append('<form id="optionform"><div class="form-group" id="formNum"><input type="text" class="form-control rounded-0" id="goods_no" name="goods_no" hidden="" value="'+info+'"><input type="number" class="form-control rounded-0 goods_amount" name="goods_amount" placeholder="수량"><input type="number" class="form-control rounded-0 goods_untpc" name="goods_untpc" placeholder="가격"><input type="text" class="form-control rounded-0 goods_size" name="goods_size" placeholder="크기"><input type="text" class="form-control rounded-0 goods_color" name="goods_color" placeholder="색상"></div></form><button id="option_input_ajax" class="form-control btn btn-info rounded-0">옵션 추가</button>');				
 			},
 			error : function(request, status, error){
 				console.log(error);

@@ -61,11 +61,15 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void specific_optiondelete(int rownum) {
-		aDAO.specific_optiondelete(rownum);
+	public void specific_optiondelete(GoodsOptionDTO goodsOptionDTO) {
+		aDAO.specific_optiondelete(goodsOptionDTO);
+		
 	}
 
-
-
+	@Override
+	public void optioninput(GoodsOptionDTO dto) {
+		aDAO.optioninput(dto);
+		
+	}
 
 }

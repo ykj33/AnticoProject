@@ -22,7 +22,9 @@ public interface AdminDAO {
 
 	List<GoodsOptionDTO> getOption(String info);
 
-	void specific_optiondelete(int rownum);
+	void specific_optiondelete(GoodsOptionDTO goodsOptionDTO);
+
+	void optioninput(GoodsOptionDTO dto);
 
 
 
