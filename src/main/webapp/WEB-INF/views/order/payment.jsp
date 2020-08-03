@@ -25,7 +25,10 @@
 				<h5>주문자 정보</h5>
 				<input type="hidden" id="email" class="form-control" name="email"
 					value="${login.email}" readonly><br>
-				<div id="adress_name"></div>
+				
+					<button id = "new_address" class="btn btn-outline-secondary">새 주소지 추가</button>
+			
+					<div id = "added_address_name"><br></div>
 				<br>
 				<form action="order" method="POST" id="adbkData">
 
@@ -51,12 +54,16 @@
 				<br>
 				<div>
 					<h4>결제수단</h4>
-					<label><input type="radio" name="setle_mth" value="카드"
-						onclick="div_OnOff(this.value,'selectCard');">카드</label> <label><input
-						type="radio" name="setle_mth" value="무통장입금"
-						onclick="div_OnOff(this.value,'selectDeposit');">무통장입금</label> <label><input
-						type="radio" name="setle_mth" value="간편결제"
-						onclick="div_OnOff(this.value,'selectPay');">간편결제</label>
+					<label><button
+							class="btn btn-outline-dark btn-block rounded-0 mt-4"
+							name="setle_mth" value="카드"
+							onclick="div_OnOff(this.value,'selectCard');">카드</button></label> <label><button
+							class="btn btn-outline-dark btn-block rounded-0 mt-4"
+							name="setle_mth" value="무통장입금"
+							onclick="div_OnOff(this.value,'selectDeposit');">무통장입금</button></label> <label><button
+							class="btn btn-outline-dark btn-block rounded-0 mt-4"
+							name="setle_mth" value="간편결제"
+							onclick="div_OnOff(this.value,'selectPay');">간편결제</button></label>
 				</div>
 
 				<div id="selectCard" style="display: none">
@@ -131,88 +138,84 @@
 </body>
 
 <script type="text/javascript">
-	$(document).ready(
-			function() {
+	$(document)
+			.ready(
+					function() {
+						addressNameDisplay();
+						$(document)
+								.on(
+										"click",
+										".namelist",
+										function() {
 
-				var email = $("#email").val();
+											var email = $("#email").val();
+											var idx = $(this).attr('data-idx');
 
-				console.log(email);
-				$.ajax({
-					type : 'POST',
-					url : 'payment',
+											$
+													.ajax({
+														type : 'POST',
+														url : 'payment',
 
-					data : {
-						email : email
-					},
-					success : function(result) {
-						
-						
-						for (var i = 0; i < result.length; i++) {
-							var ncm = result[i].delivery_adbk_ncm;
-							$("#adress_name").append(
-									"<div class='namelist' style = 'display : inline' data-idx='"+i+"'>"
-											+ ncm + "</div>");
-							$("#adress_name").append("    ");
-						}
-					
+														data : {
+															email : email
+														},
+														success : function(
+																result) {
+															var name = result[idx].delivery_adbk_ncm;
+															var telnum = result[idx].delivery_place_tlnum;
+															var address = result[idx].delivery_place_adres;
+															var address_detail = result[idx].delivery_place_adres_detail;
+															$(
+																	"#delivery_adbk_ncm")
+																	.val(name);
+															$(
+																	"#delivery_place_tlnum")
+																	.val(telnum);
+															$(
+																	"#delivery_place_adres")
+																	.val(
+																			address);
+															$(
+																	"#delivery_place_adres_detail")
+																	.val(
+																			address_detail);
 
-					},
-					error : function(request, status, error) {
+														},
+														error : function(
+																request,
+																status, error) {
 
-						console.log(error);
-					}
+															console.log(error);
+														}
 
-				});
+													});
+										});
 
-				$(document).on("click", ".namelist", function() {
+						$("#delivery_adbk_info").click(function() {
+							var formData = $('#adbkData').serialize();
 
-					var email = $("#email").val();
-						var idx = $(this).attr('data-idx');
-						
-					$.ajax({
-						type : 'POST',
-						url : 'payment',
+							console.log(formData);
+							$.ajax({
+								type : "POST",
+								url : "order",
+								data : formData,
+								success : function(result) {
+									$("#added_address_name").empty();
+									addressNameDisplay();
+								},
+								error : function(request, status, error) {
+									console.log(error);
+								}
+							});
+						});
 
-						data : {
-							email : email
-						},
-						success : function(result) {
-							var name = result[idx].delivery_adbk_ncm;
-							var telnum = result[idx].delivery_place_tlnum;
-							var address = result[idx].delivery_place_adres;
-							var address_detail = result[idx].delivery_place_adres_detail;
-							$("#delivery_adbk_ncm").val(name);
-							$("#delivery_place_tlnum").val(telnum);
-							$("#delivery_place_adres").val(address);
-							$("#delivery_place_adres_detail").val(address_detail);
-
-
-						},
-						error : function(request, status, error) {
-
-							console.log(error);
-						}
-
+						$("#new_address").click(function() {
+							$("#delivery_adbk_ncm").val("");
+							$("#delivery_place_tlnum").val("");
+							$("#delivery_place_adres").val("");
+							$("#delivery_place_adres_detail").val("");
+						});
 					});
-				});
-
-				$("#delivery_adbk_info").click(function() {
-					var formData = $('#adbkData').serialize();
-
-					console.log(formData);
-					$.ajax({
-						type : "POST",
-						url : "order",
-						data : formData,
-						success : function(result) {
-							console.log(result);
-						},
-						error : function(request, status, error) {
-							console.log(error);
-						}
-					});
-				});
-			});
 	function div_OnOff(value, id) {
 		if (value == "카드") {
 			document.getElementById("selectCard").style.display = "";
@@ -228,6 +231,36 @@
 			document.getElementById("selectPay").style.display = "";
 		}
 
+	}
+
+	function addressNameDisplay() {
+		var email = $("#email").val();
+
+		console.log(email);
+		$.ajax({
+			type : 'POST',
+			url : 'payment',
+
+			data : {
+				email : email
+			},
+			success : function(result) {
+
+				for (var i = 0; i < result.length; i++) {
+					var ncm = result[i].delivery_adbk_ncm;
+					$("#added_address_name").append(
+							"<div class='namelist' style = 'display : inline' data-idx='"+i+"'><button class='btn btn-outline-secondary'>"
+									+ ncm + "</button></div>");
+					$("#added_address_name").append("    ");
+				}
+
+			},
+			error : function(request, status, error) {
+
+				console.log(error);
+			}
+
+		});
 	}
 </script>
 </html>
