@@ -62,13 +62,16 @@ public class AdminDAOImpl implements AdminDAO {
 		
 		return Session.selectList(NS+".getoption", info);
 	}
+	
+	@Override
+	public void specific_optiondelete(GoodsOptionDTO goodsOptionDTO) {
+		Session.delete(NS+".specificoptiondelete", goodsOptionDTO);
+	}
 
 	@Override
-	public void specific_optiondelete(int rownum) {
-		System.out.println(rownum);
-		System.out.println("확인1");
-		Session.delete(NS+".specificoptiondelete", rownum);
-		System.out.println("확인2");
+	public void optioninput(GoodsOptionDTO dto) {
+		Session.insert(NS+".optioninput", dto);
+		
 	}
 	
 }

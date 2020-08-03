@@ -84,13 +84,20 @@ public class AdminController {
 	
 //	여기서 부터 ajax
 	
+	@ResponseBody
+	@RequestMapping(value = "/optioninput", method = RequestMethod.POST)
+	public void optioninput(GoodsOptionDTO dto) {
+		
+		service.optioninput(dto);
+		
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/optiondelete", method = RequestMethod.GET)
 	public void optiondelete(HttpServletRequest request) {
-		System.out.println(request.getParameter("color"));
-		System.out.println(request.getParameter("size"));
-//		service.specific_optiondelete(rownum);
+		
+		service.specific_optiondelete(new GoodsOptionDTO(request.getParameter("no"), -1, -1, request.getParameter("size"), request.getParameter("color")));
 		
 	}
 	
