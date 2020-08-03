@@ -109,6 +109,8 @@ goods_qtys NUMBER NOT NULL,
 goods_untpc NUMBER NOT NULL
 );
 
+INSERT INTO tbl_cart VALUES (1, 'dnsrjswnd@naver.com', 'g018', '/goods_img/g018/g018_main.JPG', '블랙 순면 마스크', 'black', 'S',100, 11900)
+
 CREATE SEQUENCE seq_tbl_cart START WITH 1 increment BY 1;
 
 COMMIT;
