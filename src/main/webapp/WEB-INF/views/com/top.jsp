@@ -3,9 +3,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+	
+	let btnCart = document.getElementById('btnCart');
+	
+	// 장바구니 버튼 클릭시.
+	btnCart.addEventListener('click', (evnet) => {
+		cartShow();
+	});
+});
+</script>
+
 <div class="clearfix text-secondary">
 	<span class="float-left">
-		<a href="#" class="btn">장바구니</a>
+		<span class="btn text-secondary" id="btnCart">장바구니</span>
 		
 	</span>
 	<span class="float-right">
