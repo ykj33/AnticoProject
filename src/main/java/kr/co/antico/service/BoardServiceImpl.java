@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.antico.persistence.BoardDAO;
 import kr.co.domain.BoardDTO;
+import kr.co.domain.CartDTO;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
 
@@ -88,5 +89,25 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDTO> forImg() {
 		// TODO Auto-generated method stub
 		return boardDao.forImg();
+	}
+
+	@Override
+	public void addcart(CartDTO dto) {
+		boardDao.addcart(dto);
+	}
+
+	@Override
+	public List<CartDTO> getCartList(String email) {
+		return boardDao.getCartList(email);
+	}
+
+	@Override
+	public Integer updateCart(CartDTO dto) {
+		return boardDao.updateCart(dto);
+	}
+
+	@Override
+	public Integer deleteCart(CartDTO dto) {
+		return boardDao.deleteCart(dto);
 	}
 }

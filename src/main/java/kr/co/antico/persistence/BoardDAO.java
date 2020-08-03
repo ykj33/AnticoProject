@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.domain.BoardDTO;
+import kr.co.domain.CartDTO;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
 
@@ -24,5 +25,13 @@ public interface BoardDAO {
 	List<GoodsOptionDTO> goodsSizes(String goods_no);
 
 	GoodsOptionDTO goodsUntpc(Map<String, String> map);
+
+	void addcart(CartDTO dto);
+
+	List<CartDTO> getCartList(String email);
+
+	Integer updateCart(CartDTO dto);
+
+	Integer deleteCart(CartDTO dto);
 
 }

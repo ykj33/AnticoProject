@@ -94,7 +94,6 @@ public class BoardController {
 		BoardDTO dto = boardService.read(godto);
 		dto.setGoods_color(godto.getGoods_color());
 		dto.setGoods_size(godto.getGoods_size());
-		System.out.println(dto);
 		return dto;
 	}
 	
@@ -103,8 +102,35 @@ public class BoardController {
 	public List<CartDTO> addcart(@RequestBody CartDTO dto) {
 		System.out.println(dto);
 		
+		//LoginDTO login = (LoginDTO) session.getAttribute("login");
 		List<CartDTO> list = new ArrayList<CartDTO>();
-		list.add(dto);
+
+		boardService.addcart(dto);
+				
+		list = boardService.getCartList(dto.getEmail());
+		System.out.println(">> /addcart");
 		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getcartlist", method = RequestMethod.GET)
+	public List<CartDTO> getCartList(String email) {
+		List<CartDTO> list = new ArrayList<CartDTO>();
+		System.out.println(">> /getcartlist " + email);
+		list = boardService.getCartList(email);
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/updatecart", method = RequestMethod.POST)
+	public Integer updateCart(@RequestBody CartDTO dto) {
+		return boardService.updateCart(dto);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deletecart", method = RequestMethod.POST)
+	public Integer deleteCart(@RequestBody CartDTO dto) {
+		System.out.println(">> /deletecart " + dto);
+		return boardService.deleteCart(dto);
 	}
 }

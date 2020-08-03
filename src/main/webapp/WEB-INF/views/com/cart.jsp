@@ -3,6 +3,7 @@
 		document.addEventListener('DOMContentLoaded', () => {
 
 			data_cart = [];
+			data_email = '${login.email }';
 			let hide = document.getElementById('hide');
 			let list = document.getElementById('list');
 			let totalPrice = document.getElementById('totalPrice');
@@ -24,17 +25,28 @@
 				strNum = strNum.replace(',', '');
 
 				if(strClass.indexOf('minus') > -1) {
-					qtys.innerHTML = Number(strNum) - 1;
-					price.innerHTML = numberWithCommas((Number(strNum) - 1) * Number(data_u_price));
-					if(qtys.innerHTML == '0') {
-						let row = qtysRow.parentNode.parentNode;
+					let row = qtysRow.parentNode.parentNode;
+					let cartId = row.getAttribute('data-id');
+					let result = Number(strNum) - 1;
+					qtys.innerHTML = result;
+					price.innerHTML = numberWithCommas(result * Number(data_u_price));
+					
+					if(result > 0) {
+						updatecart(cartId, result);
+					} else {
+						deletecart(cartId);
 						row.remove();
 					}
 				}
 
 				if(strClass.indexOf('plus') > -1) {
-					qtys.innerHTML = Number(strNum) + 1;
-					price.innerHTML = numberWithCommas((Number(strNum) + 1) * Number(data_u_price));
+					let row = qtysRow.parentNode.parentNode;
+					let cartId = row.getAttribute('data-id');
+					let result = Number(strNum) + 1;
+					qtys.innerHTML = result;
+					price.innerHTML = numberWithCommas(result * Number(data_u_price));
+
+					updatecart(cartId, result);
 				}
 
 				// 장바구 아이템의 총액을 계산후 표시.
@@ -45,17 +57,16 @@
 		// 장바구 아이템의 총액을 계산후 표시.
 		function cartTotalPrice() {
 			let prices = list.getElementsByClassName('price');
-				let sumPrice = 0;
-				for (let i = 0; i < prices.length; i++) {
-					const element = prices[i];
-					let strPrice = element.innerHTML;
-					let numPrice = strPrice.replace(',', '');
-					if(Number(numPrice) !== NaN) {
-						sumPrice += Number(numPrice);
-					}
+			let sumPrice = 0;
+			for (let i = 0; i < prices.length; i++) {
+				const element = prices[i];
+				let strPrice = element.innerHTML;
+				let numPrice = strPrice.replace(',', '');
+				if(Number(numPrice) !== NaN) {
+					sumPrice += Number(numPrice);
 				}
-				// let re = new RegExp('/\B(?=(\d{3})+(?!\d))/g');
-				totalPrice.innerHTML = numberWithCommas(sumPrice);
+			}
+			totalPrice.innerHTML = numberWithCommas(sumPrice);
 		};
 
 		// 자리수 표시(3자리 마다, 표시)
@@ -64,7 +75,18 @@
 			return strNum;
 		};
 
-		function addCart(data_option) {
+		function addCart(data_option, data_email) {
+			if(data_email == '') {
+				alert('장바구니는 로그인후 이용 가능합니다.');
+				console.log('data_email ', data_email );
+				location.href = '/member/login';
+				return;
+			}
+
+			if(data_cart.length === 0) {
+				ajaxGetCartList(data_email);
+			}
+			
 			let idx = data_cart.length;
 			// 장바구니에 중복되는 상품이 있는지 확인함.
 			for (let i = 0; i < idx; i++) {
@@ -81,7 +103,7 @@
 			// 새로운 상품 data
 			let newCart = {
 				cart_id : 0,
-				email : '${login.email }',
+				email : data_email,
 				goods_no : data_option.goods_no,
 				goods_img : '${dto.goods_img }',
 				goods_nm : '${dto.goods_nm }',
@@ -92,6 +114,31 @@
 			};
 
 			// ajax 장바구니 추가.
+			ajaxAddCart(newCart);
+			
+			// 장바구 아이템의 총액을 계산후 표시.
+			cartTotalPrice();
+
+			// 장바구니 리스트 가져옴.
+			//ajaxGetCartList(data_email);
+			
+			// 장바구니 열림
+			cartShow();
+		};
+
+		// 장바구니 열기 
+		function cartShow() {	
+			window.scrollTo(0, 0);
+			$('.collapse').collapse('show');
+		};
+
+		// 장바구니 닫기 
+		function cartHide() {
+			$('.collapse').collapse('hide');
+		}
+
+		// 새로운 상품을 카트에 등록 
+		function ajaxAddCart(newCart) {
 			axios({
 				method: 'post',
 				url: '/board/addcart',
@@ -109,51 +156,114 @@
 					// 업데이트 된 list를 localdata data_cart에 추가한다.
 					data_cart = response.data;
 
-					let str = ''
-
-					for (let i = 0; i < data_cart.length; i++) {
-						const cart = data_cart[i];
-
-						// 동적 테이블 생성
-						str += ''
-						+'<div class="row ml-4 mb-2 text-center">'
-						+	'<div class="col-md-1"><img src="/displayfile?img_name='+cart.goods_img+'" width="60px" height="60px"></div>'
-						+	'<div class="col-md-5">'+cart.goods_nm+'</div>'
-						+	'<div class="col-md-1">'+cart.goods_size+'</div>'
-						+	'<div class="col-md-1">'+cart.goods_color+'</div>'
-						+	'<div class="col-md-2 line">'
-						+		'<div class="row">'
-						+			'<div class="col"><p class="btn btn-block minus">-</p></div>'
-						+			'<div class="col mt-2"><p class="qtys">'+cart.goods_qtys+'</p></div>'
-						+			'<div class="col"><p class="btn btn-block plus text-muted">+</p></div>'
-						+		'</div>'
-						+	'</div>'
-						+	'<div class="col-md-2 price" data-u-price="'+cart.goods_untpc+'">'+numberWithCommas(cart.goods_untpc * cart.goods_qtys)+'</div>'
-						+'</div>';
-						
-					}
-
-					list.innerHTML += str;
- 					// 장바구 아이템의 총액을 계산후 표시.
-					cartTotalPrice();
+					// 장바구니 리스트 업데이트 HTML
+					cartUpdateHTML();
 				}
 				
 			});
+		}
+
+		// 장바구니 등록된 리스트 가져오기.
+		function ajaxGetCartList(data_email) {
+			if(data_email == '') {
+				alert('장바구니는 로그인후 이용 가능합니다.');
+				window.location.href = '/member/login';
+				return;
+			}
 			
-			// 장바구 아이템의 총액을 계산후 표시.
+			// ajax
+			axios({
+				  method: 'get',
+				  url: '/board/getcartlist',
+				  params: {
+					  	email: data_email
+					}, 
+				}).then(function (response) {
+				    console.log('response.data', response.data);
+				    data_cart = response.data;
+
+				    if(response.data) {
+						// 업데이트 된 list를 localdata data_cart에 추가한다.
+						data_cart = response.data;
+
+						// 장바구니 리스트 업데이트 HTML
+						cartUpdateHTML();
+					}
+				});
+		}
+
+		// 장바구니 상품 수량 변경.
+		function updatecart(cart_id, goods_qtys) {
+			let cart = {
+					cart_id : cart_id, email : '', goods_no : '', goods_img : '', goods_nm : '', goods_color : '', goods_size : '',
+					goods_qtys : goods_qtys, goods_untpc : 0
+			};
+			
+			axios({
+				method: 'post',
+				url: '/board/updatecart',
+				headers: {
+					"Content-Type": "application/json",
+					"X-HTTP-Method-Override": "POST"
+				},
+				data: JSON.stringify(cart),
+				responseType: 'text'
+			}).then(function (response) {
+				console.log('updatecart >> ', response.data)
+			});
+		}
+
+		// 장바구니 상품 수량 변경.
+		function deletecart(cart_id) {
+			let cart = {
+					cart_id : cart_id, email : '', goods_no : '', goods_img : '', goods_nm : '', goods_color : '', goods_size : '',
+					goods_qtys : 0, goods_untpc : 0
+			};
+			
+			axios({
+				method: 'post',
+				url: '/board/deletecart',
+				headers: {
+					"Content-Type": "application/json",
+					"X-HTTP-Method-Override": "POST"
+				},
+				data: JSON.stringify(cart),
+				responseType: 'text'
+			}).then(function (response) {
+				console.log('deletecart >> ', response.data);
+				ajaxGetCartList(data_email);
+			});
+		}
+
+		// 장바구니 리스트 업데이트 HTML
+		function cartUpdateHTML() {
+			let str = ''
+
+			for (let i = 0; i < data_cart.length; i++) {
+				const cart = data_cart[i];
+
+				// 동적 테이블 생성
+				str += ''
+				+'<div class="row ml-4 mb-2 text-center" data-id="'+cart.cart_id+'">'
+				+	'<div class="col-md-1"><img src="/displayfile?img_name='+cart.goods_img+'" width="60px" height="60px"></div>'
+				+	'<div class="col-md-5">'+cart.goods_nm+'</div>'
+				+	'<div class="col-md-1">'+cart.goods_size+'</div>'
+				+	'<div class="col-md-1">'+cart.goods_color+'</div>'
+				+	'<div class="col-md-2 line">'
+				+		'<div class="row">'
+				+			'<div class="col"><p class="btn btn-block minus">-</p></div>'
+				+			'<div class="col mt-2"><p class="qtys">'+cart.goods_qtys+'</p></div>'
+				+			'<div class="col"><p class="btn btn-block plus text-muted">+</p></div>'
+				+		'</div>'
+				+	'</div>'
+				+	'<div class="col-md-2 price" data-u-price="'+cart.goods_untpc+'">'+numberWithCommas(cart.goods_untpc * cart.goods_qtys)+'</div>'
+				+'</div>';
+				
+			}
+
+			list.innerHTML = str;
+				// 장바구 아이템의 총액을 계산후 표시.
 			cartTotalPrice();
-
-			// 장바구니 열림
-			cartShow();
-		};
-
-		function cartShow() {
-			window.scrollTo(0, 0);
-			$('.collapse').collapse('show');
-		};
-
-		function cartHide() {
-			$('.collapse').collapse('hide');
 		}
 	</script>
 	

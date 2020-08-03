@@ -9,6 +9,7 @@
 </head>
 <body>
 	<!--유지보수 하기 쉽게 파일 불러서 사용  -->
+	<%@ include file="../com/cart.jsp" %>
 	<%@ include file="../com/top.jsp"%>
 	<%@ include file="../com/title.jsp"%>
 

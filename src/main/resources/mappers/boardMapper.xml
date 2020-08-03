@@ -59,6 +59,26 @@
 		FROM tbl_goods_option 
 		WHERE goods_no = #{goods_no} and goods_color = #{goods_color} and goods_size = #{goods_size}
 	</select>
+	
+	<insert id="addcart">
+		INSERT INTO tbl_cart (
+			cart_id, email, goods_no, goods_img, goods_nm, goods_color, goods_size, goods_qtys, goods_untpc
+		) values (
+			seq_tbl_cart.nextval, #{email }, #{goods_no }, #{goods_img }, #{goods_nm }, #{goods_color }, #{goods_size }, #{goods_qtys }, #{goods_untpc }
+		)
+	</insert>
+	
+	<select id="getcartlist" resultType="CartDTO">
+		SELECT * FROM tbl_cart WHERE email = #{email }
+	</select>
+	
+	<update id="updatecart">
+		UPDATE tbl_cart SET goods_qtys = #{goods_qtys } WHERE cart_id = #{cart_id }
+	</update>
+	
+	<delete id="deletecart">
+		DELETE FROM tbl_cart WHERE cart_id = #{cart_id }
+	</delete>
 </mapper>
 
 

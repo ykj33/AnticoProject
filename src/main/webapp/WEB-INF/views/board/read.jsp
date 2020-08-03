@@ -6,7 +6,6 @@
 <head>
 	<title>Antico</title>
 	<%@ include file="../com/header.jsp"%>
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
 		document.addEventListener("DOMContentLoaded", () => {
 			
@@ -16,7 +15,8 @@
 					, goods_color: '${dto.goods_colors[0].goods_color }' 
 					, goods_size: '${dto.goods_sizes[0].goods_size }'
 					, goods_untpc: '${dto.goods_untpc }'
-				};
+			};
+			
 
 			let btnCollapse = document.getElementById('btnCollapse');
 			let option = document.getElementById('option');
@@ -26,11 +26,11 @@
 
 			// 구매 버튼 
 			btnCollapse.addEventListener('click', () => {
-				addCart(data_option);
+				addCart(data_option, data_email = '${login.email }');
 			});
 
 			// 상품에 option의 버튼들을 클릭시.
-			option.addEventListener('click', (event) => {
+			option.addEventListener('click', (event) => {				
 				// console.log(event.target);
 				let element = event.target;
 				let strClass = element.getAttribute('class');
@@ -65,10 +65,13 @@
 				// ajax
 				axios({
 					  method: 'get',
-					  url: '/board/option?goods_color='+data_option.goods_color+'&goods_size='+data_option.goods_size+'&goods_no='+data_option.goods_no,
-						
-					})
-					  .then(function (response) {
+					  url: '/board/option',
+					  params: {
+						  	goods_no: data_option.goods_no,
+						  	goods_color: data_option.goods_color,
+						  	goods_size: data_option.goods_size
+						}, 
+					}).then(function (response) {
 					    console.log('response.data', response.data);
 						let dto = response.data;
 						console.log('data', dto);
