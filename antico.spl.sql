@@ -122,3 +122,24 @@ ALTER TABLE tbl_cart rename column goods_amount TO goods_qtys;
 --DROP TABLE tbl_goods
 --DROP TABLE tbl_member
 --DROP TABLE tbl_cart
+
+--택배 업체
+CREATE TABLE tbl_delivery_company (
+delivery_bizrno varchar2(12) primary key,
+delivery_company_nm varchar2(21) not null,
+delivery_company_tlnum number(10) not null,
+delivery_company_zip number(7) not null,
+delivery_company_adres varchar2(30) not null
+);
+
+INSERT INTO tbl_delivery_company VALUES ('316-46-00107', '대한통운', 0212345678, 123456, '서울시 강남구');
+INSERT INTO tbl_delivery_company VALUES ('316-46-00128', '로젠택배', 0287654321, 654321, '서울시 강동구');
+
+-- 배송
+CREATE TABLE tbl_delivery (
+delivery_no number(9) primary key,
+delivery_bizrno varchar2(12) references tbl_delivery_company(delivery_bizrno),
+delivery_cost number(4),
+delivery_date date
+);
+
