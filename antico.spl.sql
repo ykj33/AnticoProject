@@ -143,3 +143,6 @@ delivery_cost number(4),
 delivery_date date
 );
 
+CREATE SEQUENCE seq_tbl_delivery START WITH 331000001 increment BY 1;
+
+ALTER TABLE tbl_order MODIFY (order_pro_sttus_code DEFAULT '배송 준비 중');
