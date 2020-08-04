@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.co.antico.persistence.OrderDAO;
 import kr.co.domain.CartDTO;
 import kr.co.domain.DeliveryAdbkDTO;
+import kr.co.domain.DeliveryDTO;
 import kr.co.domain.OrderDTO;
 import kr.co.domain.OrderDetailDTO;
 
@@ -45,4 +46,11 @@ public class OrderServiceImpl implements OrderService {
 		
 		return orderDao.orderList(email);
 	}
+	
+	@Override
+	public void insertDelivery() {
+		orderDao.insertDelivery();
+		
+	}
+	
 }

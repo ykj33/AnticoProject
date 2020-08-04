@@ -54,4 +54,10 @@ public class OrderDAOImpl implements OrderDAO {
 		
 		return oSession.selectList(NS + ".orderlist", email);
 	}
+	
+	@Override
+	public void insertDelivery() {
+		oSession.insert(NS + ".insertdelivery");
+		
+	}
 }

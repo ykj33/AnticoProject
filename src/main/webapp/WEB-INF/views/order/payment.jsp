@@ -26,7 +26,7 @@
 				<input type="hidden" id="email" class="form-control" name="email"
 					value="${login.email}" readonly><br>
 
-				<button id="new_address" class="btn btn-outline-secondary">새
+				<button id="new_address" class="btn btn-outline-secondary rounded-0">새
 					주소지 추가</button>
 
 				<div id="added_address_name">
@@ -55,56 +55,61 @@
 				<button id="delivery_adbk_info"
 					class="btn btn-outline-dark btn-block rounded-0 mt-4">배송정보저장</button>
 				<br>
-				<div>
-					<h4>결제수단</h4>
-					<label><button
-							class="btn btn-outline-dark btn-block rounded-0 mt-4"
-							name="setle_mth" value="카드"
-							onclick="div_OnOff(this.value,'selectCard');">카드</button></label> <label><button
-							class="btn btn-outline-dark btn-block rounded-0 mt-4"
-							name="setle_mth" value="무통장입금"
-							onclick="div_OnOff(this.value,'selectDeposit');">무통장입금</button></label> <label><button
-							class="btn btn-outline-dark btn-block rounded-0 mt-4"
-							name="setle_mth" value="간편결제"
-							onclick="div_OnOff(this.value,'selectPay');">간편결제</button></label>
-				</div>
-
-				<div id="selectCard" style="display: none">
-					카드를 선택하세요 <select class="custom-select" name="selectCard">
-						<option value="삼성카드">삼성카드</option>
-						<option value="우리카드">우리카드</option>
-						<option value="신한카드">신한카드</option>
-						<option value="하나카드">하나카드</option>
-					</select>
-				</div>
-				<div id="selectDeposit" style="display: none">
-					입금할 계좌를 선택하세요 <select class="custom-select" name="selectDeposit">
-						<option value="우리은행">우리은행</option>
-						<option value="신한은행">신한은행</option>
-						<option value="하나은행">하나은행</option>
-						<option value="농협은행">농협은행</option>
-					</select>
-				</div>
-				<div id="selectPay" style="display: none">
-					간편 결제 방법을 선택하세요 <select class="custom-select" name="selectPay">
-						<option value="삼성페이">삼성페이</option>
-						<option value="페이코">페이코</option>
-						<option value="카카오페이">카카오페이</option>
-					</select>
-				</div>
-			</div>
-
-			<div class="col-lg-5">
-				<div id="goods_list" class = "row"></div>
-				<div>
-					<div>
-						<h4 style="display: inline">총액</h4>
-						<h4 style="float: right; display: inline">28,800원</h4>
+				
+					<div id = "selectHow">
+						<h4>결제수단</h4>
+						<label><button
+								class="btn btn-outline-dark btn-block rounded-0 mt-4 howToPay"
+								name="setle_mth" value="카드"
+								onclick="div_OnOff(this.value,'selectCard');">카드</button></label> <label><button
+								class="btn btn-outline-dark btn-block rounded-0 mt-4 howToPay"
+								name="setle_mth" value="무통장입금"
+								onclick="div_OnOff(this.value,'selectDeposit');">무통장입금</button></label>
+						<label><button
+								class="btn btn-outline-dark btn-block rounded-0 mt-4 howToPay"
+								name="setle_mth" value="간편결제"
+								onclick="div_OnOff(this.value,'selectPay');">간편결제</button></label>
 					</div>
 
+					<div id="selectCard" style="display: none">
+						카드를 선택하세요 <select class="custom-select" name="selectCard">
+							<option value="삼성카드">삼성카드</option>
+							<option value="우리카드">우리카드</option>
+							<option value="신한카드">신한카드</option>
+							<option value="하나카드">하나카드</option>
+						</select>
+					</div>
+					<div id="selectDeposit" style="display: none">
+						입금할 계좌를 선택하세요 <select class="custom-select" name="selectDeposit">
+							<option value="우리은행">우리은행</option>
+							<option value="신한은행">신한은행</option>
+							<option value="하나은행">하나은행</option>
+							<option value="농협은행">농협은행</option>
+						</select>
+					</div>
+					<div id="selectPay" style="display: none">
+						간편 결제 방법을 선택하세요 <select class="custom-select" name="selectPay">
+							<option value="삼성페이">삼성페이</option>
+							<option value="페이코">페이코</option>
+							<option value="카카오페이">카카오페이</option>
+						</select>
+					</div>
+			</div>
+
+			<!-- 구매한 상품 리스트 -->
+			<div class="col-lg-5">
+				<div id="goods_list" class="row"
+					style="border-bottom: 1px black solid; padding: 10px"></div>
+				<div>
+					<div id="totalPrice" style="padding: 10px"></div>
+
 					<div>
-						<button class="btn btn-outline-dark btn-block rounded-0 mt-4">상품
-							결제</button>
+						<!-- <form action="commit" method="POST">  -->
+						<input class="form-control" name="email" value="${login.email}"
+							hidden> <input type="button" id="commit"
+							class="btn btn-outline-dark btn-block rounded-0 mt-4"
+							value="상품결제">
+						<!-- </form> -->
 					</div>
 				</div>
 			</div>
@@ -117,16 +122,11 @@
 </body>
 
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
+var choicePay = "";
+	$(document).ready(function() {
 						addressNameDisplay();
 						cartList();
-						$(document)
-								.on(
-										"click",
-										".namelist",
-										function() {
+						$(document).on("click",	".namelist",function() {
 
 											var email = $("#email").val();
 											var idx = $(this).attr('data-idx');
@@ -195,17 +195,69 @@
 							$("#delivery_place_adres").val("");
 							$("#delivery_place_adres_detail").val("");
 						});
+						
+						$("#commit").click(function() {
+							var totalPrice = $("#tPrice").html().replace('원', '');
+							console.log("total" ,totalPrice);
+							
+							
+							console.log("pay", choicePay)
+							if(choicePay == "") {
+										alert("결제 방법을 선택해주세요.");
+										return;
+								}
+							var email = $("#email").val();
+							var OrderDTO = {delivery_adbk_no: 0,
+									delivery_no: null,
+									email: email,
+									frwll_reason_code: null,
+									order_date: null,
+									order_no: 0,
+									order_pro_sttus_code: null,
+									order_totamt:  Number(totalPrice),
+									setle_mth: choicePay};
+							$.ajax({
+										type : 'POST',
+										url : 'commit',
+
+/* 										data : {
+											email : email,
+											totalPrice : Number(totalPrice),
+											howToPay : howToPay
+										}, */
+										headers: {
+											"Content-Type": "application/json",
+											"X-HTTP-Method-Override": "POST"
+										},
+										data: JSON.stringify(OrderDTO),
+										dataType: 'text',
+										success : function(result) {
+											console.log(result);
+
+										},
+										error : function(request, status, error) {
+
+											console.log(error);
+										}
+
+									});
+							
+							});
+							
 					});
 	function div_OnOff(value, id) {
 		if (value == "카드") {
+			choicePay = "카드";
 			document.getElementById("selectCard").style.display = "";
 			document.getElementById("selectDeposit").style.display = "none";
 			document.getElementById("selectPay").style.display = "none";
 		} else if (value == "무통장입금") {
+			choicePay = "무통장입금";
 			document.getElementById("selectCard").style.display = "none";
 			document.getElementById("selectDeposit").style.display = "";
 			document.getElementById("selectPay").style.display = "none";
 		} else if (value == "간편결제") {
+			choicePay = "간편결제";
 			document.getElementById("selectCard").style.display = "none";
 			document.getElementById("selectDeposit").style.display = "none";
 			document.getElementById("selectPay").style.display = "";
@@ -213,43 +265,55 @@
 
 	}
 
+	
+
 	function cartList() {
 		var email = $("#email").val();
 		$.ajax({
-			type : 'POST',
-			url : 'payment',
-			data : {
-				email : email
-			},
-			success : function(result) {
-				console.log("map")
+					type : 'POST',
+					url : 'payment',
+					data : {
+						email : email
+					},
+					success : function(result) {
+						console.log("map")
 
-				for (var i = 0; i < result["orderList"].length; i++) {
+						for (var i = 0; i < result["orderList"].length; i++) {
 
-					/* var img = result["orderList"][i].goods_img; */
-					var name = result["orderList"][i].goods_nm;
-					var quantity = result["orderList"][i].goods_qtys;
-					var price = result["orderList"][i].goods_untpc;
+							var img = result["orderList"][i].goods_img;
+							var name = result["orderList"][i].goods_nm;
+							var quantity = result["orderList"][i].goods_qtys;
+							var price = result["orderList"][i].goods_untpc;
+							var totalPrice = 0;
+							totalPrice += price;
 
-					$("#goods_list").append(
-							"<div class='goodsList col-md-4' style = 'display : inline' data-idx='"+i+"'>"
-									+ name + "</div>");
-					$("#goods_list").append(
-							"<div class='goodsList col-md-4' style = 'display : inline' data-idx='"+i+"'>"
-									+ quantity + "</div>");
-					$("#goods_list").append(
-							"<div class='goodsList col-md-4' style = 'display : inline; float : right' data-idx='"+i+"'>"
-									+ price + "</div>");
+							$("#goods_list")
+									.append(
+											"<div class='goodsList col-md-3' style = 'display : inline' data-idx='"+i+"'><img id='main' src='/displaythumb?img_name="
+													+ img + "'/></div>");
+							$("#goods_list").append(
+									"<div class='goodsList col-md-4' style = 'display : inline' data-idx='"+i+"'>"
+											+ name + "</div>");
+							$("#goods_list").append(
+									"<div class='goodsList col-md-2' style = 'display : inline' data-idx='"+i+"'>"
+											+ quantity + "</div>");
+							$("#goods_list")
+									.append(
+											"<div class='goodsList col-md-2' style = 'display : inline; text-align : right' data-idx='"+i+"'>"
+													+ price + "</div>");
+							$("#totalPrice").append(
+									"<h4 style='display: inline'>총액</h4><h4 id = 'tPrice' style='float: right; display: inline'>"
+											+ totalPrice + "원</h4>");
 
-				}
+						}
 
-			},
-			error : function(request, status, error) {
+					},
+					error : function(request, status, error) {
 
-				console.log(error);
-			}
+						console.log(error);
+					}
 
-		});
+				});
 	}
 
 	function addressNameDisplay() {
@@ -273,7 +337,7 @@
 							console.log(ncm);
 							$("#added_address_name")
 									.append(
-											"<div class='namelist' style = 'display : inline' data-idx='"+i+"'><button class='btn btn-outline-secondary'>"
+											"<div class='namelist' style = 'display : inline' data-idx='"+i+"'><button class='btn btn-outline-secondary rounded-0'>"
 													+ ncm + "</button></div>");
 							$("#added_address_name").append("    ");
 						}

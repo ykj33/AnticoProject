@@ -4,13 +4,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="o.r.d">
 
+	<insert id="deliveryinsert">
+		INSERT INTO tbl_delivery (delivery_bizrno, delivery_cost, delivery_date)
+		VALUES ('316-46-00107', 2500, sysdate+3)
+	</insert>
+
 	<select id="orderlist" resultType="CartDTO">
-		SELECT * FROM tbl_cart WHERE email = #{email}
+		SELECT * FROM tbl_cart WHERE
+		email = #{email}
 	</select>
 
 	<select id="adbkconfirm" resultType="DeliveryAdbkDTO">
-		SELECT * FROM tbl_delivery_adbk WHERE email = #{email} AND delivery_adbk_ncm
-		= #{delivery_adbk_ncm}
+		SELECT * FROM
+		tbl_delivery_adbk WHERE email = #{email} AND delivery_adbk_ncm
+		=
+		#{delivery_adbk_ncm}
 	</select>
 
 

@@ -20,4 +20,6 @@ public interface OrderDAO {
 
 	List<CartDTO> orderList(String email);
 
+	void insertDelivery();
+
 }
