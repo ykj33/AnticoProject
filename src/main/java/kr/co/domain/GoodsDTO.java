@@ -15,6 +15,8 @@ public class GoodsDTO implements Serializable {
 	private String goods_img;
 	private String goods_info_img;
 	private String goods_info_text;
+	private String application_dscnt_rate;
+
 
 	public GoodsDTO() {
 		super();
@@ -115,6 +117,14 @@ public class GoodsDTO implements Serializable {
 		} else if (!goods_no.equals(other.goods_no))
 			return false;
 		return true;
+	}
+
+	public String getApplication_dscnt_rate() {
+		return application_dscnt_rate;
+	}
+
+	public void setApplication_dscnt_rate(String application_dscnt_rate) {
+		this.application_dscnt_rate = application_dscnt_rate;
 	}
 
 }
