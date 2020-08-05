@@ -126,3 +126,24 @@ CREATE SEQUENCE sql_tbl_order START WITH 1 INCREMENT BY 1;
 --할인율 위치를 tbl_order_detail 에서 tbl_goods 로 변경
 ALTER TABLE tbl_goods ADD application_dscnt_rate NUMBER DEFAULT 0;
 ALTER TABLE tbl_order_detail DROP column application_dscnt_rate;
+
+
+--택배 업체
+CREATE TABLE tbl_delivery_company (
+delivery_bizrno varchar2(12) primary key,
+delivery_company_nm varchar2(21) not null,
+delivery_company_tlnum number(10) not null,
+delivery_company_zip number(7) not null,
+delivery_company_adres varchar2(30) not null
+);
+
+INSERT INTO tbl_delivery_company VALUES ('316-46-00107', '대한통운', 0212345678, 123456, '서울시 강남구');
+INSERT INTO tbl_delivery_company VALUES ('316-46-00128', '로젠택배', 0287654321, 654321, '서울시 강동구');
+
+-- 배송
+CREATE TABLE tbl_delivery (
+delivery_no number(9) primary key,
+delivery_bizrno varchar2(12) references tbl_delivery_company(delivery_bizrno),
+delivery_cost number(4),
+delivery_date date
+);
