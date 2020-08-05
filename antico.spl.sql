@@ -88,7 +88,7 @@ goods_size VARCHAR2(30),
 goods_color VARCHAR2(30)
 )
 
-COMMIT
+COMMIT  
 
 --DROP TABLE tbl_order_detail
 --DROP TABLE tbl_order
@@ -109,8 +109,6 @@ goods_qtys NUMBER NOT NULL,
 goods_untpc NUMBER NOT NULL
 );
 
-INSERT INTO tbl_cart VALUES (1, 'dnsrjswnd@naver.com', 'g018', '/goods_img/g018/g018_main.JPG', '블랙 순면 마스크', 'black', 'S',100, 11900)
-
 CREATE SEQUENCE seq_tbl_cart START WITH 1 increment BY 1;
 
 COMMIT;
@@ -123,26 +121,6 @@ ALTER TABLE tbl_cart rename column goods_amount TO goods_qtys;
 --DROP TABLE tbl_member
 --DROP TABLE tbl_cart
 
---택배 업체
-CREATE TABLE tbl_delivery_company (
-delivery_bizrno varchar2(12) primary key,
-delivery_company_nm varchar2(21) not null,
-delivery_company_tlnum number(10) not null,
-delivery_company_zip number(7) not null,
-delivery_company_adres varchar2(30) not null
-);
-
-INSERT INTO tbl_delivery_company VALUES ('316-46-00107', '대한통운', 0212345678, 123456, '서울시 강남구');
-INSERT INTO tbl_delivery_company VALUES ('316-46-00128', '로젠택배', 0287654321, 654321, '서울시 강동구');
-
--- 배송
-CREATE TABLE tbl_delivery (
-delivery_no number(9) primary key,
-delivery_bizrno varchar2(12) references tbl_delivery_company(delivery_bizrno),
-delivery_cost number(4),
-delivery_date date
-);
-
-CREATE SEQUENCE seq_tbl_delivery START WITH 331000001 increment BY 1;
-
-ALTER TABLE tbl_order MODIFY (order_pro_sttus_code DEFAULT '배송 준비 중');
+--할인율 위치를 tbl_order_detail 에서 tbl_goods 로 변경
+ALTER TABLE tbl_goods ADD application_dscnt_rate NUMBER DEFAULT 0;
+ALTER TABLE tbl_order_detail DROP column application_dscnt_rate;
