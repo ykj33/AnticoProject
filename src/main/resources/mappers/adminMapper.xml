@@ -4,6 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="a.d.m">
 
+	<update id="changeorderstatus">
+		update tbl_order set order_pro_sttus_code = #{info} where order_no = #{no}
+	</update>
+
+	<select id="getdeliverylist" resultType="OrderDTO">
+		select * from tbl_order
+	</select>
+
 	<insert id="optioninput">
 		insert into tbl_goods_option (goods_no, goods_amount, goods_untpc, goods_size, goods_color) values (#{goods_no}, #{goods_amount}, #{goods_untpc}, #{goods_size}, #{goods_color})
 	</insert>

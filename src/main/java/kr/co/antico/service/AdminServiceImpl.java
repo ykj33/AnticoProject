@@ -1,6 +1,7 @@
 package kr.co.antico.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.antico.persistence.AdminDAO;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
+import kr.co.domain.OrderDTO;
 
 @Service
 @Transactional
@@ -72,4 +74,13 @@ public class AdminServiceImpl implements AdminService {
 		
 	}
 
+	@Override
+	public List<OrderDTO> getDeliveryList() {
+		return aDAO.getDeliveryList();
+	}
+	
+	@Override
+	public void changeOrderStatus(Map<String, String> map) {
+		aDAO.changeOrderStatus(map);
+	}
 }

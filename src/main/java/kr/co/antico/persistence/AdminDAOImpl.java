@@ -1,6 +1,7 @@
 package kr.co.antico.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
+import kr.co.domain.OrderDTO;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -73,5 +75,14 @@ public class AdminDAOImpl implements AdminDAO {
 		Session.insert(NS+".optioninput", dto);
 		
 	}
+	@Override
+	public List<OrderDTO> getDeliveryList() {
+		List<OrderDTO> list = Session.selectList(NS+".getdeliverylist");
+		return list;
+	}
 	
+	@Override
+	public void changeOrderStatus(Map<String, String> map) {
+		Session.update(NS+".changeorderstatus", map);
+	}
 }

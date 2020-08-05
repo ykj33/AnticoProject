@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,7 +16,9 @@ import javax.xml.ws.FaultAction;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +29,7 @@ import kr.co.antico.service.AdminService;
 import kr.co.antico.utils.Utils;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
+import kr.co.domain.OrderDTO;
 
 @Controller
 @RequestMapping("admin")
@@ -33,6 +37,11 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService service;
+	
+	@RequestMapping(value = "/ordermanagement", method = RequestMethod.GET)
+	public void ordermanagement() {
+		
+	}
 	
 	@RequestMapping(value = "/management", method = RequestMethod.GET)
 	public void management() {
@@ -83,6 +92,26 @@ public class AdminController {
 	
 	
 //	여기서 부터 ajax
+	
+	@ResponseBody
+	@RequestMapping(value = "/statuschange", method = RequestMethod.POST)
+	public void statuschange(@RequestBody Map<String, String> map) {
+		System.out.println(map.get("no"));
+		System.out.println(map.get("info"));
+		service.changeOrderStatus(map);
+		
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/deliverylist", method = RequestMethod.GET)
+	public List<OrderDTO> deliverylist() {
+		List<OrderDTO> list = new ArrayList<OrderDTO>();
+		
+		list = service.getDeliveryList();
+		return list;   
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/optioninput", method = RequestMethod.POST)

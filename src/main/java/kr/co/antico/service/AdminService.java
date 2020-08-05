@@ -1,9 +1,11 @@
 package kr.co.antico.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
+import kr.co.domain.OrderDTO;
 
 public interface AdminService {
 
@@ -22,6 +24,10 @@ public interface AdminService {
 	void specific_optiondelete(GoodsOptionDTO goodsOptionDTO);
 
 	void optioninput(GoodsOptionDTO dto);
+
+	List<OrderDTO> getDeliveryList();
+
+	void changeOrderStatus(Map<String, String> map);
 
 
 
