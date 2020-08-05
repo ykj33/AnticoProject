@@ -309,6 +309,7 @@
 			<div class="row text-right">
 				<div class="col-md mr-5">
 					<h3 id="totalPrice">0</h3>
+					<a href="/order/payment" class="btn btn-outline-dark rounded-0">결제하기</a>
 				</div>
 			</div>
 			<hr>
