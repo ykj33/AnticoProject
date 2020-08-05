@@ -121,6 +121,8 @@ ALTER TABLE tbl_cart rename column goods_amount TO goods_qtys;
 --DROP TABLE tbl_member
 --DROP TABLE tbl_cart
 
+CREATE SEQUENCE sql_tbl_order START WITH 1 INCREMENT BY 1;
+
 --할인율 위치를 tbl_order_detail 에서 tbl_goods 로 변경
 ALTER TABLE tbl_goods ADD application_dscnt_rate NUMBER DEFAULT 0;
 ALTER TABLE tbl_order_detail DROP column application_dscnt_rate;

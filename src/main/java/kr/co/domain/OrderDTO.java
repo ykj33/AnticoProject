@@ -10,7 +10,7 @@ public class OrderDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int order_no;
 	private String email;
-	private String delivery_no;
+	private int delivery_no;
 	private String order_date;
 	private int order_totamt;
 	private String order_pro_sttus_code;
@@ -21,7 +21,7 @@ public class OrderDTO implements Serializable {
 	public OrderDTO() {
 	}
 
-	public OrderDTO(int order_no, String email, String delivery_no, String order_date, int order_totamt,
+	public OrderDTO(int order_no, String email, int delivery_no, String order_date, int order_totamt,
 			String order_pro_sttus_code, String frwll_reason_code, String setle_mth, int delivery_adbk_no) {
 		super();
 		this.order_no = order_no; // 주문번호
@@ -51,12 +51,12 @@ public class OrderDTO implements Serializable {
 		this.email = email;
 	}
 
-	public String getDelivery_no() {
+	public int getDelivery_no() {
 		return delivery_no;
 	}
 
-	public void setDelivery_no(String delivery_no) {
-		this.delivery_no = delivery_no;
+	public void setDelivery_no(int deliNo) {
+		this.delivery_no = deliNo;
 	}
 
 	public String getOrder_date() {

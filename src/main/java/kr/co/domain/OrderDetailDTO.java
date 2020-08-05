@@ -12,21 +12,20 @@ public class OrderDetailDTO implements Serializable {
 	private String goods_no;
 	private int order_amount;
 	private int goods_untpc;
-	private int application_dscnt_rate;
 	private String goods_size;
 	private String goods_color;
-	
+
 	public OrderDetailDTO() {
 	}
 
-	public OrderDetailDTO(int order_no, String goods_no, int order_amount, int goods_untpc, int application_dscnt_rate,
-			String goods_size, String goods_color) {
+	public OrderDetailDTO(int order_no, String goods_no, int order_amount, int goods_untpc, String goods_size,
+			String goods_color) {
 		super();
 		this.order_no = order_no;
 		this.goods_no = goods_no;
 		this.order_amount = order_amount;
 		this.goods_untpc = goods_untpc;
-		this.application_dscnt_rate = application_dscnt_rate;
+
 		this.goods_size = goods_size;
 		this.goods_color = goods_color;
 	}
@@ -63,14 +62,6 @@ public class OrderDetailDTO implements Serializable {
 		this.goods_untpc = goods_untpc;
 	}
 
-	public int getApplication_dscnt_rate() {
-		return application_dscnt_rate;
-	}
-
-	public void setApplication_dscnt_rate(int application_dscnt_rate) {
-		this.application_dscnt_rate = application_dscnt_rate;
-	}
-
 	public String getGoods_size() {
 		return goods_size;
 	}
@@ -94,9 +85,8 @@ public class OrderDetailDTO implements Serializable {
 	@Override
 	public String toString() {
 		return "OrderDetailDTO [order_no=" + order_no + ", goods_no=" + goods_no + ", order_amount=" + order_amount
-				+ ", goods_untpc=" + goods_untpc + ", application_dscnt_rate=" + application_dscnt_rate
-				+ ", goods_size=" + goods_size + ", goods_color=" + goods_color + "]";
+				+ ", goods_untpc=" + goods_untpc + ", application_dscnt_rate=, goods_size=" + goods_size
+				+ ", goods_color=" + goods_color + "]";
 	}
-	
-	
+
 }

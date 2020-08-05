@@ -24,7 +24,13 @@ public interface OrderService {
 
 	List<CartDTO> orderList(String email);
 
+
+	void insertOrder(OrderDTO orderDto);
+
+	DeliveryAdbkDTO adbkSelectNo(DeliveryAdbkDTO deliveryAdbkDto);
+
 	void insertDelivery();
+
 
 	
 

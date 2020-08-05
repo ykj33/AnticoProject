@@ -56,8 +56,24 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 	
 	@Override
+	public void insertOrder(OrderDTO orderDto) {
+		oSession.insert(NS + ".insertorder", orderDto);
+		
+	}
+	@Override
+	public DeliveryAdbkDTO adbkSelectNo(DeliveryAdbkDTO deliveryAdbkDto) {
+		// TODO Auto-generated method stub
+		return oSession.selectOne(NS + ".adbkselectno", deliveryAdbkDto);
+	}
+	
+	@Override
 	public void insertDelivery() {
 		oSession.insert(NS + ".insertdelivery");
 		
+	}
+	@Override
+	public int getDeliNo() {
+		
+		return oSession.selectOne(NS + ".getdelino");
 	}
 }

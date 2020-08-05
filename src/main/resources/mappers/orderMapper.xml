@@ -4,9 +4,32 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="o.r.d">
 
-	<insert id="deliveryinsert">
-		INSERT INTO tbl_delivery (delivery_bizrno, delivery_cost, delivery_date)
-		VALUES ('316-46-00107', 2500, sysdate+3)
+	<select id="getdelino" resultType="Integer">
+		SELECT MAX(delivery_no) FROM
+		tbl_delivery
+	</select>
+
+	<select id="adbkselectno" resultType="DeliveryAdbkDTO">
+		SELECT * FROM
+		tbl_delivery_adbk WHERE email = #{email} AND delivery_adbk_ncm
+		=
+		#{delivery_adbk_ncm}
+	</select>
+
+	<insert id="insertorder">
+		INSERT INTO tbl_order (order_no, email, delivery_no,
+		order_totamt, setle_mth, delivery_adbk_no) VALUES (SQL_TBL_ORDER.nextval, #{email},
+		#{delivery_no}, #{order_totamt},
+		#{setle_mth}, #{delivery_adbk_no})
+	</insert>
+
+	<insert id="insertdelivery">
+		INSERT INTO tbl_delivery (delivery_no,
+		delivery_bizrno,
+		delivery_cost, delivery_date)
+		VALUES
+		(SEQ_TBL_DELIVERY.nextval, '316-46-00107', 2500, sysdate + (INTERVAL
+		'3' DAY))
 	</insert>
 
 	<select id="orderlist" resultType="CartDTO">

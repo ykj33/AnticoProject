@@ -48,8 +48,20 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
+	public void insertOrder(OrderDTO orderDto) {
+		int deliNo = orderDao.getDeliNo();
+		orderDto.setDelivery_no(deliNo);
+		orderDao.insertOrder(orderDto);
+		
+	}
+	@Override
+	public DeliveryAdbkDTO adbkSelectNo(DeliveryAdbkDTO deliveryAdbkDto) {
+		// TODO Auto-generated method stub
+		return orderDao.adbkSelectNo(deliveryAdbkDto);
+	}
+	@Override
 	public void insertDelivery() {
-		orderDao.insertDelivery();
+		orderDao.insertDelivery();	
 		
 	}
 	
