@@ -25,8 +25,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.co.antico.service.AdminService;
 import kr.co.antico.utils.Utils;
+import kr.co.domain.ExDTO2;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
 import kr.co.domain.OrderDTO;
@@ -216,60 +221,11 @@ public class AdminController {
 
 	@ResponseBody
 	@RequestMapping(value = "/optionupload", method = RequestMethod.POST)
-	public String optionupload(HttpServletRequest request) {
-		boolean isOk = false;
-		String str = null;
+	public String optionupload(@RequestBody List<GoodsOptionDTO> list) throws Exception {
 		
-		String formdata = request.getParameter("jsonData");
-		formdata = formdata.substring(1);
-
-		formdata = formdata.substring(0, formdata.length() - 1);
-
-		String[] arr = formdata.split(",");
-
-		List<GoodsOptionDTO> list = new ArrayList<GoodsOptionDTO>();
-
-		for (int i = 0; i < arr.length; i++) {
-
-			String msg = arr[i];
-
-			msg = msg.substring(1, msg.length() - 1);
-
-			String[] arr2 = msg.split("&");
-
-			String[] var = new String[arr2.length];
-
-			for (int j = 0; j < arr2.length; j++) {
-
-				String msg2 = arr2[j];
-
-				String[] arr3 = msg2.split("=");
-
-				for (int k = 0; k < arr3.length; k++) {
-
-					if (k == 1) {
-
-						var[j] = arr3[k];
-
-					}
-
-				}
-
-			}
-			if(var[1]!=null) {
-				isOk = true;
-			}
-			if(isOk) {
-			GoodsOptionDTO dto = new GoodsOptionDTO(var[0], Integer.valueOf(var[1]), Integer.valueOf(var[2]), var[3],
-					var[4]);
-			list.add(dto);
-			}
-			str = var[0];
-		}
-		if(isOk) {
 		service.goodsoptioninsert(list);
-		}
-		return str;
+		
+		return list.get(0).getGoods_no();
 		
 	}
 

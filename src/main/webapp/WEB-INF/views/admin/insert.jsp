@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<title>상품 추가</title>
 <%@ include file="../com/header.jsp"%>
 </head>
 <body>
@@ -71,7 +71,14 @@
 
 	function addoptioninfo(){
 		var no = $("#goods_no").val();
-		var str = '<form id="optionform'+formNum+'"><div class="form-group" id="formNum"><input type="text" class="form-control rounded-0" id="goods_no" name="goods_no" hidden="" value="'+no+'"><input type="number" class="form-control rounded-0 goods_amount" name="goods_amount" placeholder="수량"><input type="number" class="form-control rounded-0 goods_untpc" name="goods_untpc" placeholder="가격"><input type="text" class="form-control rounded-0 goods_size" name="goods_size" placeholder="크기"><input type="text" class="form-control rounded-0 goods_color" name="goods_color" placeholder="색상"></div></form>';
+		var str = '<form class="optionform'+formNum+'">'
+		+			'<div class="form-group" id="formNum">'
+		+				'<input type="text" class="form-control rounded-0 goods_no" name="goods_no" hidden="" value="'+no+'">'
+		+				'<input type="number" class="form-control rounded-0 goods_amount" name="goods_amount" placeholder="수량">'
+		+				'<input type="number" class="form-control rounded-0 goods_untpc" name="goods_untpc" placeholder="가격">'
+		+				'<input type="text" class="form-control rounded-0 goods_size" name="goods_size" placeholder="크기">'
+		+				'<input type="text" class="form-control rounded-0 goods_color" name="goods_color" placeholder="색상">'
+		+			'</div></form>';
 		formNum = formNum+1;
 		$("#optioninfo").append(str);
 	
@@ -114,7 +121,19 @@
 
 			$(document).on("click", "#optionupload", function(){
 				for(var i=0;i<formNum;i++){
-					var form=$("#optionform"+i).serialize();
+					var form={
+							"goods_no":$(".optionform"+i).children().children(".goods_no").attr("value"),
+							"goods_amount":$(".optionform"+i).children().children(".goods_amount").val(),
+							"goods_untpc":$(".optionform"+i).children().children(".goods_untpc").val(),
+							"goods_size":$(".optionform"+i).children().children(".goods_size").val(),
+							"goods_color":$(".optionform"+i).children().children(".goods_color").val()
+							};
+
+
+
+					
+					
+					
 					formData.push(form);
 					
 					}
@@ -129,9 +148,11 @@
 					type:"POST",
 					url:"optionupload",
 					dataType:'text',
-					data:{
-						jsonData:jsonData
+					headers: {
+						"Content-Type": "application/json",
+						"X-HTTP-Method-Override": "POST"
 					},
+					data:jsonData,
 					success:function(result){
 						 location.href="/board/read/"+result; 
 						},
