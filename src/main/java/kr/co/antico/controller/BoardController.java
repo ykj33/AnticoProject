@@ -38,16 +38,16 @@ public class BoardController {
 	public String list(Model model) {
 		List<GoodsDTO> list = boardService.list();
 		List<BoardDTO> forImg = boardService.forImg();
-		List<GoodsOptionDTO> option = boardService.option();
-		List<GoodsOptionDTO> optionByNo = new ArrayList<GoodsOptionDTO>();
-		for (int i = 0; i < list.size(); i++) {
-			for (int j = 0; j < option.size(); j++) {
-				String goods_no = list.get(i).getGoods_no();
-				String goods_option_no = option.get(j).getGoods_no();
-				if (goods_no.equals(goods_option_no)) {
-					optionByNo.add(new GoodsOptionDTO(goods_no, option.get(j).getGoods_amount(),
-							option.get(j).getGoods_untpc(), option.get(j).getGoods_size(),
-							option.get(j).getGoods_color()));
+//		List<GoodsOptionDTO> option = boardService.option();
+//		List<GoodsOptionDTO> optionByNo = new ArrayList<GoodsOptionDTO>();
+//		for (int i = 0; i < list.size(); i++) {
+//			for (int j = 0; j < option.size(); j++) {
+//				String goods_no = list.get(i).getGoods_no();
+//				String goods_option_no = option.get(j).getGoods_no();
+//				if (goods_no.equals(goods_option_no)) {
+//					optionByNo.add(new GoodsOptionDTO(goods_no, option.get(j).getGoods_amount(),
+//							option.get(j).getGoods_untpc(), option.get(j).getGoods_size(),
+//							option.get(j).getGoods_color()));
 
 ////					goods_option_size = option.get(j).getGoods_size();
 ////
@@ -57,22 +57,15 @@ public class BoardController {
 ////
 ////					System.out.println(goods_option_size);
 
-				}
-			}
-		}
+//		}
 
-	
-		
 //		model.addAttribute("goods_option_size", goods_option_size);
-		model.addAttribute("optionByNo", optionByNo);
+//		model.addAttribute("optionByNo", optionByNo);
 		model.addAttribute("forImg", forImg);
 		model.addAttribute("list", list);
-		
-		
 		System.out.println(list);
 		return "board/list";
 	}
-
 
 	@RequestMapping(value = "/read/{goods_no}", method = RequestMethod.GET)
 	public String read(@PathVariable("goods_no") String goods_no, Model model, HttpSession session) {
@@ -81,12 +74,12 @@ public class BoardController {
 
 		return "/board/read";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/option", method = RequestMethod.GET)
 	public BoardDTO read(GoodsOptionDTO godto) {
 		System.out.println(godto);
-		
+
 		// 상품 color 기준으로 size 종류를 가져온다.
 		// 상품 size 기준으로 color 종류를 가져온다.
 		// 상품의 가격을 가져온다.
@@ -96,22 +89,22 @@ public class BoardController {
 		dto.setGoods_size(godto.getGoods_size());
 		return dto;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/addcart", method = RequestMethod.POST)
 	public List<CartDTO> addcart(@RequestBody CartDTO dto) {
 		System.out.println(dto);
-		
-		//LoginDTO login = (LoginDTO) session.getAttribute("login");
+
+		// LoginDTO login = (LoginDTO) session.getAttribute("login");
 		List<CartDTO> list = new ArrayList<CartDTO>();
 
 		boardService.addcart(dto);
-				
+
 		list = boardService.getCartList(dto.getEmail());
 		System.out.println(">> /addcart");
 		return list;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/getcartlist", method = RequestMethod.GET)
 	public List<CartDTO> getCartList(String email) {
@@ -120,13 +113,13 @@ public class BoardController {
 		list = boardService.getCartList(email);
 		return list;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/updatecart", method = RequestMethod.POST)
 	public Integer updateCart(@RequestBody CartDTO dto) {
 		return boardService.updateCart(dto);
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/deletecart", method = RequestMethod.POST)
 	public Integer deleteCart(@RequestBody CartDTO dto) {

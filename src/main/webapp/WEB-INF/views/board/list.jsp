@@ -34,12 +34,12 @@
 							<c:if test="${dto.goods_no == option.goods_no  }">
 								${option.goods_color }
 							</c:if> 
-						</c:forEach>--%> <c:forEach items="${optionByNo }" var="option"
-							begin="0" end="1">
-							<c:if test="${dto.goods_no == option.goods_no  }">
-								<div style="float: right">${option.goods_untpc}원</div>
-							</c:if>
-						</c:forEach>
+						<%-- </c:forEach> <c:forEach items="${optionByNo }" var="option"
+							begin="0" end="1"> --%>
+							<%-- <c:if test="${dto.goods_no == option.goods_no  }"> --%>
+								<%-- <div style="float: right">${dto.goods_untpc}원</div> --%>
+							<%-- </c:if> --%>
+						<%-- </c:forEach> --%>
 					</a>
 				</div>
 			</c:forEach>
@@ -62,12 +62,12 @@
 							<c:if test="${dto.goods_no == option.goods_no  }">
 								${option.goods_color }
 							</c:if> 
-						</c:forEach>--%> <c:forEach items="${optionByNo }" var="option"
-							begin="2" end="3">
-							<c:if test="${dto.goods_no == option.goods_no  }">
-								<div style="float: right">${option.goods_untpc}원</div>
-							</c:if>
-						</c:forEach>
+						<%-- </c:forEach> <c:forEach items="${optionByNo }" var="option"
+							begin="0" end="1"> --%>
+							<%-- <c:if test="${dto.goods_no == option.goods_no  }"> --%>
+								<%-- <div style="float: right">${dto.goods_untpc}원</div> --%>
+							<%-- </c:if> --%>
+						<%-- </c:forEach> --%>
 					</a>
 				</div>
 			</c:forEach>
