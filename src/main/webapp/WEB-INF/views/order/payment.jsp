@@ -126,6 +126,7 @@ var choicePay = "";
 	$(document).ready(function() {
 						addressNameDisplay();
 						cartList();
+						adbkLatest();
 						$(document).on("click",	".namelist",function() {
 
 											var email = $("#email").val();
@@ -238,7 +239,7 @@ var choicePay = "";
 														success : function(
 																result) {
 															console.log(result);
-															window.location.href = "/mypage/mypage";
+															window.location.href = "/mypage";
 
 
 														},
@@ -273,6 +274,57 @@ var choicePay = "";
 		}
 
 	}
+
+	function adbkLatest() {
+	var email = $("#email").val();
+	
+
+	$.ajax({
+				type : 'POST',
+				url : 'payment',
+
+				data : {
+					email : email
+				},
+				success : function(
+						result) {
+					var idx = -1;
+					
+					for(i = 1; i<result["adbkList"].length; i++) {
+						var no = result["adbkList"][i].delivery_adbk_no;
+				
+						if(idx < no) {
+							idx = no;
+							}
+						}
+					console.log("idx", idx);
+					var name = result["adbkList"][idx].delivery_adbk_ncm;
+					var telnum = result["adbkList"][idx].delivery_place_tlnum;
+					var address = result["adbkList"][idx].delivery_place_adres;
+					var address_detail = result["adbkList"][idx].delivery_place_adres_detail;
+					$("#delivery_adbk_ncm").val(name);
+					$(
+							"#delivery_place_tlnum")
+							.val(telnum);
+					$(
+							"#delivery_place_adres")
+							.val(
+									address);
+					$(
+							"#delivery_place_adres_detail")
+							.val(
+									address_detail);
+
+				},
+				error : function(
+						request,
+						status, error) {
+
+					console.log(error);
+				}
+
+			});
+}
 
 	function cartList() {
 		var email = $("#email").val();
@@ -370,7 +422,6 @@ var choicePay = "";
 						for (var i = 0; i < result["adbkList"].length; i++) {
 
 							var ncm = result["adbkList"][i].delivery_adbk_ncm;
-							console.log(ncm);
 							$("#added_address_name")
 									.append(
 											"<div class='namelist' style = 'display : inline' data-idx='"+i+"'><button class='btn btn-outline-secondary rounded-0'>"

@@ -99,7 +99,6 @@ public class OrderController {
 
 	@RequestMapping(value = "/payment", method = RequestMethod.GET)
 	public void payment() {
-
 	}
 
 	@ResponseBody
