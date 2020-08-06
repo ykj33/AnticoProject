@@ -71,7 +71,7 @@ email VARCHAR2(100) REFERENCES tbl_member(email),
 delivery_no VARCHAR2(15) NOT NULL,
 order_date DATE DEFAULT SYSDATE,
 order_totamt NUMBER NOT NULL,
-order_pro_sttus_code VARCHAR2(12) NOT NULL,
+order_pro_sttus_code varchar2(30) DEFAULT '배송 준비 중',
 frwll_reason_code VARCHAR2(60),
 setle_mth VARCHAR2(60) NOT NULL,
 delivery_adbk_no NUMBER(2) NOT NULL
@@ -147,3 +147,11 @@ delivery_bizrno varchar2(12) references tbl_delivery_company(delivery_bizrno),
 delivery_cost number(4),
 delivery_date date
 );
+
+-- tbl_delivery 의 no 지정
+CREATE SEQUENCE seq_tbl_delivery START WITH 330001 INCREMENT BY 1;
+
+--tbl_order 의 order_pro_sttus_code기본값 및 타입 변경
+ALTER TABLE tbl_order MODIFY (order_pro_sttus_code varchar2(30) DEFAULT '배송 준비 중');
+
+

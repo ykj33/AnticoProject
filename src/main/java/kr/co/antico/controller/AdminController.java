@@ -31,7 +31,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.antico.service.AdminService;
 import kr.co.antico.utils.Utils;
-import kr.co.domain.ExDTO2;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
 import kr.co.domain.OrderDTO;
