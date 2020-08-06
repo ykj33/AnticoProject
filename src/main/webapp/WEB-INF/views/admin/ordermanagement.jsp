@@ -107,11 +107,10 @@ function list_fresh(){
 
 				str +='</td><td class="option">' 
 						+'<select class="status_select se'+i+'" data-no="'+data[i].order_no+'">'
-						+'<option value="0" class="op0">입금 전</option>'
-						+'<option value="1" class="op1">배송 준비 중</option>'
-						+'<option value="2" class="op2">배송 중</option>'
-						+'<option value="3" class="op3">배송 완료</option>'
-						+'<option value="4" class="op4">반송 중</option>'
+						+'<option value="배송 준비 중" class="배송 준비 중">배송 준비 중</option>'
+						+'<option value="배송 중" class="배송 중">배송 중</option>'
+						+'<option value="배송 완료" class="배송 완료">배송 완료</option>'
+						+'<option value="반송 중" class="반송 중">반송 중</option>'
 						+'</select></td>'
 						+'</tr>';
 
@@ -119,7 +118,7 @@ function list_fresh(){
 						
 						
 			$("#delivery_table").children("tbody").append(str);
-			$(".se"+i).children(".op"+data[i].order_pro_sttus_code).attr("selected", "selected");
+			$(".se"+i).children("[value='"+data[i].order_pro_sttus_code+"']").attr("selected", "selected");
 			}
 			},
 		error:function(request, status, error){

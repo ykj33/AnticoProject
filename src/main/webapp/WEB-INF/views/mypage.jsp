@@ -33,11 +33,11 @@ tr td {
 </head>
 <body>
 
-	<%@ include file="../com/header.jsp"%>
-	<%@ include file="../com/top.jsp"%>
+	<%@ include file="com/header.jsp"%>
+	<%@ include file="com/top.jsp"%>
 	<div id="antico_layout" class="container">
-		<%@ include file="../com/title.jsp"%>
-		<%@ include file="../com/navbar.jsp"%>
+		<%@ include file="com/title.jsp"%>
+		<%@ include file="com/navbar.jsp"%>
 		<div id="mypage_head" class="text-center p-4">
 			<h2 class="text-black-50">마이 쇼핑</h2>
 		</div>
@@ -193,7 +193,7 @@ tr td {
 
 
 	</div>
-	<%@ include file="../com/footer.jsp"%>
+	<%@ include file="com/footer.jsp"%>
 	<script type="text/javascript">
 
 	function exchangeitem(that){

@@ -100,8 +100,6 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "/statuschange", method = RequestMethod.POST)
 	public void statuschange(@RequestBody Map<String, String> map) {
-		System.out.println(map.get("no"));
-		System.out.println(map.get("info"));
 		service.changeOrderStatus(map);
 		
 	}
