@@ -76,4 +76,27 @@ public class OrderDAOImpl implements OrderDAO {
 		
 		return oSession.selectOne(NS + ".getdelino");
 	}
+	
+	@Override
+	public List<CartDTO> selectCart(OrderDTO orderDto) {
+		// TODO Auto-generated method stub
+		return oSession.selectList(NS + ".selectcart", orderDto);
+	}
+	@Override
+	public void insertOrderDetail(OrderDetailDTO orderDetailDto) {
+		
+		oSession.insert(NS + ".insertorderdetail", orderDetailDto);
+		
+	}
+	@Override
+	public int getOrderNo(OrderDTO orderDto) {
+		
+		return oSession.selectOne(NS + ".getorderno", orderDto);
+	}
+	
+	@Override
+	public void deleteCart(String email) {
+		oSession.delete(NS + ".deletecart", email);
+		
+	}
 }

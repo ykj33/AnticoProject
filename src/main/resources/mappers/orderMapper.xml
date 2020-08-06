@@ -4,6 +4,30 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="o.r.d">
 
+	<delete id="deletecart">
+		DELETE FROM tbl_cart WHERE email = #{email}
+	</delete>
+
+	<select id="getorderno" resultType="Integer">
+		SELECT order_no FROM tbl_order WHERE email = #{email} and delivery_no =
+		#{delivery_no}
+	</select>
+
+	<insert id="insertorderdetail">
+		INSERT INTO tbl_order_detail (order_no, goods_no,
+		order_amount, goods_untpc,
+		goods_size, goods_color) VALUES
+		(#{order_no}, #{goods_no},
+		#{order_amount}, #{goods_untpc},
+		#{goods_size}, #{goods_color})
+	</insert>
+
+
+	<select id="selectcart" resultType="CartDTO">
+		SELECT * FROM tbl_cart WHERE
+		email = #{email}
+	</select>
+
 	<select id="getdelino" resultType="Integer">
 		SELECT MAX(delivery_no) FROM
 		tbl_delivery
@@ -18,7 +42,8 @@
 
 	<insert id="insertorder">
 		INSERT INTO tbl_order (order_no, email, delivery_no,
-		order_totamt, setle_mth, delivery_adbk_no) VALUES (SQL_TBL_ORDER.nextval, #{email},
+		order_totamt, setle_mth, delivery_adbk_no) VALUES
+		(SQL_TBL_ORDER.nextval, #{email},
 		#{delivery_no}, #{order_totamt},
 		#{setle_mth}, #{delivery_adbk_no})
 	</insert>

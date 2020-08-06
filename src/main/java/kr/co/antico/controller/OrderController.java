@@ -42,24 +42,56 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping(value = "/commit", method = RequestMethod.POST)
 	public Map<String, Object> commit(@RequestBody Map<String, Object> map) throws Exception {
-		// payment에서 데이터 받기
+//		// payment에서 데이터 받기
 		ObjectMapper mapper = new ObjectMapper();
-		String jsondto1 = mapper.writeValueAsString(map.get("OrderDTO"));
-		String jsondto2 = mapper.writeValueAsString(map.get("DeliveryAdbkDTO"));
-		// 데이터 parsing해서 받기
-		OrderDTO orderDto = mapper.readValue(jsondto1, OrderDTO.class);
-		DeliveryAdbkDTO deliveryAdbkDto = mapper.readValue(jsondto2, DeliveryAdbkDTO.class);
-	
-	
+//		String jsondto1 = mapper.writeValueAsString(map.get("OrderDTO"));
+//		String jsondto2 = mapper.writeValueAsString(map.get("DeliveryAdbkDTO"));
+//		
+//		// 데이터 parsing해서 받기
+//		OrderDTO orderDto = mapper.readValue(jsondto1, OrderDTO.class);
+//		DeliveryAdbkDTO deliveryAdbkDto = mapper.readValue(jsondto2, DeliveryAdbkDTO.class);
+
+		// 코드 간소화
+		OrderDTO orderDto = mapper.convertValue(map.get("OrderDTO"), OrderDTO.class);
+		DeliveryAdbkDTO deliveryAdbkDto = mapper.convertValue(map.get("DeliveryAdbkDTO"), DeliveryAdbkDTO.class);
+
+		// 주수록의 별칭 별 번호 불러오기
 		DeliveryAdbkDTO adbkList = orderService.adbkSelectNo(deliveryAdbkDto);
 		int adbkNo = adbkList.getDelivery_adbk_no();
-		System.out.println("adbkNo" + adbkNo);
+		
+		// order 테이블에 값 할당
 		orderDto.setDelivery_adbk_no(adbkNo);
+		
+		// 배송테이블 작성
 		orderService.insertDelivery();
-	
+		
+		// 할당된 값을 가지고 order 테이블 작성
+		
 		orderService.insertOrder(orderDto);
+		// order_no 가져오기
+		int orderNo = orderService.getOrderNo(orderDto);
+
+		// 혹시 모를 반환 값 할당
 		map.put("orderDto", orderDto);
 		map.put("deliveryAdbkDto", deliveryAdbkDto);
+		
+		// 장바구니 테이블 가져오기
+		List<CartDTO> cartDto = orderService.selectCart(orderDto);
+		
+		// 장바구니 테이블에서 정보를 가져와 order_detail 테이블에 할당 후 추가
+		for (int i = 0; i < cartDto.size(); i++) {
+			String goodsNo = cartDto.get(i).getGoods_no();
+			System.out.println(goodsNo);
+			int goodsQuantity = cartDto.get(i).getGoods_qtys();
+			int goodsPrice = cartDto.get(i).getGoods_untpc();
+			String goodsColor = cartDto.get(i).getGoods_color();
+			String goodsSize = cartDto.get(i).getGoods_size();
+			OrderDetailDTO orderDetailDto = new OrderDetailDTO(orderNo, goodsNo, goodsQuantity, goodsPrice, goodsSize, goodsColor);
+			orderService.insertOrderDetail(orderDetailDto);
+		}
+		// 결제가 끝난 후 장바구니 목록 삭제
+		orderService.deleteCart(orderDto.getEmail());
+
 		return map;
 	}
 

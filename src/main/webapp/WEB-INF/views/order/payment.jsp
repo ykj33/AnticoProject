@@ -98,7 +98,8 @@
 			<!-- 구매한 상품 리스트 -->
 			<div class="col-lg-5">
 				<div id="goods_list" class="row"
-					style="border-bottom: 1px black solid; padding: 10px"></div>
+					style="border-bottom: 1px black solid; padding: 10px">
+					</div>
 				<div>
 					<div id="totalPrice" style="padding: 10px"></div>
 
@@ -222,25 +223,12 @@ var choicePay = "";
 												"delivery_place_adres" : $("#delivery_place_adres").val(), // 배송지 주소
 												"delivery_place_adres_detail" : $("#delivery_place_adres_detail").val()
 											};
-	var OrderDetailDTO = {
-			order_no;
-			goods_no;
-			order_amount;
-			goods_untpc;
-			goods_size;
-			goods_color;
-			};
-	
+
 	var obj = {"OrderDTO":OrderDTO, "DeliveryAdbkDTO" : DeliveryAdbkDTO};
 											$.ajax({
 														type : 'POST',
 														url : 'commit',
 
-														/* 										data : {
-														 email : email,
-														 totalPrice : Number(totalPrice),
-														 howToPay : howToPay
-														 }, */
 														headers : {
 															"Content-Type" : "application/json",
 															"X-HTTP-Method-Override" : "POST"
@@ -250,6 +238,8 @@ var choicePay = "";
 														success : function(
 																result) {
 															console.log(result);
+															window.location.href = "/mypage/mypage";
+
 
 														},
 														error : function(
@@ -298,32 +288,55 @@ var choicePay = "";
 
 						var totalPrice = 0;
 						for (var i = 0; i < result["orderList"].length; i++) {
-							console.log("길이", result["orderList"].length)
-
+							
+							var goods_no = result["orderList"][i].goods_no;
 							var img = result["orderList"][i].goods_img;
 							var name = result["orderList"][i].goods_nm;
 							var quantity = result["orderList"][i].goods_qtys;
 							var price = result["orderList"][i].goods_untpc;
-							console.log(typeof (price));
-							console.log("가격", price);
+							var goods_size = result["orderList"][i].goods_size;
+							var goods_color = result["orderList"][i].goods_color;
+							var priceSum = quantity*price;
+							console.log(priceSum);
+							totalPrice += priceSum;
 
-							totalPrice += price;
 
-							$("#goods_list")
+							var cart_list = "<div class='row cart"+i+"'><div class='goodsList col-md-3' style = 'display : inline' data-idx='"+i+"'><img id='main' src='/displaythumb?img_name="
+								+ img + "'/></div><div class='goodsList col-md-4' style = 'display : inline; margin-left:5px;' data-idx='"+i+"'>"
+								+ name + "</div><div class='goodsList_quantity col-md-2' style = 'display : inline' data-idx='"+i+"'>"
+								+ quantity + "</div><div class='goodsList_price col-md-2' style = 'display : inline; text-align : right' data-idx='"+i+"'>"
+								+ price + "</div><div class='goodsList_size' style = 'display : none' data-idx='"+i+"'>"
+								+ goods_size + "</div><div class='goodsList_color' style = 'display : none' data-idx='"+i+"'>"
+								+ goods_color + "</div><div class='goodsList_no' style = 'display : none' data-idx='"+i+"'>"
+								+ goods_no + "</div></div>";
+
+								$("#goods_list").append(cart_list);
+							
+							
+							/* $("#goods_list")
 									.append(
-											"<div class='goodsList col-md-3' style = 'display : inline' data-idx='"+i+"'><img id='main' src='/displaythumb?img_name="
+											"<div class='"+i+"'><div class='goodsList col-md-3' style = 'display : inline' data-idx='"+i+"'><img id='main' src='/displaythumb?img_name="
 													+ img + "'/></div>");
 							$("#goods_list").append(
 									"<div class='goodsList col-md-4' style = 'display : inline' data-idx='"+i+"'>"
 											+ name + "</div>");
 							$("#goods_list").append(
-									"<div class='goodsList col-md-2' style = 'display : inline' data-idx='"+i+"'>"
+									"<div class='goodsList_quantity col-md-2' style = 'display : inline' data-idx='"+i+"'>"
 											+ quantity + "</div>");
 							$("#goods_list")
 									.append(
-											"<div class='goodsList col-md-2' style = 'display : inline; text-align : right' data-idx='"+i+"'>"
+											"<div class='goodsList_price col-md-2' style = 'display : inline; text-align : right' data-idx='"+i+"'>"
 													+ price + "</div>");
-
+							$("#goods_list").append(
+									"<div class='goodsList_size col-md-2' style = 'display : none' data-idx='"+i+"'>"
+											+ goods_size + "</div>");
+							$("#goods_list").append(
+									"<div class='goodsList_color col-md-2' style = 'display : none' data-idx='"+i+"'>"
+											+ goods_color + "</div>");
+							$("#goods_list").append(
+									"<div class='goodsList_no col-md-2' style = 'display : none' data-idx='"+i+"'>"
+											+ goods_no + "</div></div>");
+ */
 						}
 						$("#totalPrice")
 								.append(

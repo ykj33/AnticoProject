@@ -30,4 +30,12 @@ public interface OrderDAO {
 
 	int getDeliNo();
 
+	List<CartDTO> selectCart(OrderDTO orderDto);
+
+	void insertOrderDetail(OrderDetailDTO orderDetailDto);
+
+	int getOrderNo(OrderDTO orderDto);
+
+	void deleteCart(String email);
+
 }

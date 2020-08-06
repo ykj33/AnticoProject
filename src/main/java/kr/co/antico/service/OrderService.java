@@ -31,6 +31,15 @@ public interface OrderService {
 
 	void insertDelivery();
 
+	List<CartDTO> selectCart(OrderDTO orderDto);
+
+	void insertOrderDetail(OrderDetailDTO orderDetailDto);
+
+	int getOrderNo(OrderDTO orderDto);
+
+	void deleteCart(String email);
+
+	
 
 	
 
