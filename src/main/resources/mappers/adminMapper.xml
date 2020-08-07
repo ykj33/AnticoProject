@@ -4,6 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="a.d.m">
 
+	<update id="refundorder">
+		update tbl_order set ORDER_PRO_STTUS_CODE = '반송 중' where order_no = #{no} 
+	</update>
+
+
+	<update id="cancleorder">
+		update tbl_order set ORDER_PRO_STTUS_CODE = '취소' where order_no = #{no}
+	</update>
+
+	<select id="getorderlist" resultType="OrderListDTO">
+		select o.order_no, o.order_pro_sttus_code, o.delivery_adbk_no, o.order_date, o.delivery_no, d.goods_size, d.goods_color, d.goods_untpc, d.goods_no, d.order_amount, g.goods_img, g.goods_nm, r.delivery_date from tbl_order o, tbl_order_detail d, tbl_delivery r, tbl_goods g where o.order_no = d.order_no and o.delivery_no = r.delivery_no and d.goods_no = g.goods_no and o.email = #{email} order by o.order_no
+	</select>
+
 	<update id="changeorderstatus">
 		update tbl_order set order_pro_sttus_code = #{info} where order_no = #{no}
 	</update>
