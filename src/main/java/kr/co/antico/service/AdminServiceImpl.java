@@ -11,6 +11,7 @@ import kr.co.antico.persistence.AdminDAO;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
 import kr.co.domain.OrderDTO;
+import kr.co.domain.OrderListDTO;
 
 @Service
 @Transactional
@@ -83,4 +84,20 @@ public class AdminServiceImpl implements AdminService {
 	public void changeOrderStatus(Map<String, String> map) {
 		aDAO.changeOrderStatus(map);
 	}
+	
+	@Override
+	public List<OrderListDTO> getOrderList(String email) {
+		return aDAO.getOrderList(email);
+	}
+	
+	@Override
+	public void cancleorder(int no) {
+		aDAO.cancleorder(no);
+	}
+	
+	@Override
+	public void refundorder(int no) {
+		aDAO.refundorder(no);
+	}
+	
 }

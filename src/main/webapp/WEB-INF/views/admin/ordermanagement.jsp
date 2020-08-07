@@ -107,6 +107,7 @@ function list_fresh(){
 
 				str +='</td><td class="option">' 
 						+'<select class="status_select se'+i+'" data-no="'+data[i].order_no+'">'
+						+'<option value="취소" class="취소">취소</option>'
 						+'<option value="배송 준비 중" class="배송 준비 중">배송 준비 중</option>'
 						+'<option value="배송 중" class="배송 중">배송 중</option>'
 						+'<option value="배송 완료" class="배송 완료">배송 완료</option>'

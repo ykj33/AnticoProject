@@ -8,6 +8,7 @@ import java.io.InputStream;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -15,6 +16,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class RestController {
 
 	
+	//<img id="main" src='/displaythumbbyno/     '/>  사용방법
+	@RequestMapping(value = "/displaythumbbyno/{no}", method = RequestMethod.GET)
+	public byte[] displaythumbbyno(@PathVariable String no, HttpSession session) {
+		String uploadPath = session.getServletContext().getRealPath(File.separator + "resources");
+		String img_name = "/goods_img/"+no+"/s_"+no+"_main.JPG";
+		img_name = img_name.replace('/', File.separatorChar);
+		InputStream in = null;
+		byte[] result = null;
+		try {
+			
+			in = new FileInputStream(uploadPath + img_name);
+			result = IOUtils.toByteArray(in);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (in != null)
+					in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+		
+	}
 	//<img id="main" src='/displaythumb?img_name=     '/>  사용방법
 	@RequestMapping(value = "/displaythumb", method = RequestMethod.GET)
 	public byte[] displaythumb(String img_name, HttpSession session) {

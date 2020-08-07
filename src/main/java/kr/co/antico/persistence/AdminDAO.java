@@ -7,6 +7,7 @@ import java.util.Map;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
 import kr.co.domain.OrderDTO;
+import kr.co.domain.OrderListDTO;
 
 public interface AdminDAO {
 
@@ -31,6 +32,12 @@ public interface AdminDAO {
 	List<OrderDTO> getDeliveryList();
 
 	void changeOrderStatus(Map<String, String> map);
+
+	List<OrderListDTO> getOrderList(String email);
+
+	void cancleorder(int no);
+
+	void refundorder(int no);
 
 
 

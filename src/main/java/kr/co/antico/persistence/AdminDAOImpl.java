@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
 import kr.co.domain.OrderDTO;
+import kr.co.domain.OrderListDTO;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -85,4 +86,20 @@ public class AdminDAOImpl implements AdminDAO {
 	public void changeOrderStatus(Map<String, String> map) {
 		Session.update(NS+".changeorderstatus", map);
 	}
+	
+	@Override
+	public List<OrderListDTO> getOrderList(String email) {
+		return Session.selectList(NS+".getorderlist", email);
+	}
+	
+	@Override
+	public void cancleorder(int no) {
+		Session.update(NS+".cancleorder", no);
+	}
+	
+	@Override
+	public void refundorder(int no) {
+		Session.update(NS+".refundorder", no);
+	}
+	
 }
