@@ -105,7 +105,7 @@
 				cart_id : 0,
 				email : data_email,
 				goods_no : data_option.goods_no,
-				goods_img : '${dto.goods_img }',
+				goods_img : data_option.goods_img,
 				goods_nm : data_option.goods_nm,
 				goods_color : data_option.goods_color,
 				goods_size : data_option.goods_size,

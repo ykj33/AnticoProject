@@ -16,6 +16,7 @@
 					, goods_size: '${dto.goods_sizes[0].goods_size }'
 					, goods_untpc: '${dto.goods_untpc }'
 					, goods_nm : '${dto.goods_nm }'
+					, goods_img : '${dto.goods_img}'
 			};
 			
 

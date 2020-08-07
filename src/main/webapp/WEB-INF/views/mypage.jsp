@@ -34,9 +34,11 @@ tr td {
 <body>
 
 	<%@ include file="com/header.jsp"%>
+	<%@ include file="com/cart.jsp" %>
 	<%@ include file="com/top.jsp"%>
+	<%@ include file="com/title.jsp"%>
 	<div id="antico_layout" class="container">
-		<%@ include file="com/title.jsp"%>
+		
 		<%@ include file="com/navbar.jsp"%>
 		<div id="mypage_head" class="text-center p-4">
 			<h2 class="text-black-50">마이 쇼핑</h2>
@@ -111,29 +113,31 @@ tr td {
 							+		'<img src="/displaythumb?img_name='+result[i].goods_img+'"class="m-2 float-left">'	
 							+		'<div class="basket_item_details position-relative flex-fill" style="width: 70%">'
 							+		'<div class="basket_item basket_name text-left overflow-hidden">'+result[i].goods_nm+'</div>'
-							+		'<div class="position-absolute basket_item basket_status repurchase" id="resell'+result[i].goods_no+'" style="bottom: 0; right: 0;" >재구매</div>'
+							+		'<div class="position-absolute basket_item basket_status repurchase" data-img="'+result[i].goods_img+'" data-no="'+result[i].goods_no+'" style="bottom: 0; right: 0;" >재구매</div>'
 							+	'</div></td>'	
-							+	'<td class="align-middle"><div>'+result[i].goods_color+'</div><div>'+result[i].goods_size+'</div></td>'
+							+	'<td class="align-middle"><div class="color">'+result[i].goods_color+'</div><div class="size">'+result[i].goods_size+'</div></td>'
 							+	'<td class="align-middle"><div>'+result[i].order_amount+'</div></td>'	
-							+	'<td class="item_price align-middle"><div>'+result[i].goods_untpc+' 원</div></td>'	
+							+	'<td class="item_price align-middle"><div class="untpc">'+result[i].goods_untpc+' 원</div></td>'	
 							+	'<td class="item_del_price align-middle"><div>3,000 원</div></td>';
 
 					if($("#btns"+result[i].order_no).length==0){
-						tr += 	'<td class="align-middle btns '+result[i].order_pro_sttus_code+'" id="btns'+result[i].order_no+'"><div>'+result[i].order_pro_sttus_code+'</div>';
+						tr += 	'<td class="align-middle btns" id="btns'+result[i].order_no+'"><div>'+result[i].order_pro_sttus_code+'</div>';
 
 							if(result[i].order_pro_sttus_code=='배송 준비 중'){
-								tr+='<button class="btn btn-outline-danger rounded-0" onclick="cancleitem('+result[i].order_no+')">취소</button>'
+								tr+='<button class="btn btn-outline-danger rounded-0 st1" onclick="cancleitem('+result[i].order_no+')">취소</button>'
 							}else if(result[i].order_pro_sttus_code=='배송 중'){
-								tr+='<button class="btn btn-outline-secondary rounded-0 item_location_search">위치 확인</button>'
+								tr+='<button class="btn btn-outline-secondary rounded-0 item_location_search st2">위치 확인</button>'
 							}else if(result[i].order_pro_sttus_code=='배송 완료'){
-								tr+='<button class="btn btn-outline-danger rounded-0 " href="#" role="button" id="dropdownMenuLink"'
+								tr+='<button class="btn btn-outline-danger rounded-0 st3" href="#" role="button" id="dropdownMenuLink"'
 									+'data-toggle="dropdown"aria-haspopup="true" > 교환/환불 </button>'
 									+'<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">'
 									+'<a class="dropdown-item" href="#" onclick="exchangeitem('+result[i].order_no+');">교환</a>'
 									+'<a class="dropdown-item" href="#" onclick="refunditem('+result[i].order_no+');">환불</a>'
 									+'</div>'
 									
-							}
+							}else{
+								tr+='<div class="st4"></div>'
+								}
 							
 						}
 							
@@ -144,13 +148,15 @@ tr td {
 
 					var rowno = $("#tbody"+result[i].order_no).children("tr").length;
 					$("#tbody"+result[i].order_no).children("tr").children(".btns").attr("rowspan", rowno);
-					console.log(rowno);
 					
 					
 					
 					
 					}
-
+				$("#status_1").append($(".st1").length);
+				$("#status_2").append($(".st2").length);
+				$("#status_3").append($(".st3").length);
+				$("#status_4").append($(".st4").length);
 				
 									
 				},
@@ -200,6 +206,8 @@ tr td {
 			}
 		
 		}
+
+
 	
 		
 	
@@ -208,12 +216,8 @@ tr td {
 
 			
 			
-			
-			
-							$("#status_1").append($("."));
-							$("#status_2").append();
-							$("#status_3").append();
-							$("#status_4").append();
+
+							
 							
 							if (window.innerWidth < 768) {
 								$(".right-border").removeClass("border-right");
@@ -235,9 +239,28 @@ tr td {
 												location.href = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=%ED%83%9D%EB%B0%B0";
 
 											});
-							$("tbody").on("click", ".repurchase", function(){
-								location.href="/order/payment";
+							$(document).on("click", ".repurchase", function(){
+
+								var that = $(this);
+								var untpc = that.parent().parent().nextAll().children(".untpc").text();
+								untpc = untpc.substring(0, untpc.length-2);
+								 var data_option = {
+										goods_no:that.attr("data-no")
+										, goods_color: that.parent().parent().next().children(".color").text()
+										, goods_size: that.parent().parent().next().children(".size").text()
+										, goods_untpc: untpc
+										, goods_nm: that.prev().text()
+										, goods_img: that.attr("data-img")
+										
+									}; 
+								    addCart(data_option, data_email = '${login.email }');    
+
+								
+								
+								
 								});
+
+
 							
 
 						});
