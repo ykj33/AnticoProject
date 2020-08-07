@@ -100,6 +100,7 @@ public class MemberController {
 			
 			return "redirect:/board/list";
 		} else {
+			model.addAttribute("msg", "ID_ALTER_FAIL");
 			return "/member/login";
 		}
 	}

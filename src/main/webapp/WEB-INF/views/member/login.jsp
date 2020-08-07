@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function(){
 	<c:if test="${msg eq 'KEY_ALTER_FAIL'}" >
 		alert('이메일 인증이 완료되지 않았습니다.');
    	</c:if>
+	<c:if test="${msg eq 'ID_ALTER_FAIL'}" >
+		alert('입력된 아이디가 없거나 패스워드가 같지 않습니다.');
+   	</c:if>
  });
  
 function validateMemberLoginForm() {
