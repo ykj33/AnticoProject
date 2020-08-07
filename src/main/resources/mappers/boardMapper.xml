@@ -4,10 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="b.o.a">
 
-	<select id="list" resultType="GoodsDTO">
+<!-- 	<select id="list" resultType="GoodsDTO">
 		SELECT * FROM tbl_goods ORDER BY
 		goods_no DESC
-	</select>
+	</select> -->
 
 	<select id="option" resultType="GoodsOptionDTO">
 		SELECT * FROM tbl_goods_option
@@ -39,11 +39,9 @@
 		SELECT * FROM tbl_goods WHERE tbl_goods.goods_no = #{goods_no}
 	</select>
 
-	<select id="forimg" resultType="BoardDTO">
-		SELECT * FROM tbl_goods RIGHT JOIN
-		tbl_goods_option
-		ON tbl_goods.goods_no =
-		tbl_goods_option.goods_no
+	<select id="list" resultType="BoardDTO">
+		SELECT * FROM tbl_goods ORDER BY
+		goods_no DESC
 	</select>
 	
 	<select id="goodsColors" resultType="GoodsOptionDTO">
@@ -54,6 +52,7 @@
 		SELECT goods_size FROM tbl_goods_option WHERE goods_no = #{goods_no} GROUP BY goods_size
 	</select>
 	
+
 	<select id="goodUntpc" resultType="GoodsOptionDTO">
 		SELECT * 
 		FROM tbl_goods_option 

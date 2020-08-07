@@ -20,14 +20,14 @@
 			<!-- 1열 -->
 			<c:forEach items="${list }" var="dto" begin="0" end="1">
 				<div class="col-md-5">
-					<a href="/board/read/${dto.goods_no}"> <c:forEach
+					<a href="/board/read/${dto.goods_no}"> <%-- <c:forEach
 							items="${forImg }" var="img">
-							<c:if test="${dto.goods_no == img.goods_no  }">
+							<c:if test="${dto.goods_no == img.goods_no  }"> --%>
 								<img id="main"
-									src='/displayfile?goods_no=${img.goods_no}&&img_name=${img.goods_img}'
+									src='/displayfile?goods_no=${dto.goods_no}&&img_name=${dto.goods_img}'
 									width="100%" height="70%" margin="auto" />
-							</c:if>
-						</c:forEach>
+						<%-- 	</c:if>
+						</c:forEach> --%>
 						<div>
 							<h5>[${dto.goods_no }] ${dto.goods_nm }</h5>
 						</div> <%-- <c:forEach items="${board }" var="option">
@@ -48,14 +48,14 @@
 			<div class="col-md-1"></div>
 			<c:forEach items="${list }" var="dto" begin="2" end="3">
 				<div class="col-md-5">
-					<a href="/board/read/${dto.goods_no}"> <c:forEach
+					<a href="/board/read/${dto.goods_no}"> <%-- <c:forEach
 							items="${forImg }" var="img">
-							<c:if test="${dto.goods_no == img.goods_no  }">
+							<c:if test="${dto.goods_no == img.goods_no  }"> --%>
 								<img id="main"
-									src='/displayfile?goods_no=${img.goods_no}&&img_name=${img.goods_img}'
+									src='/displayfile?goods_no=${dto.goods_no}&&img_name=${dto.goods_img}'
 									width="100%" height="70%" margin="auto" />
-							</c:if>
-						</c:forEach>
+						<%-- 	</c:if>
+						</c:forEach> --%>
 						<div>
 							<h5>[${dto.goods_no }] ${dto.goods_nm }</h5>
 						</div> <%-- <c:forEach items="${board }" var="option">

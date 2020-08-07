@@ -36,8 +36,8 @@ public class BoardController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) {
-		List<GoodsDTO> list = boardService.list();
-		List<BoardDTO> forImg = boardService.forImg();
+//		List<GoodsDTO> list = boardService.list();
+		List<BoardDTO> list = boardService.forImg();
 //		List<GoodsOptionDTO> option = boardService.option();
 //		List<GoodsOptionDTO> optionByNo = new ArrayList<GoodsOptionDTO>();
 //		for (int i = 0; i < list.size(); i++) {
@@ -61,9 +61,9 @@ public class BoardController {
 
 //		model.addAttribute("goods_option_size", goods_option_size);
 //		model.addAttribute("optionByNo", optionByNo);
-		model.addAttribute("forImg", forImg);
+//		model.addAttribute("forImg", forImg);
 		model.addAttribute("list", list);
-		System.out.println(list);
+//		System.out.println(list);
 		return "board/list";
 	}
 

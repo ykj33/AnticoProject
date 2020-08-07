@@ -42,6 +42,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		List<GoodsOptionDTO> goodsColors = boardDao.goodsColors(goods_no);
 		List<GoodsOptionDTO> goodsSizes = boardDao.goodsSizes(goods_no);
+	
 		
 		System.out.println("goodsColors" + goodsColors.size());
 		System.out.println("goodsSizes" + goodsSizes.size());
@@ -55,12 +56,16 @@ public class BoardServiceImpl implements BoardService {
 			map.put("goods_size", goodsSizes.get(0).getGoods_size());
 		}
 		
-		GoodsOptionDTO optionDto = boardDao.goodsUntpc(map);
+		List<GoodsOptionDTO> optionDto = boardDao.goodsUntpc(map);
 
+		System.out.println("확인용1" + optionDto);
 		dto.setGoods_colors(goodsColors);
 		dto.setGoods_sizes(goodsSizes);
-		dto.setGoods_untpc(optionDto.getGoods_untpc());
-		dto.setGoods_amount(optionDto.getGoods_amount());
+		for (int i = 0; i<optionDto.size(); i++) {
+			dto.setGoods_untpc(optionDto.get(i).getGoods_untpc());
+			dto.setGoods_amount(optionDto.get(i).getGoods_amount());
+			
+		}
 		return dto;
 	}
 	
@@ -76,12 +81,16 @@ public class BoardServiceImpl implements BoardService {
 		map.put("goods_color", godto.getGoods_color());
 		map.put("goods_size", godto.getGoods_size());
 		
-		GoodsOptionDTO optionDto = boardDao.goodsUntpc(map);
+		List<GoodsOptionDTO> optionDto = boardDao.goodsUntpc(map);
 
+		System.out.println("확인용2" + optionDto);
 		dto.setGoods_colors(goodsColors);
 		dto.setGoods_sizes(goodsSizes);
-		dto.setGoods_untpc(optionDto.getGoods_untpc());
-		dto.setGoods_amount(optionDto.getGoods_amount());
+		for (int i = 0; i<optionDto.size(); i++) {
+			dto.setGoods_untpc(optionDto.get(i).getGoods_untpc());
+			dto.setGoods_amount(optionDto.get(i).getGoods_amount());
+			
+		}
 		return dto;
 	}
 	

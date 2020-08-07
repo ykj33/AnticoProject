@@ -24,7 +24,7 @@ public interface BoardDAO {
 
 	List<GoodsOptionDTO> goodsSizes(String goods_no);
 
-	GoodsOptionDTO goodsUntpc(Map<String, String> map);
+	List<GoodsOptionDTO> goodsUntpc(Map<String, String> map);
 
 	void addcart(CartDTO dto);
 
@@ -33,5 +33,6 @@ public interface BoardDAO {
 	Integer updateCart(CartDTO dto);
 
 	Integer deleteCart(CartDTO dto);
+
 
 }

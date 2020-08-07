@@ -44,7 +44,7 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	@Override
 	public List<BoardDTO> forImg() {
-		return bSession.selectList(NS + ".forimg");
+		return bSession.selectList(NS + ".list");
 	}
 
 	@Override
@@ -58,8 +58,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public GoodsOptionDTO goodsUntpc(Map<String, String> map) {
-		return bSession.selectOne(NS + ".goodUntpc", map);
+	public List<GoodsOptionDTO> goodsUntpc(Map<String, String> map) {
+		return bSession.selectList(NS + ".goodUntpc", map);
 	}
 
 	@Override
