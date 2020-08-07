@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
+import kr.co.domain.MemberDTO;
 import kr.co.domain.OrderDTO;
 import kr.co.domain.OrderListDTO;
 
@@ -101,5 +102,16 @@ public class AdminDAOImpl implements AdminDAO {
 	public void refundorder(int no) {
 		Session.update(NS+".refundorder", no);
 	}
+	
+	@Override
+	public void memberdelete(String email) {
+		Session.delete(NS+".memberdelete", email);
+	}
+	
+	@Override
+	public List<MemberDTO> getMemberList() {
+		return Session.selectList(NS+".getmemberlist");
+	}
+	
 	
 }

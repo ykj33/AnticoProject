@@ -17,8 +17,12 @@ integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7
 <title>배송 관리</title>
 </head>
 <body>
-
+	<%@ include file="../com/header.jsp"%>
+	<%@ include file="../com/top.jsp"%>
+	<%@ include file="../com/title.jsp"%>
+		
 <div class="container">
+		<%@ include file="../com/navbar.jsp"%>
 <div id="delivery_list">
 
 

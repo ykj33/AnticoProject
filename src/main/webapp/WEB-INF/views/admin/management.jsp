@@ -17,8 +17,12 @@ integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7
 <title>상품 관리</title>
 </head>
 <body>
-
+	<%@ include file="../com/header.jsp"%>
+	<%@ include file="../com/top.jsp"%>
+	<%@ include file="../com/title.jsp"%>
+		
 <div class="container">
+		<%@ include file="../com/navbar.jsp"%>
 
 <form action="goods" method="post">
 <div class="form-group">
@@ -87,7 +91,11 @@ $(document).ready(function(){
 		});
 	$("#goods_delete").click(function(){
 		if(goodsno != ""){
-			location.href="/admin/delete/"+goodsno;
+			var isOk = confirm("삭제하시겠습니까?")
+			if(isOk){
+				location.href="/admin/delete/"+goodsno;
+				}
+			
 			}
 	});
 

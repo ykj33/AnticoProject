@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
+import kr.co.domain.MemberDTO;
 import kr.co.domain.OrderDTO;
 import kr.co.domain.OrderListDTO;
 
@@ -35,6 +36,10 @@ public interface AdminService {
 	void cancleorder(int no);
 
 	void refundorder(int no);
+
+	void memberdelete(String email);
+
+	List<MemberDTO> getMemberList();
 
 
 

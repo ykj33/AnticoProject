@@ -35,28 +35,6 @@ public class MypageController {
 	private AdminService service;
 	
 	
-	
-	@ResponseBody
-	@RequestMapping("/refundorder/{no}")
-	public void refundorder(@PathVariable int no) {
-		service.refundorder(no);
-	}
-	@ResponseBody
-	@RequestMapping("/cancleorder/{no}")
-	public void cancleorder(@PathVariable int no) {
-		service.cancleorder(no);
-	}
-	
-	@ResponseBody
-	@RequestMapping("/getdata")
-	public List<OrderListDTO> getdata(HttpSession session){
-		List<OrderListDTO> list = new ArrayList<OrderListDTO>();
-		MemberDTO mDto = (MemberDTO) session.getAttribute("login");
-		list = service.getOrderList(mDto.getEmail());
-		
-		return list;
-	}
-	
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
 	public String mypage(HttpSession session, HttpServletResponse response, Model model) {
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
@@ -83,6 +61,33 @@ public class MypageController {
 		return null;
 	}
 	
+	
+	
+	
+
+	
+	@ResponseBody
+	@RequestMapping("/refundorder/{no}")
+	public void refundorder(@PathVariable int no) {
+		service.refundorder(no);
+	}
+	@ResponseBody
+	@RequestMapping("/cancleorder/{no}")
+	public void cancleorder(@PathVariable int no) {
+		service.cancleorder(no);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getdata")
+	public List<OrderListDTO> getdata(HttpSession session){
+		List<OrderListDTO> list = new ArrayList<OrderListDTO>();
+		MemberDTO mDto = (MemberDTO) session.getAttribute("login");
+		list = service.getOrderList(mDto.getEmail());
+		
+		return list;
+	}
+	
+
 	
 	
 }

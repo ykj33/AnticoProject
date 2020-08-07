@@ -16,6 +16,7 @@ import javax.xml.ws.FaultAction;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,7 @@ import kr.co.antico.service.AdminService;
 import kr.co.antico.utils.Utils;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
+import kr.co.domain.MemberDTO;
 import kr.co.domain.OrderDTO;
 
 @Controller
@@ -41,6 +43,13 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService service;
+	
+	@RequestMapping(value = "/member", method = RequestMethod.GET)
+	public void member(Model model) {
+		List<MemberDTO> list = service.getMemberList();
+		
+		model.addAttribute("list", list);
+	}
 	
 	@RequestMapping(value = "/ordermanagement", method = RequestMethod.GET)
 	public void ordermanagement() {
@@ -96,6 +105,15 @@ public class AdminController {
 	
 	
 //	여기서 부터 ajax
+	
+	@ResponseBody
+	@RequestMapping("memberdelete")
+	public void memberdelete(String email) {
+		System.out.println(email);
+		service.memberdelete(email);
+		
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/statuschange", method = RequestMethod.POST)

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.antico.persistence.AdminDAO;
 import kr.co.domain.GoodsDTO;
 import kr.co.domain.GoodsOptionDTO;
+import kr.co.domain.MemberDTO;
 import kr.co.domain.OrderDTO;
 import kr.co.domain.OrderListDTO;
 
@@ -98,6 +99,16 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void refundorder(int no) {
 		aDAO.refundorder(no);
+	}
+
+	@Override
+	public void memberdelete(String email) {
+		aDAO.memberdelete(email);
+	}
+	
+	@Override
+	public List<MemberDTO> getMemberList() {
+		return aDAO.getMemberList();
 	}
 	
 }

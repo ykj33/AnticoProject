@@ -4,6 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="a.d.m">
 
+	<select id="getmemberlist" resultType="MemberDTO">
+		select * from tbl_member where key = 'N' or key = 'F'
+	</select>
+
+	<delete id="memberdelete">
+		delete from tbl_member where email = #{email}
+	</delete>
+
 	<update id="refundorder">
 		update tbl_order set ORDER_PRO_STTUS_CODE = '반송 중' where order_no = #{no} 
 	</update>
