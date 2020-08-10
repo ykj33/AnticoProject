@@ -50,6 +50,11 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	@Override
+	public void updateF(MemberDTO dto) {
+		memberDao.updateF(dto);
+	}
+
 
 
 }

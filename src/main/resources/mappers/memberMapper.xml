@@ -29,12 +29,13 @@
 	</select>
 
 	<update id="update">
-		UPDATE tbl_member SET mpw=#{mpw} WHERE email =#{email}
+		UPDATE tbl_member SET mpw=#{mpw} WHERE email = #{email}
 	</update>
 	
-	<delete id="delete">
-		DELETE FROM tbl_member WHERE email = #{email}
-	</delete>
+	<update id="updateF">
+		UPDATE tbl_member SET key = 'F' WHERE email = #{email}
+	</update>
+	
 	
 </mapper>
 

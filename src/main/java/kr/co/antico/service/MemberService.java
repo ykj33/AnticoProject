@@ -19,5 +19,7 @@ public interface MemberService {
 
 	void update(MemberDTO dto);
 
+	void updateF(MemberDTO dto);
+
 
 }

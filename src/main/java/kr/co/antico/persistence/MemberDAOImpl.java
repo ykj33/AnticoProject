@@ -52,5 +52,10 @@ public class MemberDAOImpl implements MemberDAO {
 		
 	}
 
+	@Override
+	public void updateF(MemberDTO dto) {
+		mSession.update(NS+".updateF", dto);
+	}
+
 
 }

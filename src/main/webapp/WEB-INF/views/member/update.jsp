@@ -19,8 +19,8 @@
 	<div class="container mb-5">
 
 		<div class="row">
-
-			<div class="col-md-5 mt-4 ml-4 mr-4 text-dark">
+			<div class="col-md-3"></div>
+			<div class="col-md-6 mt-4 ml-4 mr-4 text-dark">
 				<h3>비밀번호 수정</h3>
 				<form class="mt-4 text-muted" action="/member/update" method="post" name="memberLoginForm">
 					<div class="form-group">
@@ -36,8 +36,10 @@
 						<button type="submit" value="Submit"
 							class="btn btn-outline-dark rounded-0">완료</button>
 					</div>
+					
 				</form>
 			</div>
+			<div class="col-md-3"></div>
 		</div>
 	</div>
 

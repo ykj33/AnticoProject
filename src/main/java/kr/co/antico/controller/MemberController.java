@@ -141,7 +141,17 @@ public class MemberController {
 		return "redirect:/member/read";
 	}
 	
-	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String delete(HttpSession session, SessionStatus status) {
+		
+		MemberDTO dto= (MemberDTO) session.getAttribute("login");
+		if (dto != null) {
+			mService.updateF(dto);			
+			status.setComplete();
+			return "redirect:/board/list";
+		}
+		return "/member/login";
+	}
 	
 	
 	// 난수 확인 후 난수가 맞을 시 Y로  변경

@@ -21,4 +21,8 @@ public interface MemberDAO {
 
 
 
+	void updateF(MemberDTO dto);
+
+
+
 }
