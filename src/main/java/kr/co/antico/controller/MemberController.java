@@ -114,7 +114,32 @@ public class MemberController {
 		return "redirect:/board/list";
 	}
 	
+	@RequestMapping(value = "/read", method = RequestMethod.GET)
+	public void read(HttpSession session, Model model) {
+		
+		MemberDTO dto1 = (MemberDTO) session.getAttribute("login");
+		MemberDTO dto = mService.read(dto1.getEmail());
+		model.addAttribute("dto",dto);
+	}
 	
+	
+	
+	@RequestMapping(value = "/update/{email}", method = RequestMethod.GET)
+	public String updateui(@PathVariable("email") String email, Model model) {
+		
+		MemberDTO dto = mService.updateui(email);
+		model.addAttribute("dto",dto);
+		
+		return "/member/update";
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(MemberDTO dto) {
+		
+		mService.update(dto);
+		
+		return "redirect:/member/read";
+	}
 	
 	
 	

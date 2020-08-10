@@ -13,4 +13,11 @@ public interface MemberService {
 
 	Integer keyAlter(MemberDTO dto);
 
+	MemberDTO read(String email);
+
+	MemberDTO updateui(String email);
+
+	void update(MemberDTO dto);
+
+
 }

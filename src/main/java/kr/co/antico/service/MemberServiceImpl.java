@@ -33,4 +33,23 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.keyAlter(dto);
 	}
 
+	@Override
+	public MemberDTO read(String email) {
+		return memberDao.read(email);
+	}
+
+	@Override
+	public MemberDTO updateui(String email) {
+		return memberDao.updateui(email);
+
+	}
+
+	@Override
+	public void update(MemberDTO dto) {
+		memberDao.update(dto);
+		
+	}
+
+
+
 }

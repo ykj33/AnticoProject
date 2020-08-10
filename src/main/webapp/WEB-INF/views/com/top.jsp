@@ -22,12 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		
 	</span>
 	<span class="float-right">
-	
+		
 		<c:if test="${empty login.email}">
 			<span><a href="/member/login" class="btn"> 로그인 </a></span>
 		</c:if>
 	
 		<c:if test="${not empty login.email}">
+			<span><a href="/member/read" class="btn">마이페이지</a></span>
 			<span><a href="/member/logout" class="btn"> 로그아웃 </a></span>
 		</c:if>
 

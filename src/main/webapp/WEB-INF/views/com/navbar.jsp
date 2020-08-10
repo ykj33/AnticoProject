@@ -13,9 +13,9 @@
 
 <nav class="navbar navbar-expand-sm bg-white justify-content-center">
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">Link 1</a></li>
-		<li class="nav-item"><a class="nav-link" href="/board/list">리스트</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">Link 3</a></li>
-		<li class="nav-item"><a class="nav-link " href="/mypage/mypage">마이쇼핑</a></li>
+		<li class="nav-item"><a class="nav-link" href="#" style="padding-left: 30px; padding-right:30px;">Link 1</a></li>
+		<li class="nav-item"><a class="nav-link" href="/board/list" style="padding-left: 30px; padding-right:30px;">리스트</a></li>
+		<li class="nav-item"><a class="nav-link" href="#" style="padding-left: 30px; padding-right:30px;">Link 3</a></li>
+		<li class="nav-item"><a class="nav-link " href="/mypage" style="padding-left: 30px; padding-right:30px;">마이쇼핑</a></li>
 	</ul>
 </nav>

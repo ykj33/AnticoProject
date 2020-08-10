@@ -35,4 +35,22 @@ public class MemberDAOImpl implements MemberDAO {
 	public Integer keyAlter(MemberDTO dto) {
 		return mSession.update(NS + ".keyAlter", dto);
 	}
+
+	@Override
+	public MemberDTO read(String email) {
+		return mSession.selectOne(NS +".read", email);
+	}
+
+	@Override
+	public MemberDTO updateui(String email) {
+		return mSession.selectOne(NS+".updateui", email);
+	}
+
+	@Override
+	public void update(MemberDTO dto) {
+		mSession.selectOne(NS+".update", dto);
+		
+	}
+
+
 }

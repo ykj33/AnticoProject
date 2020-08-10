@@ -17,7 +17,24 @@
 	</select>
 
 	<update id="keyAlter">
-		UPDATE tbl_member set key = 'Y' WHERE email = #{email} and key = #{key}
+		UPDATE tbl_member SET key = 'Y' WHERE email = #{email} and key = #{key}
 	</update>
+	
+	<select id="read" resultType="MemberDTO">
+		SELECT * FROM tbl_member WHERE email = #{email}
+	</select>
+	
+	<select id="updateui" resultType="MemberDTO">
+		SELECT * FROM tbl_member WHERE email = #{email}
+	</select>
+
+	<update id="update">
+		UPDATE tbl_member SET mpw=#{mpw} WHERE email =#{email}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM tbl_member WHERE email = #{email}
+	</delete>
+	
 </mapper>
 
