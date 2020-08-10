@@ -41,6 +41,8 @@ public interface OrderService {
 
 	void reduceGoods(Map<String, Object> reduceMap);
 
+	int getRemainAmount(Map<String, Object> reduceMap);
+
 	
 
 	

@@ -98,8 +98,7 @@
 			<!-- 구매한 상품 리스트 -->
 			<div class="col-lg-5">
 				<div id="goods_list" class="row"
-					style="border-bottom: 1px black solid; padding: 10px">
-					</div>
+					style="border-bottom: 1px black solid; padding: 10px"></div>
 				<div>
 					<div id="totalPrice" style="padding: 10px"></div>
 
@@ -122,12 +121,18 @@
 </body>
 
 <script type="text/javascript">
-var choicePay = "";
-	$(document).ready(function() {
+	var choicePay = "";
+	$(document)
+			.ready(
+					function() {
 						addressNameDisplay();
 						cartList();
 						adbkLatest();
-						$(document).on("click",	".namelist",function() {
+						$(document)
+								.on(
+										"click",
+										".namelist",
+										function() {
 
 											var email = $("#email").val();
 											var idx = $(this).attr('data-idx');
@@ -196,37 +201,53 @@ var choicePay = "";
 							$("#delivery_place_adres").val("");
 							$("#delivery_place_adres_detail").val("");
 						});
-						
-						$("#commit").click(function() {
-							var totalPrice = $("#tPrice").html().replace('원', '');
-							if(choicePay == "") {
-										alert("결제 방법을 선택해주세요.");
-										return;
-								}
-							var email = $("#email").val();
-							var OrderDTO = {"delivery_adbk_no" : 0,
-									"delivery_no" : null,
-									"email" : email,
-									"frwll_reason_code" : null,
-									"order_date": null,
-									"order_no": 0,
-									"order_pro_sttus_code": null,
-									"order_totamt":  Number(totalPrice),
-									"setle_mth": choicePay};
-					
-							
-	var DeliveryAdbkDTO = {
+
+						$("#commit")
+								.click(
+										function() {
+											var totalPrice = $("#tPrice")
+													.html().replace('원', '');
+											if (choicePay == "") {
+												alert("결제 방법을 선택해주세요.");
+												return;
+											}
+											var email = $("#email").val();
+											var OrderDTO = {
+												"delivery_adbk_no" : 0,
+												"delivery_no" : null,
+												"email" : email,
+												"frwll_reason_code" : null,
+												"order_date" : null,
+												"order_no" : 0,
+												"order_pro_sttus_code" : null,
+												"order_totamt" : Number(totalPrice),
+												"setle_mth" : choicePay
+											};
+
+											var DeliveryAdbkDTO = {
 
 												"email" : email, // 이메일
 												"delivery_adbk_no" : 0, // 주소록 번호
-												"delivery_adbk_ncm" : $("#delivery_adbk_ncm").val(), // 주소록 별칭
-												"delivery_place_tlnum" : $("#delivery_place_tlnum").val(),// 배송지 전화번호
-												"delivery_place_adres" : $("#delivery_place_adres").val(), // 배송지 주소
-												"delivery_place_adres_detail" : $("#delivery_place_adres_detail").val()
+												"delivery_adbk_ncm" : $(
+														"#delivery_adbk_ncm")
+														.val(), // 주소록 별칭
+												"delivery_place_tlnum" : $(
+														"#delivery_place_tlnum")
+														.val(),// 배송지 전화번호
+												"delivery_place_adres" : $(
+														"#delivery_place_adres")
+														.val(), // 배송지 주소
+												"delivery_place_adres_detail" : $(
+														"#delivery_place_adres_detail")
+														.val()
 											};
 
-	var obj = {"OrderDTO":OrderDTO, "DeliveryAdbkDTO" : DeliveryAdbkDTO};
-											$.ajax({
+											var obj = {
+												"OrderDTO" : OrderDTO,
+												"DeliveryAdbkDTO" : DeliveryAdbkDTO
+											};
+											$
+													.ajax({
 														type : 'POST',
 														url : 'commit',
 
@@ -234,13 +255,19 @@ var choicePay = "";
 															"Content-Type" : "application/json",
 															"X-HTTP-Method-Override" : "POST"
 														},
-														data : JSON.stringify(obj),
+														data : JSON
+																.stringify(obj),
 														dataType : 'JSON',
 														success : function(
 																result) {
+															if (result["result"] == "result") {
+																alert("주문하신 수량이 잔여 수량보다 많습니다.");
+															} else{
+
 															console.log(result);
 															window.location.href = "/mypage";
 
+	}
 
 														},
 														error : function(
@@ -276,55 +303,44 @@ var choicePay = "";
 	}
 
 	function adbkLatest() {
-	var email = $("#email").val();
-	
+		var email = $("#email").val();
 
-	$.ajax({
-				type : 'POST',
-				url : 'payment',
+		$
+				.ajax({
+					type : 'POST',
+					url : 'payment',
 
-				data : {
-					email : email
-				},
-				success : function(
-						result) {
-					var idx = -1;
-					
-					for(i = 1; i<result["adbkList"].length; i++) {
-						var no = result["adbkList"][i].delivery_adbk_no;
-				
-						if(idx < no) {
-							idx = no;
+					data : {
+						email : email
+					},
+					success : function(result) {
+						var idx = -1;
+
+						for (i = 1; i < result["adbkList"].length; i++) {
+							var no = result["adbkList"][i].delivery_adbk_no;
+
+							if (idx < no) {
+								idx = no;
 							}
 						}
-					console.log("idx", idx);
-					var name = result["adbkList"][idx].delivery_adbk_ncm;
-					var telnum = result["adbkList"][idx].delivery_place_tlnum;
-					var address = result["adbkList"][idx].delivery_place_adres;
-					var address_detail = result["adbkList"][idx].delivery_place_adres_detail;
-					$("#delivery_adbk_ncm").val(name);
-					$(
-							"#delivery_place_tlnum")
-							.val(telnum);
-					$(
-							"#delivery_place_adres")
-							.val(
-									address);
-					$(
-							"#delivery_place_adres_detail")
-							.val(
-									address_detail);
+						console.log("idx", idx);
+						var name = result["adbkList"][idx].delivery_adbk_ncm;
+						var telnum = result["adbkList"][idx].delivery_place_tlnum;
+						var address = result["adbkList"][idx].delivery_place_adres;
+						var address_detail = result["adbkList"][idx].delivery_place_adres_detail;
+						$("#delivery_adbk_ncm").val(name);
+						$("#delivery_place_tlnum").val(telnum);
+						$("#delivery_place_adres").val(address);
+						$("#delivery_place_adres_detail").val(address_detail);
 
-				},
-				error : function(
-						request,
-						status, error) {
+					},
+					error : function(request, status, error) {
 
-					console.log(error);
-				}
+						console.log(error);
+					}
 
-			});
-}
+				});
+	}
 
 	function cartList() {
 		var email = $("#email").val();
@@ -340,7 +356,7 @@ var choicePay = "";
 
 						var totalPrice = 0;
 						for (var i = 0; i < result["orderList"].length; i++) {
-							
+
 							var goods_no = result["orderList"][i].goods_no;
 							var img = result["orderList"][i].goods_img;
 							var name = result["orderList"][i].goods_nm;
@@ -348,23 +364,27 @@ var choicePay = "";
 							var price = result["orderList"][i].goods_untpc;
 							var goods_size = result["orderList"][i].goods_size;
 							var goods_color = result["orderList"][i].goods_color;
-							var priceSum = quantity*price;
+							var priceSum = quantity * price;
 							console.log(priceSum);
 							totalPrice += priceSum;
 
-
 							var cart_list = "<div class='row cart"+i+"'><div class='goodsList col-md-3' style = 'display : inline' data-idx='"+i+"'><img id='main' src='/displaythumb?img_name="
-								+ img + "'/></div><div class='goodsList col-md-4' style = 'display : inline; margin-left:5px;' data-idx='"+i+"'>"
-								+ name + "</div><div class='goodsList_quantity col-md-2' style = 'display : inline' data-idx='"+i+"'>"
-								+ quantity + "</div><div class='goodsList_price col-md-2' style = 'display : inline; text-align : right' data-idx='"+i+"'>"
-								+ price + "</div><div class='goodsList_size' style = 'display : none' data-idx='"+i+"'>"
-								+ goods_size + "</div><div class='goodsList_color' style = 'display : none' data-idx='"+i+"'>"
-								+ goods_color + "</div><div class='goodsList_no' style = 'display : none' data-idx='"+i+"'>"
-								+ goods_no + "</div></div>";
+									+ img
+									+ "'/></div><div class='goodsList col-md-4' style = 'display : inline; margin-left:5px;' data-idx='"+i+"'>"
+									+ name
+									+ "</div><div class='goodsList_quantity col-md-2' style = 'display : inline' data-idx='"+i+"'>"
+									+ quantity
+									+ "</div><div class='goodsList_price col-md-2' style = 'display : inline; text-align : right' data-idx='"+i+"'>"
+									+ price
+									+ "</div><div class='goodsList_size' style = 'display : none' data-idx='"+i+"'>"
+									+ goods_size
+									+ "</div><div class='goodsList_color' style = 'display : none' data-idx='"+i+"'>"
+									+ goods_color
+									+ "</div><div class='goodsList_no' style = 'display : none' data-idx='"+i+"'>"
+									+ goods_no + "</div></div>";
 
-								$("#goods_list").append(cart_list);
-							
-							
+							$("#goods_list").append(cart_list);
+
 							/* $("#goods_list")
 									.append(
 											"<div class='"+i+"'><div class='goodsList col-md-3' style = 'display : inline' data-idx='"+i+"'><img id='main' src='/displaythumb?img_name="
@@ -388,7 +408,7 @@ var choicePay = "";
 							$("#goods_list").append(
 									"<div class='goodsList_no col-md-2' style = 'display : none' data-idx='"+i+"'>"
 											+ goods_no + "</div></div>");
- */
+							 */
 						}
 						$("#totalPrice")
 								.append(
