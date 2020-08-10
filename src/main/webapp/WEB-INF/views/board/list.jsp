@@ -25,7 +25,7 @@
 							<c:if test="${dto.goods_no == img.goods_no  }"> --%>
 								<img id="main"
 									src='/displayfile?goods_no=${dto.goods_no}&&img_name=${dto.goods_img}'
-									width="100%" height="70%" margin="auto" />
+									width="100%" height="100%" margin="auto" />
 						<%-- 	</c:if>
 						</c:forEach> --%>
 						<div>
@@ -53,7 +53,7 @@
 							<c:if test="${dto.goods_no == img.goods_no  }"> --%>
 								<img id="main"
 									src='/displayfile?goods_no=${dto.goods_no}&&img_name=${dto.goods_img}'
-									width="100%" height="70%" margin="auto" />
+									width="100%" height="100%" margin="auto" />
 						<%-- 	</c:if>
 						</c:forEach> --%>
 						<div>

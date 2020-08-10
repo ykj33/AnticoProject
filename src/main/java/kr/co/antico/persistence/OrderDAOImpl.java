@@ -99,4 +99,20 @@ public class OrderDAOImpl implements OrderDAO {
 		oSession.delete(NS + ".deletecart", email);
 		
 	}
+	
+	@Override
+	public void reduceGoods(Map<String, Object> reduceMap) {
+		oSession.update(NS + ".reducegoods", reduceMap);
+	}
+	@Override
+	public int getRemainAmount(Map<String, Object> reduceMap) {
+		// TODO Auto-generated method stub
+		return oSession.selectOne(NS + ".getremainamount", reduceMap);
+	}
+	
+	@Override
+	public void setAmountZero(Map<String, Object> reduceMap) {
+		oSession.update(NS + ".setamountzero", reduceMap);
+		
+	}
 }

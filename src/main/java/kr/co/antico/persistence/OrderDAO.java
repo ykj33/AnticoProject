@@ -38,4 +38,10 @@ public interface OrderDAO {
 
 	void deleteCart(String email);
 
+	void reduceGoods(Map<String, Object> reduceMap);
+
+	int getRemainAmount(Map<String, Object> reduceMap);
+
+	void setAmountZero(Map<String, Object> reduceMap);
+
 }

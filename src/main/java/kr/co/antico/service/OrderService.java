@@ -39,6 +39,8 @@ public interface OrderService {
 
 	void deleteCart(String email);
 
+	void reduceGoods(Map<String, Object> reduceMap);
+
 	
 
 	

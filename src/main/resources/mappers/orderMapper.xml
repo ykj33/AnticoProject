@@ -4,12 +4,32 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="o.r.d">
 
+	<select id="setamountzero">
+		UPDATE tbl_goods_option SET goods_amount = 0 WHERE goods_no = #{goodsNo} and
+		goods_color = #{goodsColor} and goods_size = #{goodsSize}
+	</select>
+
+	<select id="getremainamount" resultType="Integer">
+		SELECT goods_amount FROM
+		tbl_goods_option WHERE goods_no = #{goodsNo} and goods_color =
+		#{goodsColor} and goods_size = #{goodsSize}
+	</select>
+
+	<update id="reducegoods">
+		UPDATE tbl_goods_option SET goods_amount =
+		goods_amount - #{goodsQuantity}
+		WHERE goods_no = #{goodsNo} and
+		goods_color = #{goodsColor} and
+		goods_size = #{goodsSize}
+	</update>
+
 	<delete id="deletecart">
 		DELETE FROM tbl_cart WHERE email = #{email}
 	</delete>
 
 	<select id="getorderno" resultType="Integer">
-		SELECT order_no FROM tbl_order WHERE email = #{email} and delivery_no =
+		SELECT order_no FROM
+		tbl_order WHERE email = #{email} and delivery_no =
 		#{delivery_no}
 	</select>
 

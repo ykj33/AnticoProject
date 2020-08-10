@@ -116,7 +116,7 @@ public class BoardController {
 
 	@ResponseBody
 	@RequestMapping(value = "/updatecart", method = RequestMethod.POST)
-	public Integer updateCart(@RequestBody CartDTO dto) {
+	public Integer updateCart(@RequestBody CartDTO dto, GoodsOptionDTO goodsOtionDto) {
 		return boardService.updateCart(dto);
 	}
 

@@ -96,4 +96,19 @@ public class OrderServiceImpl implements OrderService {
 		orderDao.deleteCart(email);
 
 	}
+
+	@Override
+	public void reduceGoods(Map<String, Object> reduceMap) {
+
+		int remainAmount = orderDao.getRemainAmount(reduceMap);
+		System.out.println("남은 수량" + remainAmount);
+		int orderedGoodsQuantity = (Integer) reduceMap.get("goodsQuantity");
+		System.out.println("주문한 수량" + orderedGoodsQuantity);
+		if (remainAmount - orderedGoodsQuantity >= 0) {
+			orderDao.reduceGoods(reduceMap);
+		} else {
+			orderDao.setAmountZero(reduceMap);
+		}
+
+	}
 }

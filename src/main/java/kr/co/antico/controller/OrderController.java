@@ -81,13 +81,21 @@ public class OrderController {
 		// 장바구니 테이블에서 정보를 가져와 order_detail 테이블에 할당 후 추가
 		for (int i = 0; i < cartDto.size(); i++) {
 			String goodsNo = cartDto.get(i).getGoods_no();
-			System.out.println(goodsNo);
+			
 			int goodsQuantity = cartDto.get(i).getGoods_qtys();
 			int goodsPrice = cartDto.get(i).getGoods_untpc();
 			String goodsColor = cartDto.get(i).getGoods_color();
 			String goodsSize = cartDto.get(i).getGoods_size();
 			OrderDetailDTO orderDetailDto = new OrderDetailDTO(orderNo, goodsNo, goodsQuantity, goodsPrice, goodsSize, goodsColor);
+			
 			orderService.insertOrderDetail(orderDetailDto);
+			Map<String , Object> reduceMap = new HashMap<String, Object>();
+			reduceMap.put("goodsNo", goodsNo);
+			reduceMap.put("goodsQuantity", goodsQuantity);
+			reduceMap.put("goodsColor", goodsColor);
+			reduceMap.put("goodsSize", goodsSize);
+			System.out.println(reduceMap);
+			orderService.reduceGoods(reduceMap);
 		}
 		// 결제가 끝난 후 장바구니 목록 삭제
 		orderService.deleteCart(orderDto.getEmail());
