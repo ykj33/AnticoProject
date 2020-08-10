@@ -316,12 +316,12 @@
 					success : function(result) {
 						var idx = -1;
 
-						for (i = 1; i < result["adbkList"].length; i++) {
+						for (i = 0; i < result["adbkList"].length-1; i++) {
 							var no = result["adbkList"][i].delivery_adbk_no;
 
 							if (idx < no) {
 								idx = no;
-							}
+							} 
 						}
 						console.log("idx", idx);
 						var name = result["adbkList"][idx].delivery_adbk_ncm;
