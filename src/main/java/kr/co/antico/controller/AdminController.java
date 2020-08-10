@@ -200,8 +200,27 @@ public class AdminController {
 				String format = Utils.getFormat(orgFileName);
 				if (format != null) {
 					imgName[i] += "." + format;
-					String str = uploadPath +imgName[i++];
-					mFile.transferTo(new File(str));
+					String str = uploadPath +imgName[i];
+					
+					if(i==0) {
+						
+						File f1 = new File(mFile.getOriginalFilename());
+						mFile.transferTo(f1);
+						
+						BufferedImage sourceImg = ImageIO.read(f1);
+						
+						BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_EXACT, 450);
+						
+						File newfFile = new File(str);
+						ImageIO.write(destImg, format, newfFile);
+						
+					}else if(i==1) {
+						mFile.transferTo(new File(str));	
+					}
+					
+					
+					
+					i++;
 					
 				} else {
 				//파일이 없거나 이미지 파일이 아님
