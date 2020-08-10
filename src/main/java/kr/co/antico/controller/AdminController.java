@@ -1,5 +1,6 @@
 package kr.co.antico.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,11 +10,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.ws.FaultAction;
 
 import org.apache.commons.io.IOUtils;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -276,9 +279,28 @@ public class AdminController {
 				String format = Utils.getFormat(orgFileName);
 				if (format != null) {
 					imgName[i] += "." + format;
-					String str = uploadPath +imgName[i++];
-					mFile.transferTo(new File(str));
+					String str = uploadPath +imgName[i];
 					
+					
+					if(i==0) {
+			
+						File f1 = new File(mFile.getOriginalFilename());
+						mFile.transferTo(f1);
+						
+						BufferedImage sourceImg = ImageIO.read(f1);
+						
+						BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_EXACT, 450);
+						
+						File newfFile = new File(str);
+						ImageIO.write(destImg, format, newfFile);
+						
+					}else if(i==1) {
+						mFile.transferTo(new File(str));	
+					}
+					
+					
+					
+					i++;
 				} else {
 					imgName[i++] = "";
 				}

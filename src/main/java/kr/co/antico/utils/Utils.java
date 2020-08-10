@@ -19,6 +19,7 @@ public class Utils {
 
 	public static void makeThumbnail(String uploadPath, String datePath, String newName) throws IOException {
 		File f1 = new File(uploadPath+File.separator+datePath, newName);
+		
 		BufferedImage sourceImg = ImageIO.read(f1);
 		
 		BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_EXACT, 100);

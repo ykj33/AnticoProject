@@ -47,26 +47,26 @@ tr td {
 			<div class="col-md-3  status p-0 border-top border-bottom">
 				<div class="border-right right-border">
 					<div class="text-center m-3 del_menu">배송 준비 중</div>
-					<div class="text-center m-3 status_val" id="status_1"></div>
+					<div class="text-center m-3 status_val" id="status_1">0</div>
 				</div>
 			</div>
 			<div class="col-md-3  status p-0 border-top border-bottom">
 				<div class=" border-right right-border">
 					<div class="text-center m-3 del_menu">배송 중</div>
-					<div class="text-center m-3 status_val" id="status_2"></div>
+					<div class="text-center m-3 status_val" id="status_2">0</div>
 				</div>
 			</div>
 			<div class="col-md-3  status p-0 border-top border-bottom">
 				<div class="border-right right-border">
 					<div class="text-center m-3 del_menu">배송 완료</div>
-					<div class="text-center m-3 status_val" id="status_3"></div>
+					<div class="text-center m-3 status_val" id="status_3">0</div>
 				</div>
 			</div>
 
 			<div class="col-md-3 status p-0 border-top border-bottom">
 				<div>
 					<div class="text-center m-3 del_menu">취소/교환/반품</div>
-					<div class="text-center m-3 status_val" id="status_4"></div>
+					<div class="text-center m-3 status_val" id="status_4">0</div>
 				</div>
 			</div>
 		</div>
@@ -153,6 +153,7 @@ tr td {
 					
 					
 					}
+				$(".status_val").empty();
 				$("#status_1").append($(".st1").length);
 				$("#status_2").append($(".st2").length);
 				$("#status_3").append($(".st3").length);
@@ -197,6 +198,7 @@ tr td {
 				success:function(result){
 					console.log('성공');
 					$("#basket").empty();
+					
 					getlist();
 					},
 				error:function(request, error, status){
