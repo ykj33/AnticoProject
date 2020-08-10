@@ -51,8 +51,10 @@ $(document).ready(function(){
 
 	$(document).on("click", ".delete_btn", function(){
 		that = $(this);
+		
 		var email = that.attr("id");
-		console.log(email);
+		var isOk = confirm(email+"를 삭제하시겠습니까?");
+		if(isOk){
 		$.ajax({
 			type:'post',
 			url:'memberdelete',
@@ -69,7 +71,7 @@ $(document).ready(function(){
 			
 			});
 
-		
+			}
 		});
 	
 });

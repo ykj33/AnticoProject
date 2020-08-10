@@ -4,6 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="a.d.m">
 
+	
+	<delete id="orderdeletebyemail">
+		delete from tbl_order where email = #{email}	
+	</delete>
+	<delete id="detaildeletebyemail">
+		delete from (select * from tbl_order_detail d left join tbl_order o on d.order_no = o.order_no where o.email = #{email})
+	</delete>
+	<delete id="deliverydeletebyemail">
+		delete from tbl_delivery_adbk where email = #{email}
+	</delete>
+	<delete id="cartdeletebyemail">
+		delete from tbl_cart where email = #{email}
+	</delete>
+
 	<select id="getmemberlist" resultType="MemberDTO">
 		select * from tbl_member where key = 'N' or key = 'F'
 	</select>

@@ -103,6 +103,11 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void memberdelete(String email) {
+		aDAO.cartDeleteByEamil(email);
+		aDAO.deliveryDeleteByEmail(email);
+		aDAO.detailDeleteByEmail(email);
+		aDAO.orderDeleteByEmail(email);
+		
 		aDAO.memberdelete(email);
 	}
 	

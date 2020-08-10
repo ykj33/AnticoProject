@@ -113,5 +113,22 @@ public class AdminDAOImpl implements AdminDAO {
 		return Session.selectList(NS+".getmemberlist");
 	}
 	
+	@Override
+	public void cartDeleteByEamil(String email) {
+		Session.delete(NS+".cartdeletebyemail", email);
+	}
+	@Override
+	public void deliveryDeleteByEmail(String email) {
+		Session.delete(NS+".deliverydeletebyemail", email);
+	}
+	@Override
+	public void detailDeleteByEmail(String email) {
+		Session.delete(NS+".detaildeletebyemail", email);
+	}
+	@Override
+	public void orderDeleteByEmail(String email) {
+		Session.delete(NS+".orderdeletebyemail", email);
+	}
+	
 	
 }

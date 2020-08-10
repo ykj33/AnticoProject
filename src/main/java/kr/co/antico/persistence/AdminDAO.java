@@ -44,6 +44,16 @@ public interface AdminDAO {
 
 	List<MemberDTO> getMemberList();
 
+	void cartDeleteByEamil(String email);
+
+	void deliveryDeleteByEmail(String email);
+
+	void detailDeleteByEmail(String email);
+
+	void orderDeleteByEmail(String email);
+
+
+
 
 
 
