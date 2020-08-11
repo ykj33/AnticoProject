@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 </head>
 <body>
+	<%@ include file="../com/cart.jsp" %>
 	<%@ include file="../com/top.jsp"%>
 	<%@ include file="../com/title.jsp"%>
 	<%@ include file="../com/navbar.jsp"%>

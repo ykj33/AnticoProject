@@ -129,7 +129,7 @@
 		// 장바구니 열기 
 		function cartShow() {	
 			window.scrollTo(0, 0);
-			$('.collapse').collapse('show');
+			$('.collapse').collapse('toggle');
 		};
 
 		// 장바구니 닫기 
