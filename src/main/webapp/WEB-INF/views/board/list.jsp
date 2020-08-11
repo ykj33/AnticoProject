@@ -25,11 +25,6 @@
 
   pageContext.setAttribute("list2", list2);
 
-  
-
-  
-
-   
 
   %>
 	<div class="container">
@@ -53,7 +48,7 @@
 			</c:forEach>
 				<div class="col-md-1"></div>
 				</div>
-				<br><br>
+				<br><br><br><br>
 			<!-- 2열 -->
 			<div class="row">
 			<div class="col-md-1"></div>
@@ -71,17 +66,17 @@
 			</c:forEach>
 				<div class="col-md-1"></div>
 		</div>
-		<%request.setAttribute("dfdf", 4); %>
+		<br><br><br><br>
 		<%@ include file="../com/footer.jsp"%>
 	</div>
 
 <script type="text/javascript">
 
 $(document).ready(function(){
-	var data = ${list2};
+	var data = <c:out value="${list2}" escapeXml="false"/>;
 	var tar = 4;	
 $(window).scroll(function(){
-	if($(window).scrollTop() == $(document).height() - $(window).height()){
+	if($(window).scrollTop() > $(document).height() - $(window).height()-100){
 		if(tar <8){
 		
 				var list = '<div class="row">'
@@ -101,11 +96,9 @@ $(window).scroll(function(){
 								+'</a>'
 								+'</div>'
 
-
-						
 						}
 					list += 	'<div class="col-md-1"></div>'
-							+	'</div>';
+							+	'</div><br><br><br><br>';
 					$("#back-to-top").before(list);
 					tar +=2;
 					

@@ -38,11 +38,7 @@ tr td {
 	<%@ include file="com/top.jsp"%>
 	<%@ include file="com/title.jsp"%>
 	<div id="antico_layout" class="container">
-		
 		<%@ include file="com/navbar.jsp"%>
-		<div id="mypage_head" class="text-center p-4">
-			<h2 class="text-black-50">마이 쇼핑</h2>
-		</div>
 		<div id="delevery_status" class="row align-items-center  m-5">
 			<div class="col-md-3  status p-0 border-top border-bottom">
 				<div class="border-right right-border">
