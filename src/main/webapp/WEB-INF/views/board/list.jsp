@@ -20,12 +20,11 @@
   List<BoardDTO> list=(List<BoardDTO>)request.getAttribute("list");
  
   ObjectMapper mapper=new ObjectMapper();
-
   String list2=mapper.writeValueAsString(list);
-
   pageContext.setAttribute("list2", list2);
-
-
+  
+  
+   
   %>
 	<div class="container">
 		<%@ include file="../com/navbar.jsp"%>
@@ -48,7 +47,7 @@
 			</c:forEach>
 				<div class="col-md-1"></div>
 				</div>
-				<br><br><br><br>
+				<br><br>
 			<!-- 2열 -->
 			<div class="row">
 			<div class="col-md-1"></div>
@@ -66,17 +65,16 @@
 			</c:forEach>
 				<div class="col-md-1"></div>
 		</div>
-		<br><br><br><br>
+		<%request.setAttribute("dfdf", 4); %>
 		<%@ include file="../com/footer.jsp"%>
 	</div>
 
 <script type="text/javascript">
-
 $(document).ready(function(){
-	var data = <c:out value="${list2}" escapeXml="false"/>;
+	var data = ${list2};
 	var tar = 4;	
 $(window).scroll(function(){
-	if($(window).scrollTop() > $(document).height() - $(window).height()-100){
+	if($(window).scrollTop() == $(document).height() - $(window).height()){
 		if(tar <8){
 		
 				var list = '<div class="row">'
@@ -95,10 +93,10 @@ $(window).scroll(function(){
 								+	'</div>'
 								+'</a>'
 								+'</div>'
-
+						
 						}
 					list += 	'<div class="col-md-1"></div>'
-							+	'</div><br><br><br><br>';
+							+	'</div>';
 					$("#back-to-top").before(list);
 					tar +=2;
 					

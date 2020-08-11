@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 </script>
-<%@ include file="../com/cart.jsp" %>
+
 <div class="clearfix" id="top">
 	<span class="float-left">
 		<a class="btn text-secondary shadow-none" id="btnCart">장바구니</a>
