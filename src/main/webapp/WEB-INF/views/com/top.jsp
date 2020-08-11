@@ -7,32 +7,37 @@
 document.addEventListener('DOMContentLoaded', () => {
 	
 	let btnCart = document.getElementById('btnCart');
+	let btnLogin = document.getElementById('btnLogin');
+	let btnMypage = document.getElementById('btnMypage');
+	let btnLogout = document.getElementById('btnLogout');
+	let url = document.location.href;
 	
 	// 장바구니 버튼 클릭시.
 	btnCart.addEventListener('click', (evnet) => {
-		cartShow();
 		ajaxGetCartList('${login.email }')
+		cartShow();
 	});
+
 });
 </script>
-
-<div class="clearfix text-secondary">
+<%@ include file="../com/cart.jsp" %>
+<div class="clearfix" id="top">
 	<span class="float-left">
-		<span class="btn text-secondary" id="btnCart">장바구니</span>
+		<a class="btn text-secondary shadow-none" id="btnCart">장바구니</a>
 		
 	</span>
 	<span class="float-right">
 		
 		<c:if test="${empty login.email}">
-			<span><a href="/member/login" class="btn"> 로그인 </a></span>
+			<a href="/member/login" class="btn text-secondary shadow-none" id="btnLogin"> 로그인 </a>
 		</c:if>
 	
 		<c:if test="${not empty login.email}">
-			<span><a href="/member/read" class="btn">마이페이지</a></span>
-			<span><a href="/member/logout" class="btn"> 로그아웃 </a></span>
+			<a href="/member/read" class="btn text-secondary shadow-none" id="btnMypage">마이페이지</a>
+			<a href="/member/logout" class="btn text-secondary shadow-none" id="btnLogout"> 로그아웃 </a>
 		</c:if>
 
-		<a href="/member/insert" class="btn">회원가입</a>
+		<a href="/member/insert" class="btn text-secondary shadow-none">회원가입</a>
 	
 	</span>
 </div>

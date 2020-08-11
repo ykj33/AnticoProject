@@ -14,31 +14,31 @@ document.addEventListener('DOMContentLoaded', function(){
 
     let email = document.getElementById('inputEmail');
 
-    console.log(email);
+    //console.log(email);
 
     email.addEventListener('focusout', (event) => {
-       console.log(event.target.value);
+       //console.log(event.target.value);
 
-       let emailVal = event.target.value;
+		let emailVal = event.target.value;
 
-       axios.get('/member/idCheck/'+emailVal)
-       .then(function (response) {
-          // handle success
-          console.log(response);
-          if(response.data == "IN_USE"){
-             alert('사용중인 이메일입니다.');
-          } else {
-             alert('사용가능합니다.');
-          }
-       })
-       .catch(function (error) {
-          // handle error
-          console.log(error);
-       })
-       .then(function () {
-          // always executed
-       });
-       
+		axios.get('/member/idCheck/'+emailVal)
+		.then(function (response) {
+			// handle success
+			console.log(response);
+			if(response.data == "IN_USE"){
+			   alert('사용중인 이메일입니다.');
+			} else {
+			   alert('사용가능합니다.');
+			}
+		})
+		.catch(function (error) {
+		   // handle error
+		   console.log(error);
+		})
+		.then(function () {
+		   // always executed
+		});
+
     });
 
  });
@@ -52,6 +52,12 @@ document.addEventListener('DOMContentLoaded', function(){
     if (email == '') {
        alert('이메일을 입력해주세요.');
        return false;
+    }
+    
+    let exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+    if(exptext.test(email) == false) {
+		alert('정상적인 메일 형식이 아닙니다.');
+		return false;
     }
     if (mpw == '') {
        alert('패스워드를 입력해주세요.');
