@@ -58,8 +58,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<GoodsOptionDTO> goodsUntpc(Map<String, String> map) {
-		return bSession.selectList(NS + ".goodUntpc", map);
+	public GoodsOptionDTO goodsUntpc(Map<String, String> map) {
+		return bSession.selectOne(NS + ".goodUntpc", map);
 	}
 
 	@Override
