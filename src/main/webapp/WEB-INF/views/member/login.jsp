@@ -6,6 +6,7 @@
 <html>
 <head>
 <title>로그인</title>
+<%@ include file="../com/cart.jsp" %>
 <%@ include file="../com/header.jsp"%>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>

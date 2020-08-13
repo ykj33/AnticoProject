@@ -243,22 +243,23 @@
 				const cart = data_cart[i];
 
 				// 동적 테이블 생성
-				str += ''
-				+'<div class="row ml-4 mb-2 text-center" data-id="'+cart.cart_id+'">'
-				+	'<div class="col-md-1"><img src="/displayfile?img_name='+cart.goods_img+'" width="60px" height="60px"></div>'
-				+	'<div class="col-md-5">'+cart.goods_nm+'</div>'
-				+	'<div class="col-md-1">'+cart.goods_size+'</div>'
-				+	'<div class="col-md-1">'+cart.goods_color+'</div>'
-				+	'<div class="col-md-2 line">'
-				+		'<div class="row">'
-				+			'<div class="col"><p class="btn btn-block minus">-</p></div>'
-				+			'<div class="col mt-2"><p class="qtys">'+cart.goods_qtys+'</p></div>'
-				+			'<div class="col"><p class="btn btn-block plus text-muted">+</p></div>'
-				+		'</div>'
-				+	'</div>'
-				+	'<div class="col-md-2 price" data-u-price="'+cart.goods_untpc+'">'+numberWithCommas(cart.goods_untpc * cart.goods_qtys)+'</div>'
-				+'</div>';
+				const price = numberWithCommas(cart.goods_untpc * cart.goods_qtys);
 				
+				str += 
+				`<div class="row ml-4 mb-2 text-center" data-id="\${cart.cart_id}">
+					<div class="col-md-1"><img src="/displayfile?img_name=${cart.goods_img}" width="60px" height="60px"></div>
+					<div class="col-md-5">\${cart.goods_nm}</div>
+					<div class="col-md-1">\${cart.goods_size}</div>
+					<div class="col-md-1">\${cart.goods_color}</div>
+					<div class="col-md-2 line">
+					<div class="row">
+						<div class="col"><p class="btn btn-block minus">-</p></div>
+						<div class="col mt-2"><p class="qtys">\${cart.goods_qtys}</p></div>
+						<div class="col"><p class="btn btn-block plus text-muted">+</p></div>
+					</div>
+				</div>
+				<div class="col-md-2 price" data-u-price="\${cart.goods_untpc}">\${price}</div>
+				</div>`;
 			}
 
 			list.innerHTML = str;
