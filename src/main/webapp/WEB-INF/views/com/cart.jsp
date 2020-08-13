@@ -2,11 +2,11 @@
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
 
-			data_cart = [];
-			data_email = '${login.email }';
-			let hide = document.getElementById('hide');
-			let list = document.getElementById('list');
-			let totalPrice = document.getElementById('totalPrice');
+			const data_cart = [];
+			const data_email = '${login.email }';
+			const hide = document.getElementById('hide');
+			const list = document.getElementById('list');
+			const totalPrice = document.getElementById('totalPrice');
 
 			// 장바구니 창에 X표시를 클릭시.
 			hide.addEventListener('click', () => {
@@ -15,10 +15,10 @@
 
 			// 장바구니 리스트의 - + 버튼들을 클릭시.
 			list.addEventListener('click', (event) => {
-				let element = event.target;
+				const element = event.target;
 				let strClass = element.getAttribute('class');
 				let qtysRow = element.parentNode.parentNode;
-				let	qtys = qtysRow.getElementsByClassName('qtys')[0];
+				let qtys = qtysRow.getElementsByClassName('qtys')[0];
 				let price = qtysRow.parentNode.parentNode.getElementsByClassName('price')[0];
 				let data_u_price = price.getAttribute('data-u-price');
 				let strNum = qtys.innerHTML;

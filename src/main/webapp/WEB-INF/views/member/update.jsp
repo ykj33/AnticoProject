@@ -16,7 +16,7 @@
 		<%@ include file="../com/navbar.jsp"%>
 	</div>
 	
-	<div class="container mb-5">
+	<div class="container mb-5 mh-100">
 
 		<div class="row">
 			<div class="col-md-3"></div>

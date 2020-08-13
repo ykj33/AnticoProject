@@ -33,12 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		</c:if>
 	
 		<c:if test="${not empty login.email}">
-			<a href="/member/read" class="btn text-secondary shadow-none" id="btnMypage">마이페이지</a>
+			<a href="/mypage" class="btn text-secondary shadow-none" id="btnMypage">마이페이지</a>
 			<a href="/member/logout" class="btn text-secondary shadow-none" id="btnLogout"> 로그아웃 </a>
 		</c:if>
 
-		<a href="/member/insert" class="btn text-secondary shadow-none">회원가입</a>
-	
+		<c:if test="${empty login.email}">
+			<a href="/member/insert" class="btn text-secondary shadow-none">회원가입</a>
+		</c:if>
+
+		<c:if test="${not empty login.email}">
+			<a href="/member/update/login.email" class="btn text-secondary shadow-none">회원정보수정</a>
+		</c:if>
 	</span>
 </div>
 
