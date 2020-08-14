@@ -14,7 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	// 장바구니 버튼 클릭시.
 	btnCart.addEventListener('click', (evnet) => {
-		ajaxGetCartList('${login.email }')
+		if(logincheck()){
+			ajaxGetCartList()
+			cartTotalPrice()
+		}
 		cartShow();
 	});
 

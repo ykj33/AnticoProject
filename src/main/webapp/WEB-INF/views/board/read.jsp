@@ -28,7 +28,7 @@
 
 			// 구매 버튼 
 			btnCollapse.addEventListener('click', () => {
-				addCart(data_option, data_email = '${login.email }');
+				addCart(data_option);
 			});
 
 			// 상품에 option의 버튼들을 클릭시.
@@ -62,9 +62,6 @@
 					data_option.goods_size = element.innerHTML;
 				}
 
-				// console.log('>>', data);
-
-				// ajax
 				axios({
 					  method: 'get',
 					  url: '/board/option',
@@ -89,7 +86,6 @@
 										str +='<div class="row">'
 								for (let i = 0; i < colors.length; i++) {
 									const item = colors[i];
-									// console.log(dto.goods_color, data.goods_color);
 									if (item.goods_color === dto.goods_color) {
 										str +=	'<div class="col-md">'
 										str +=		'<p class="btn btn-sm goods_color font-weight-bold">'+item.goods_color+'</p>'
@@ -103,10 +99,8 @@
 										str +='</div>'
 										str +='<!-- 옵션 size  -->'
 										str +='<div class="row">'
-								// console.log(sizes);
 								for (let i = 0; i < sizes.length; i++) {
 									const item = sizes[i];
-									// console.log(dto.goods_size, data.goods_size);
 									if (item.goods_size === dto.goods_size) {
 										str +=	'<div class="col-md">'
 										str +=		'<p class="btn btn-sm goods_size font-weight-bold">'+item.goods_size+'</p>'
@@ -124,7 +118,6 @@
 										str +=		'<h3><strong class="goods_untpc" id="untpc">'+numberWithCommas(dto.goods_untpc)+'</strong>원</h3>'
 										str +=	'</div>'
 										str +='</div>';
-							// console.log(str);
 							option.innerHTML = str;
 
 							// 상품 제고 수량에 따라 구매 or 재고업음 으로 표시 	
