@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	btnCart.addEventListener('click', (evnet) => {
 		if(isLogin()){
 			ajaxGetCartList()
-			cartTotalPrice()
 		}
 		cartShow();
 	});

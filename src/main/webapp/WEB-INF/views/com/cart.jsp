@@ -9,7 +9,7 @@
 			const list = document.getElementById('list');
 			const totalPrice = document.getElementById('totalPrice');
 
-			if(data_email != '') {
+			if (data_email != '') {
 				ajaxGetCartList();
 				cartTotalPrice();
 			}
@@ -22,37 +22,29 @@
 			// 장바구니 리스트의 - + 버튼들을 클릭시.
 			list.addEventListener('click', (event) => {
 				const element = event.target;
-				let strClass = element.getAttribute('class');
-				let qtysRow = element.parentNode.parentNode;
-				let qtys = qtysRow.getElementsByClassName('qtys')[0];
-				let price = qtysRow.parentNode.parentNode.getElementsByClassName('price')[0];
-				let data_u_price = price.getAttribute('data-u-price');
-				let strNum = qtys.innerHTML;
-				strNum = strNum.replace(',', '');
+				const strClass = element.getAttribute('class');
+				const qtysRow = element.parentNode.parentNode;
+				const qtys = qtysRow.querySelector('.qtys');
+				const price = qtysRow.parentNode.parentNode.querySelector('.price');
+				let strNum = qtys.innerHTML.replace(',', '');
+				const row = qtysRow.parentNode.parentNode;
+				const cartId = row.dataset.id;
+				let result = 0;
 
-				if(strClass.indexOf('minus') > -1) {
-					let row = qtysRow.parentNode.parentNode;
-					let cartId = row.getAttribute('data-id');
-					let result = Number(strNum) - 1;
-					qtys.innerHTML = result;
-					price.innerHTML = numberWithCommas(result * Number(data_u_price));
-					
-					if(result > 0) {
-						updatecart(cartId, result);
-					} else {
-						deletecart(cartId);
-						row.remove();
-					}
+				if (strClass.indexOf('minus') > -1) {
+					result = Number(strNum) - 1;
 				}
+				if (strClass.indexOf('plus') > -1) {
+					result = Number(strNum) + 1;
+				}
+				qtys.innerHTML = result;
+				price.innerHTML = numberWithCommas(result * Number(price.dataset.uPrice));
 
-				if(strClass.indexOf('plus') > -1) {
-					let row = qtysRow.parentNode.parentNode;
-					let cartId = row.getAttribute('data-id');
-					let result = Number(strNum) + 1;
-					qtys.innerHTML = result;
-					price.innerHTML = numberWithCommas(result * Number(data_u_price));
-
+				if (result > 0) {
 					updatecart(cartId, result);
+				} else {
+					deletecart(cartId);
+					row.remove();
 				}
 
 				cartTotalPrice();
@@ -61,17 +53,11 @@
 
 		// 장바구 아이템의 총액을 계산후 표시.
 		function cartTotalPrice() {
-			let prices = list.getElementsByClassName('price');
-			let sumPrice = 0;
-			for (let i = 0; i < prices.length; i++) {
-				const element = prices[i];
-				let strPrice = element.innerHTML;
-				let numPrice = strPrice.replace(',', '');
-				if(Number(numPrice) !== NaN) {
-					sumPrice += Number(numPrice);
-				}
-			}
-			totalPrice.innerHTML = numberWithCommas(sumPrice);
+			let prices = Array.from(list.getElementsByClassName('price'));
+			let total = prices //
+				.map((element) => Number(element.innerHTML.replace(',', '')))
+				.reduce((prev, curr) => prev + curr, 0);
+			totalPrice.innerHTML = numberWithCommas(total);
 		};
 
 		// 자리수 표시(3자리 마다, 표시)
@@ -82,19 +68,19 @@
 
 		// 구매 버튼 클릭 장바구니에 추가.
 		function addCart(data_option) {
-			if(!isLogin()) {
+			if (!isLogin()) {
 				return;
 			}
-	
-			if(data_carts.length > 0) {
+
+			if (data_carts.length > 0) {
 				// 장바구니에 중복되는 상품이 있는지 확인함.
 				const isOverlap = data_carts.some((cart) => {
-					return cart.goods_no === data_option.goods_no 
-					&& cart.goods_color === data_option.goods_color 
-					&& cart.goods_size === data_option.goods_size;
+					return cart.goods_no === data_option.goods_no
+						&& cart.goods_color === data_option.goods_color
+						&& cart.goods_size === data_option.goods_size;
 				});
-				
-				if(isOverlap) {
+
+				if (isOverlap) {
 					alert('같은 상품이 존재 합니다.');
 					cartShow('show');
 					return;
@@ -103,15 +89,15 @@
 
 			// 새로운 상품 data
 			let newCart = {
-				cart_id : 0,
-				email : data_email,
-				goods_no : data_option.goods_no,
-				goods_img : data_option.goods_img,
-				goods_nm : data_option.goods_nm,
-				goods_color : data_option.goods_color,
-				goods_size : data_option.goods_size,
-				goods_qtys : 1,
-				goods_untpc : data_option.goods_untpc
+				cart_id: 0,
+				email: data_email,
+				goods_no: data_option.goods_no,
+				goods_img: data_option.goods_img,
+				goods_nm: data_option.goods_nm,
+				goods_color: data_option.goods_color,
+				goods_size: data_option.goods_size,
+				goods_qtys: 1,
+				goods_untpc: data_option.goods_untpc
 			};
 
 			ajaxAddCart(newCart);
@@ -119,7 +105,7 @@
 		};
 
 		// 장바구니 열기 
-		function cartShow(pram = 'toggle') {	
+		function cartShow(pram = 'toggle') {
 			window.scrollTo(0, 0);
 			$('.collapse').collapse(pram);
 		};
@@ -144,34 +130,34 @@
 
 				console.log('상품등록 ajax response >>', response);
 
-				if(response.data) {
+				if (response.data) {
 					data_carts = response.data;
 					cartUpdateHTML(data_carts);
 					cartTotalPrice();
 				}
-				
+
 			});
 		}
 
 		// 장바구니 등록된 리스트 가져오기.
 		function ajaxGetCartList() {
 			axios({
-				  method: 'get',
-				  url: '/board/getcartlist',
-				  params: {
-					  	email: data_email
-					}, 
-				}).then((response) => {
-				    if(response.data) {
-						data_carts = response.data;
-						cartUpdateHTML(data_carts);
-						cartTotalPrice();
-					}
-				});
+				method: 'get',
+				url: '/board/getcartlist',
+				params: {
+					email: data_email
+				},
+			}).then((response) => {
+				if (response.data) {
+					data_carts = response.data;
+					cartUpdateHTML(data_carts);
+					cartTotalPrice();
+				}
+			});
 		}
 
 		function isLogin() {
-			if(data_email == '') {
+			if (data_email == '') {
 				alert('장바구니는 로그인후 이용 가능합니다.');
 				window.location.href = '/member/login';
 				return false;
@@ -182,10 +168,10 @@
 		// 장바구니 상품 수량 변경.
 		function updatecart(cart_id, goods_qtys) {
 			let cart = {
-					cart_id : cart_id, email : '', goods_no : '', goods_img : '', goods_nm : '', goods_color : '', goods_size : '',
-					goods_qtys : goods_qtys, goods_untpc : 0
+				cart_id: cart_id, email: '', goods_no: '', goods_img: '', goods_nm: '', goods_color: '', goods_size: '',
+				goods_qtys: goods_qtys, goods_untpc: 0
 			};
-			
+
 			axios({
 				method: 'post',
 				url: '/board/updatecart',
@@ -203,10 +189,10 @@
 		// 장바구니 상품 수량 변경.
 		function deletecart(cart_id) {
 			let cart = {
-					cart_id : cart_id, email : '', goods_no : '', goods_img : '', goods_nm : '', goods_color : '', goods_size : '',
-					goods_qtys : 0, goods_untpc : 0
+				cart_id: cart_id, email: '', goods_no: '', goods_img: '', goods_nm: '', goods_color: '', goods_size: '',
+				goods_qtys: 0, goods_untpc: 0
 			};
-			
+
 			axios({
 				method: 'post',
 				url: '/board/deletecart',
@@ -228,21 +214,21 @@
 			list.innerHTML = data_carts.map((cart) => {
 				const price = numberWithCommas(cart.goods_untpc * cart.goods_qtys);
 				return `
-				<div class="row ml-4 mb-2 text-center" data-id="\${cart.cart_id}">
-					<div class="col-md-1"><img src="/displayfile?img_name=${cart.goods_img}" width="60px" height="60px"></div>
-					<div class="col-md-5">\${cart.goods_nm}</div>
-					<div class="col-md-1">\${cart.goods_size}</div>
-					<div class="col-md-1">\${cart.goods_color}</div>
-					<div class="col-md-2 line">
-					<div class="row">
-						<div class="col"><p class="btn btn-block minus">-</p></div>
-						<div class="col mt-2"><p class="qtys">\${cart.goods_qtys}</p></div>
-						<div class="col"><p class="btn btn-block plus text-muted">+</p></div>
+					<div class="row ml-4 mb-2 text-center" data-id="\${cart.cart_id}">
+						<div class="col-md-1"><img src="/displayfile?img_name=${cart.goods_img}" width="60px" height="60px"></div>
+						<div class="col-md-5">\${cart.goods_nm}</div>
+						<div class="col-md-1">\${cart.goods_size}</div>
+						<div class="col-md-1">\${cart.goods_color}</div>
+						<div class="col-md-2 line">
+						<div class="row">
+							<div class="col"><p class="btn btn-block minus">-</p></div>
+							<div class="col mt-2"><p class="qtys">\${cart.goods_qtys}</p></div>
+							<div class="col"><p class="btn btn-block plus text-muted">+</p></div>
+						</div>
 					</div>
-				</div>
-				<div class="col-md-2 price" data-u-price="\${cart.goods_untpc}">\${price}</div>
-				</div>
-				`;
+					<div class="col-md-2 price" data-u-price="\${cart.goods_untpc}">\${price}</div>
+					</div>
+					`;
 			}).join('');
 		}
 	</script>
