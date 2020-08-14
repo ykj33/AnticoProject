@@ -94,7 +94,7 @@
 			});
 
 
-			if(!isOverlap && data_carts.length > 0) {
+			if(isOverlap && data_carts.length > 0) {
 				alert('같은 상품이 존재 합니다.');
 				cartShow();
 				return;
