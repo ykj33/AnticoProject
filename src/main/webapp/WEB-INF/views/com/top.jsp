@@ -6,11 +6,11 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 	
-	let btnCart = document.getElementById('btnCart');
-	let btnLogin = document.getElementById('btnLogin');
-	let btnMypage = document.getElementById('btnMypage');
-	let btnLogout = document.getElementById('btnLogout');
-	let url = document.location.href;
+	const btnCart = document.getElementById('btnCart');
+	const btnLogin = document.getElementById('btnLogin');
+	const btnMypage = document.getElementById('btnMypage');
+	const btnLogout = document.getElementById('btnLogout');
+	const url = document.location.href;
 	
 	// 장바구니 버튼 클릭시.
 	btnCart.addEventListener('click', (evnet) => {

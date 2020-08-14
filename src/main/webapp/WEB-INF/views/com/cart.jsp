@@ -127,15 +127,11 @@
 				data: JSON.stringify(newCart),
 				responseType: 'text'
 			}).then(function (response) {
-
-				console.log('상품등록 ajax response >>', response);
-
 				if (response.data) {
 					data_carts = response.data;
 					cartUpdateHTML(data_carts);
 					cartTotalPrice();
 				}
-
 			});
 		}
 
