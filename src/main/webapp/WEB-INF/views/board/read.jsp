@@ -142,17 +142,17 @@
 	<%@ include file="../com/top.jsp" %>
 	<!-- 타이틀(홈 링크)   -->
 	<%@ include file="../com/title.jsp" %>
+	<!-- 상단 네비게이션 메뉴 -->
+	<%@ include file="../com/navbar.jsp"%>
 
-	<div class="container">
-		<!-- 상단 네비게이션 메뉴 -->
-		<%@ include file="../com/navbar.jsp"%>
+	<div class="container h-100">
 		<img id="main" src="/displayfile?img_name=${dto.goods_info_img}" width="100%" />
 
 		<h3 class="text-muted mt-4">${dto.goods_nm}</h3>
 
 		<div class="row">
 			<div class="col-md-8">
-				<pre class="text-muted mt-4">${dto.goods_info_text }</pre>
+				<pre class="text-muted mt-4" style="overflow: auto; white-space: pre-wrap;">${dto.goods_info_text }</pre>
 			</div>
 			<div class="col-md-4 mt-4 text-muted" id="option">
 				<!-- 옵션 color  -->
@@ -203,8 +203,8 @@
 			<button type="button" class="btn btn-outline-dark rounded-0 btn-lg btn-block mt-5 mb-5" id="btnCollapse" disabled="disabled">재고없음</button>
 		</c:if>
 		
-		<%@ include file="../com/footer.jsp"%>
 	</div>
+	<%@ include file="../com/footer.jsp"%>
 </body>
 
 </html>

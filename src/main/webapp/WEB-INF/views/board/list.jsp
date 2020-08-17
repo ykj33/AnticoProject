@@ -66,8 +66,8 @@
 				<div class="col-md-1"></div>
 		</div>
 		<%request.setAttribute("dfdf", 4); %>
-		<%@ include file="../com/footer.jsp"%>
 	</div>
+	<%@ include file="../com/footer.jsp"%>
 
 <script type="text/javascript">
 $(document).ready(function(){

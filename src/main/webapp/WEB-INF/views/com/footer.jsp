@@ -30,14 +30,21 @@
 	
 		$('#back-to-top').tooltip('show');
 
+		// footer 주소줄에 member가 포함할때 바닥에 고정.
+		document.addEventListener('DOMContentLoaded', () => {
+			if(document.location.href.indexOf('/member') > -1) {
+				let footer = document.querySelector('footer');
+				footer.setAttribute('class', 'fixed-bottom container-fluid text-center text-secondary');
+			}
+		});
 	</script>
 	
 	<a id="back-to-top" href="#" class="btn btn-secondary btn-md back-to-top" role="button" title="Click to return on the top page" 
 		data-toggle="tooltip" data-placement="left"><span class="btn btn-secondary">^</span></a>
 		
-	<hr>
-	<footer class="container-fluid text-center">
-		<p>000회사 | 대표이사 000 | 사업자번호 000-0000-000 </p>
-		<p>Tel. 02-123-4567 | Fax. 02-456-1233 | E-mail OOOO@naver.com</p>
+	<footer class="container-fluid text-center text-secondary">
+		<hr>
+		<p>000회사  대표이사 000  사업자번호  000-0000-000 </p>
+		<p>Tel. 02-123-4567  Fax. 02-456-1233  E-mail OOOO@naver.com</p>
 		<p>서울시 광진구 뚝섬로00길 00 (자양4동, 000건물)</p>
 	</footer>

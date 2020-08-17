@@ -6,7 +6,6 @@
 <html>
 <head>
 <title>로그인</title>
-<%@ include file="../com/cart.jsp" %>
 <%@ include file="../com/header.jsp"%>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
@@ -22,9 +21,9 @@ document.addEventListener('DOMContentLoaded', function(){
  });
  
 function validateMemberLoginForm() {
-    let email = document.forms['memberLoginForm']['email'].value;
-    let mpw = document.forms['memberLoginForm']['mpw'].value;
-    let RemembeMeCheck = document.forms['memberLoginForm']['RemembeMeCheck'].checked;
+    const email = document.forms['memberLoginForm']['email'].value;
+    const mpw = document.forms['memberLoginForm']['mpw'].value;
+    const RemembeMeCheck = document.forms['memberLoginForm']['RemembeMeCheck'].checked;
 
     if (email == '') {
        alert('이메일을 입력해주세요.');
@@ -38,12 +37,12 @@ function validateMemberLoginForm() {
 </script>
 </head>
 <body>
+	<%@ include file="../com/cart.jsp" %>
 	<%@ include file="../com/top.jsp"%>
+	<%@ include file="../com/title.jsp"%>
+	<%@ include file="../com/navbar.jsp"%>
 	<div class="container mb-5">
-		<%@ include file="../com/title.jsp"%>
-		<%@ include file="../com/navbar.jsp"%>
 		<div class="row">
-
 			<div class="col-md-5 mt-4 ml-4 mr-4 text-dark">
 				<h3>기존고객</h3>
 				<form class="mt-4 text-muted" action="/member/login" method="post"
