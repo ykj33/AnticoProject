@@ -8,17 +8,17 @@
 	<%@ include file="../com/header.jsp"%>
 	<script>
 		document.addEventListener("DOMContentLoaded", () => {
-			
+
 			// local data
-			let data_option = { 
-					goods_no:'${dto.goods_no }'
-					, goods_color: '${dto.goods_colors[0].goods_color }' 
-					, goods_size: '${dto.goods_sizes[0].goods_size }'
-					, goods_untpc: '${dto.goods_untpc }'
-					, goods_nm : '${dto.goods_nm }'
-					, goods_img : '${dto.goods_img}'
+			let data_option = {
+				goods_no: '${dto.goods_no }'
+				, goods_color: '${dto.goods_colors[0].goods_color }'
+				, goods_size: '${dto.goods_sizes[0].goods_size }'
+				, goods_untpc: '${dto.goods_untpc }'
+				, goods_nm: '${dto.goods_nm }'
+				, goods_img: '${dto.goods_img}'
 			};
-			
+
 
 			let btnCollapse = document.getElementById('btnCollapse');
 			let option = document.getElementById('option');
@@ -32,104 +32,92 @@
 			});
 
 			// 상품에 option의 버튼들을 클릭시.
-			option.addEventListener('click', (event) => {				
-				// console.log(event.target);
-				let element = event.target;
-				let strClass = element.getAttribute('class');
-				// console.log(element.getAttribute('class'));
+			option.addEventListener('click', (event) => {
+				let selectedElement = event.target;
+				let selectedClassName = selectedElement.getAttribute('class');
 
-				if (strClass.indexOf('goods_color') > -1) {
-					// console.log('@ goods_color click !!');
-
-					let gcArr = document.getElementsByClassName('goods_color');
-					for (let i = 0; i < gcArr.length; i++) {
-						const element = gcArr[i];
-						element.setAttribute('class', 'btn btn-sm goods_color');
-					}
-					element.setAttribute('class', 'btn btn-sm goods_color font-weight-bold');
-					data_option.goods_color = element.innerHTML;
+				if (selectedClassName.indexOf('goods_color') > -1) {
+					let allGoodsColorArr = Array.from(document.getElementsByClassName('goods_color'));
+					allGoodsColorArr.forEach((goodsColorElement) => goodsColorElement.setAttribute('class', 'btn btn-sm goods_color'));
+					selectedElement.setAttribute('class', 'btn btn-sm goods_color font-weight-bold');
+					data_option.goods_color = selectedElement.innerHTML;
 				}
 
-				if (strClass.indexOf('goods_size') > -1) {
-					// console.log('@ goods_size click !!');
-
-					let gsArr = document.getElementsByClassName('goods_size');
-					for (let i = 0; i < gsArr.length; i++) {
-						const element = gsArr[i];
-						element.setAttribute('class', 'btn btn-sm goods_size');
-					}
-					element.setAttribute('class', 'btn btn-sm goods_size font-weight-bold');
-					data_option.goods_size = element.innerHTML;
+				if (selectedClassName.indexOf('goods_size') > -1) {
+					let allGoodsSizeArr = Array.from(document.getElementsByClassName('goods_size'));
+					allGoodsSizeArr.forEach((goodsSizeElement) => goodsSizeElement.setAttribute('class', 'btn btn-sm goods_size'));
+					selectedElement.setAttribute('class', 'btn btn-sm goods_size font-weight-bold');
+					data_option.goods_size = selectedElement.innerHTML;
 				}
 
 				axios({
-					  method: 'get',
-					  url: '/board/option',
-					  params: {
-						  	goods_no: data_option.goods_no,
-						  	goods_color: data_option.goods_color,
-						  	goods_size: data_option.goods_size
-						}, 
-					}).then(function (response) {
-					    console.log('response.data', response.data);
-						let dto = response.data;
-						console.log('data', dto);
-					    if(dto) {
+					method: 'get',
+					url: '/board/option',
+					params: {
+						goods_no: data_option.goods_no,
+						goods_color: data_option.goods_color,
+						goods_size: data_option.goods_size
+					},
+				}).then(function (response) {
+					console.log('response.data', response.data);
+					let dto = response.data;
+					console.log('data', dto);
+					if (dto) {
 
-							let colors = dto.goods_colors;
-							let sizes = dto.goods_sizes;
-							let untpc = dto.goods_untpc;
-							data_option.goods_untpc = untpc;
-							
-							let str = '';
-										str +='<!-- 옵션 color  -->'
-										str +='<div class="row">'
-								for (let i = 0; i < colors.length; i++) {
-									const item = colors[i];
-									if (item.goods_color === dto.goods_color) {
-										str +=	'<div class="col-md">'
-										str +=		'<p class="btn btn-sm goods_color font-weight-bold">'+item.goods_color+'</p>'
-										str +=	'</div>'
-									} else {
-										str +=	'<div class="col-md">'
-										str +=		'<p class="btn btn-sm goods_color">'+item.goods_color+'</p>'
-										str +=	'</div>'
-									}
-								}
-										str +='</div>'
-										str +='<!-- 옵션 size  -->'
-										str +='<div class="row">'
-								for (let i = 0; i < sizes.length; i++) {
-									const item = sizes[i];
-									if (item.goods_size === dto.goods_size) {
-										str +=	'<div class="col-md">'
-										str +=		'<p class="btn btn-sm goods_size font-weight-bold">'+item.goods_size+'</p>'
-										str +=	'</div>'
-									} else {
-										str +=	'<div class="col-md">'
-										str +=		'<p class="btn btn-sm goods_size">'+item.goods_size+'</p>'
-										str +=	'</div>'
-									}
-								}
-										str +='</div>'
-										str +='<!-- 옵션 color와 size에 따른 가격  -->'
-										str +='<div class="row">'
-										str +=	'<div class="col-md ml-2 mt-5">'
-										str +=		'<h3><strong class="goods_untpc" id="untpc">'+numberWithCommas(dto.goods_untpc)+'</strong>원</h3>'
-										str +=	'</div>'
-										str +='</div>';
-							option.innerHTML = str;
+						let colors = dto.goods_colors;
+						let sizes = dto.goods_sizes;
+						let untpc = dto.goods_untpc;
+						data_option.goods_untpc = untpc;
 
-							// 상품 제고 수량에 따라 구매 or 재고업음 으로 표시 	
-							if(dto.goods_amount > 0) {
-								btnCollapse.setAttribute('disarbled', 'disarbled');
-								btnCollapse.innerHTML = '구매';
+						let str = '';
+						str += '<!-- 옵션 color  -->'
+						str += '<div class="row">'
+						for (let i = 0; i < colors.length; i++) {
+							const item = colors[i];
+							if (item.goods_color === dto.goods_color) {
+								str += '<div class="col-md">'
+								str += '<p class="btn btn-sm goods_color font-weight-bold">' + item.goods_color + '</p>'
+								str += '</div>'
 							} else {
-								btnCollapse.removeAttribute('disarbled');
-								btnCollapse.innerHTML = '재고없음';
+								str += '<div class="col-md">'
+								str += '<p class="btn btn-sm goods_color">' + item.goods_color + '</p>'
+								str += '</div>'
 							}
 						}
-					  });
+						str += '</div>'
+						str += '<!-- 옵션 size  -->'
+						str += '<div class="row">'
+						for (let i = 0; i < sizes.length; i++) {
+							const item = sizes[i];
+							if (item.goods_size === dto.goods_size) {
+								str += '<div class="col-md">'
+								str += '<p class="btn btn-sm goods_size font-weight-bold">' + item.goods_size + '</p>'
+								str += '</div>'
+							} else {
+								str += '<div class="col-md">'
+								str += '<p class="btn btn-sm goods_size">' + item.goods_size + '</p>'
+								str += '</div>'
+							}
+						}
+						str += '</div>'
+						str += '<!-- 옵션 color와 size에 따른 가격  -->'
+						str += '<div class="row">'
+						str += '<div class="col-md ml-2 mt-5">'
+						str += '<h3><strong class="goods_untpc" id="untpc">' + numberWithCommas(dto.goods_untpc) + '</strong>원</h3>'
+						str += '</div>'
+						str += '</div>';
+						option.innerHTML = str;
+
+						// 상품 제고 수량에 따라 구매 or 재고업음 으로 표시 	
+						if (dto.goods_amount > 0) {
+							btnCollapse.setAttribute('disarbled', 'disarbled');
+							btnCollapse.innerHTML = '구매';
+						} else {
+							btnCollapse.removeAttribute('disarbled');
+							btnCollapse.innerHTML = '재고없음';
+						}
+					}
+				});
 			});
 		}); // DOMContentLoaded
 	</script>
@@ -152,7 +140,8 @@
 
 		<div class="row">
 			<div class="col-md-8">
-				<pre class="text-muted mt-4" style="overflow: auto; white-space: pre-wrap;">${dto.goods_info_text }</pre>
+				<pre class="text-muted mt-4"
+					style="overflow: auto; white-space: pre-wrap;">${dto.goods_info_text }</pre>
 			</div>
 			<div class="col-md-4 mt-4 text-muted" id="option">
 				<!-- 옵션 color  -->
@@ -197,12 +186,14 @@
 			</div>
 		</div>
 		<c:if test="${dto.goods_amount > 0 }">
-			<button type="button" class="btn btn-outline-dark rounded-0 btn-lg btn-block mt-5 mb-5" id="btnCollapse" >구매</button>
+			<button type="button" class="btn btn-outline-dark rounded-0 btn-lg btn-block mt-5 mb-5"
+				id="btnCollapse">구매</button>
 		</c:if>
 		<c:if test="${dto.goods_amount <= 0 }">
-			<button type="button" class="btn btn-outline-dark rounded-0 btn-lg btn-block mt-5 mb-5" id="btnCollapse" disabled="disabled">재고없음</button>
+			<button type="button" class="btn btn-outline-dark rounded-0 btn-lg btn-block mt-5 mb-5" id="btnCollapse"
+				disabled="disabled">재고없음</button>
 		</c:if>
-		
+
 	</div>
 	<%@ include file="../com/footer.jsp"%>
 </body>
