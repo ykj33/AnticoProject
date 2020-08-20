@@ -59,9 +59,9 @@
 						goods_size: data_option.goods_size
 					},
 				}).then(function (response) {
-					console.log('response.data', response.data);
+					// console.log('response.data', response.data);
 					let dto = response.data;
-					console.log('data', dto);
+					// console.log('data', dto);
 					if (dto) {
 
 						let colors = dto.goods_colors;
@@ -69,43 +69,50 @@
 						let untpc = dto.goods_untpc;
 						data_option.goods_untpc = untpc;
 
-						let str = '';
-						str += '<!-- 옵션 color  -->'
-						str += '<div class="row">'
-						for (let i = 0; i < colors.length; i++) {
-							const item = colors[i];
+						let str = `
+							<!-- 옵션 color  -->
+							<div class="row">`;
+						str += colors.map((item) => {
 							if (item.goods_color === dto.goods_color) {
-								str += '<div class="col-md">'
-								str += '<p class="btn btn-sm goods_color font-weight-bold">' + item.goods_color + '</p>'
-								str += '</div>'
+								return `
+								<div class="col-md">
+									<p class="btn btn-sm goods_color font-weight-bold">\${item.goods_color}</p>
+								</div>`;
 							} else {
-								str += '<div class="col-md">'
-								str += '<p class="btn btn-sm goods_color">' + item.goods_color + '</p>'
-								str += '</div>'
+								return `
+								<div class="col-md">
+									<p class="btn btn-sm goods_color">\${item.goods_color}</p>
+								</div>`;
 							}
-						}
-						str += '</div>'
-						str += '<!-- 옵션 size  -->'
-						str += '<div class="row">'
-						for (let i = 0; i < sizes.length; i++) {
-							const item = sizes[i];
+						}).join('');
+
+						str +=	`
+							</div>
+							<!-- 옵션 size  -->
+							<div class="row">`;
+
+						str += sizes.map((item) => {
 							if (item.goods_size === dto.goods_size) {
-								str += '<div class="col-md">'
-								str += '<p class="btn btn-sm goods_size font-weight-bold">' + item.goods_size + '</p>'
-								str += '</div>'
+								return `
+								<div class="col-md">
+									<p class="btn btn-sm goods_size font-weight-bold">\${item.goods_size}</p>
+								</div>`;
 							} else {
-								str += '<div class="col-md">'
-								str += '<p class="btn btn-sm goods_size">' + item.goods_size + '</p>'
-								str += '</div>'
+								return `
+								<div class="col-md">
+									<p class="btn btn-sm goods_size">\${item.goods_size}</p>
+								</div>`;
 							}
-						}
-						str += '</div>'
-						str += '<!-- 옵션 color와 size에 따른 가격  -->'
-						str += '<div class="row">'
-						str += '<div class="col-md ml-2 mt-5">'
-						str += '<h3><strong class="goods_untpc" id="untpc">' + numberWithCommas(dto.goods_untpc) + '</strong>원</h3>'
-						str += '</div>'
-						str += '</div>';
+						}).join('');
+
+						str += `
+							</div>
+							<!-- 옵션 color와 size에 따른 가격  -->
+							<div class="row">
+								<div class="col-md ml-2 mt-5">
+									<h3><strong class="goods_untpc" id="untpc">\${numberWithCommas(dto.goods_untpc)}</strong>원</h3>
+								</div>
+							</div>`;
 						option.innerHTML = str;
 
 						// 상품 제고 수량에 따라 구매 or 재고업음 으로 표시 	
