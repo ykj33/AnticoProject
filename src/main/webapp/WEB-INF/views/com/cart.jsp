@@ -5,9 +5,9 @@
 
 		document.addEventListener('DOMContentLoaded', () => {
 
-			const hide = document.getElementById('hide');
-			const list = document.getElementById('list');
-			const totalPrice = document.getElementById('totalPrice');
+			const hide = document.querySelector('#hide');
+			const list = document.querySelector('#list');
+			const totalPrice = document.querySelector('#totalPrice');
 
 			if (data_email != '') {
 				ajaxGetCartList();
@@ -22,21 +22,33 @@
 			// 장바구니 리스트의 - + 버튼들을 클릭시.
 			list.addEventListener('click', (event) => {
 				const element = event.target;
-				const strClass = element.getAttribute('class');
-				const qtysRow = element.parentNode.parentNode;
-				const qtys = qtysRow.querySelector('.qtys');
-				const price = qtysRow.parentNode.parentNode.querySelector('.price');
-				let strNum = qtys.innerHTML.replace(',', '');
-				const row = qtysRow.parentNode.parentNode;
+				if(!element.classList.contains('minus') && !element.classList.contains('plus')) {
+					console.log(element.classList);
+					return;
+				}
+
+				let row = element;
+				while (!row.classList.contains('row') || !row.dataset.id) {
+					row = row.parentNode;
+					if (row.classList.contains('list')) {
+						row = null;
+						return;
+					}
+				} 
+
+				const qtys = row.querySelector('.qtys');
+				const price = row.querySelector('.price');
 				const cartId = row.dataset.id;
+
 				let result = 0;
 
-				if (strClass.indexOf('minus') > -1) {
-					result = Number(strNum) - 1;
+				if (element.classList.contains('minus')) {
+					result = Number(qtys.innerHTML) - 1;
 				}
-				if (strClass.indexOf('plus') > -1) {
-					result = Number(strNum) + 1;
+				if (element.classList.contains('plus')) {
+					result = Number(qtys.innerHTML) + 1;
 				}
+				
 				qtys.innerHTML = result;
 				price.innerHTML = numberWithCommas(result * Number(price.dataset.uPrice));
 
@@ -216,13 +228,13 @@
 						<div class="col-md-1">\${cart.goods_size}</div>
 						<div class="col-md-1">\${cart.goods_color}</div>
 						<div class="col-md-2 line">
-						<div class="row">
-							<div class="col"><p class="btn btn-block minus">-</p></div>
-							<div class="col mt-2"><p class="qtys">\${cart.goods_qtys}</p></div>
-							<div class="col"><p class="btn btn-block plus text-muted">+</p></div>
+							<div class="row">
+								<div class="col"><p class="btn btn-block minus">-</p></div>
+								<div class="col mt-2"><p class="qtys">\${cart.goods_qtys}</p></div>
+								<div class="col"><p class="btn btn-block plus text-muted">+</p></div>
+							</div>
 						</div>
-					</div>
-					<div class="col-md-2 price" data-u-price="\${cart.goods_untpc}">\${price}</div>
+						<div class="col-md-2 price" data-u-price="\${cart.goods_untpc}">\${price}</div>
 					</div>
 					`;
 			}).join('');

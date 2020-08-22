@@ -6,10 +6,10 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 	
-	const btnCart = document.getElementById('btnCart');
-	const btnLogin = document.getElementById('btnLogin');
-	const btnMypage = document.getElementById('btnMypage');
-	const btnLogout = document.getElementById('btnLogout');
+	const btnCart = document.querySelector('#btnCart');
+	const btnLogin = document.querySelector('#btnLogin');
+	const btnMypage = document.querySelector('#btnMypage');
+	const btnLogout = document.querySelector('#btnLogout');
 	const url = document.location.href;
 	
 	// 장바구니 버튼 클릭시.
